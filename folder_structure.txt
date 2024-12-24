@@ -1,0 +1,17 @@
+git clone https://github.com/wsvincent/lithium.git
+
+-- Gestion_RH
+-- Account : register/login
+-- accueil
+  --> models (folder include all models)
+  --> views (for home page)
+-- section1
+-- section2
+-- section3
+-- Templates
+  --> section1
+  --> section2
+  --> 404.html
+  --> 403.html
+-- static
+-- migrate.py
