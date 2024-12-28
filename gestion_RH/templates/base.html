@@ -9,7 +9,18 @@
     <title>{%block title%} {%endblock%}</title>
 </head>
 <body>
-    {% include "./partiel/header.html" %}
+    <!-- {% include "./partiel/header.html" %} -->
+     <header>
+        <div class="container-lg flex">
+            {%block navBar %}
+            <ul  class="flex-row gap-4">
+                    <li><a href="/login/">login</a></li>
+                    <li><a href="/register/">register</a></li>
+            </ul>
+            {% endblock %}
+        </div>
+    </header>
+     
     {%block content%}
     {% endblock %}
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
