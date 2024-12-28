@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Conge
+from ..app.models import Conge
 from .forms import CongeForm
 
 # Liste des congés
 def liste_conges(request):
     conges = Conge.objects.all()
-    return render(request, 'conge/liste_conges.html', {'conges': conges})
+    return render(request, 'pages/RH/tables/conge/liste_conges.html', {'conges': conges})
 
 # Créer un congé
 def creer_conge(request):
@@ -16,7 +16,7 @@ def creer_conge(request):
             return redirect('liste_conges')  # Redirige vers la liste des congés
     else:
         form = CongeForm()  # Affiche un formulaire vide
-    return render(request, 'conge/creer_conge.html', {'form': form})
+        return render(request, 'pages/RH/tables/conge/creer_conge.html', {'form': form})
 
 
 # Mettre à jour un congé
@@ -29,7 +29,7 @@ def modifier_conge(request, id):
             return redirect('liste_conges')
     else:
         form = CongeForm(instance=conge)
-    return render(request, 'conge/modifier_conge.html', {'form': form})
+    return render(request, 'pages/RH/tables/conge/modifier_conge.html', {'form': form})
 
 # Supprimer un congé
 def supprimer_conge(request, id):
@@ -37,4 +37,4 @@ def supprimer_conge(request, id):
     if request.method == 'POST':
         conge.delete()
         return redirect('liste_conges')
-    return render(request, 'conge/supprimer_conge.html', {'conge': conge})
+    return render(request, 'pages/RH/tables/conge/supprimer_conge.html', {'conge': conge})

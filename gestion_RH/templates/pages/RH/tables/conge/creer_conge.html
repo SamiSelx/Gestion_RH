@@ -1,3 +1,11 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Ajouter Conge
+{% endblock %}
+
+{% block content %}
+
 <h1>Créer un Congé</h1>
 <form method="post">
     {% csrf_token %}
@@ -5,3 +13,4 @@
     <button type="submit">Enregistrer</button>
 </form>
 <a href="{% url 'liste_conges' %}" style="display: block; margin-top: 10px;">Retour à la liste des congés</a>
+{% endblock %}
