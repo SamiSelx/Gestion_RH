@@ -1,37 +1,44 @@
 {% extends "../../base.html" %}
 
 {% block title %}
-Liste_EMP
+Liste des Employés
 {% endblock %}
 
 {% block content %}
+<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+    Liste des Employés :
+</div>
 
-    
-<table class="table table-dark table-striped">
-       <tbody>
-            {% for employe in employes %}
-                <tr>
-                    <td>{{ employe.code_employe }}</td>
-                    <td>{{ employe.nomE }} </td>
-                    <td>{{ employe.prenomE }}</td>
-                    <td>{{ employe.gender }}</td>
-                    <td>{{ employe.date_naissance_E }}</td>
-                    <td><a href="{% url 'employe_update' employe.code_employe %}" class="btn btn-light" > Update </a></td>
-                    <td><a href="{% url 'employe_delete' employe.code_employe %}" class="btn btn-danger"> delete </a></td>
-                    <td><a href="{% url 'employe_detail' employe.code_employe %}" class="btn btn-light">View</a></td>
-          </tr>
-            
-            {% endfor %}
-          
-        </tbody>
-    </table>
-    <a href="{% url 'employe_create' %}" class="btn btn-light">Add New Employee</a>
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Code Employé</td>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Genre</td>
+            <td>Date Naissance</td>
+            <td>Modifier</td>
+            <td>Supprimer</td>
+            <td>Détails</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for employe in employes %}
+        <tr>
+            <td>{{ employe.code_employe }}</td>
+            <td>{{ employe.nomE }}</td>
+            <td>{{ employe.prenomE }}</td>
+            <td>{{ employe.gender }}</td>
+            <td>{{ employe.date_naissance_E }}</td>
+            <td><a href="{% url 'employe_update' employe.code_employe %}" class="btn btn-success">Modifier</a></td>
+            <td><a href="{% url 'employe_delete' employe.code_employe %}" class="btn btn-danger">Supprimer</a></td>
+            <td><a href="{% url 'employe_detail' employe.code_employe %}" class="btn btn-light">Voir</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'employe_create' %}" class="btn btn-outline-dark">Ajouter employé</a>
 
 {% endblock %}
-
-
-                        
-                       
-   
-    
-

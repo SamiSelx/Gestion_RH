@@ -6,8 +6,10 @@ delete
 
 {% block content %}
 <form method="post">
+          <h1> Are u sure you want to delete </h1>
+          <p>{{ employe.nomE }} {{ employe.prenomE }}</p>
           {% csrf_token %}
-          <button type="submit">Yes, delete</button>
+          <button type="submit" class="btn btn-outline-dark">Yes, delete</button>
       </form>
-      <a href="{% url 'employe_list' %}">Cancel</a>
+      <a href="{% url 'employe_list' %}" class="btn btn-outline-danger mt-3">Cancel</a>
 {% endblock %}
