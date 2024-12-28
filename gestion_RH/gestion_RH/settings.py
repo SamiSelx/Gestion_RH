@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'apps.app',
     'apps.authentification',
     'apps.conge'
-
+    'apps.contrat'
 ]
 
 MIDDLEWARE = [
