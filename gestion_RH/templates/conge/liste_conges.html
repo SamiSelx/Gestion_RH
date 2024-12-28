@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Congés</title>
+</head>
+<body>
+    <h1>Liste des Congés</h1>
+    <a href="{% url 'creer_conge' %}">Créer un nouveau congé</a>
+    <hr>
+    {% if conges %}
+        <table border="1" cellspacing="0" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Employé</th>
+                    <th>Date Début</th>
+                    <th>Date Fin</th>
+                    <th>Type de Congé</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conge in conges %}
+                    <tr>
+                        <td>{{ conge.code }}</td>
+                        <td>{{ conge.employe }}</td>
+                        <td>{{ conge.date_debut }}</td>
+                        <td>{{ conge.date_fin }}</td>
+                        <td>{{ conge.type_conge }}</td>
+                        <td>
+                            <a href="{% url 'modifier_conge' conge.id %}">Modifier</a> |
+                            <a href="{% url 'supprimer_conge' conge.id %}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun congé disponible.</p>
+    {% endif %}
+</body>
+</html>
+
