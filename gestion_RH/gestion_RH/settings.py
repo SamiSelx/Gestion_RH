@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.authentification.middleware.role_check.RoleBasedAccessMiddleware'
+    # 'apps.authentification.middleware.role_check.RoleBasedAccessMiddleware'
 ]
 
 ROOT_URLCONF = 'gestion_RH.urls'
