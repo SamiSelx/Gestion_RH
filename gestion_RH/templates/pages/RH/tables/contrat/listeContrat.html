@@ -1,0 +1,42 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Contrat
+{% endblock %}
+
+
+{% block content %}
+<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+    Liste des Contrats :
+  </div>
+
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Conrat Type</td>
+            <td>Date Debut</td>
+            <td>Date Fin</td>
+            <td>Salaire</td>
+            <td>Etat</td>
+            <td>Employe</td>
+            <td>Edit</td>
+            <td>Supprimer</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for contrat in contrats %}
+        <tr>
+            <td>{{contrat.type_contrat}}</td>
+            <td> {{contrat.date_debut_contrat}} </td>
+            <td> {{contrat.date_fin_contrat}} </td>
+            <td> {{contrat.salaire}} </td>
+            <td> {{contrat.etat}} </td>
+            <td> {{contrat.code_employe}} </td>
+            <td><a href="{% url 'modifierContrat' contrat.id %}" class="btn btn-success"> Edit </a></td>
+            <td><a href="{% url 'supprimerContrat' contrat.id %}" class="btn btn-danger"> Supprimer </a></td>
+        </tr>
+        {% endfor%}
+    </tbody>
+</table>
+{% endblock %}
