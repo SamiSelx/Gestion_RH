@@ -1,17 +1,25 @@
 git clone https://github.com/wsvincent/lithium.git
 
 -- Gestion_RH
--- Account : register/login
--- accueil
-  --> models (folder include all models)
-  --> views (for home page)
--- section1
--- section2
--- section3
+-- apps:
+  -- Account : register/login
+  -- app
+    --> models (folder include all models + CustomUserModel = Utilisateur)
+    --> views (for home page)
+  -- section1
+  -- section2
+  -- section3
 -- Templates
-  --> section1
-  --> section2
+  --> auth
+  --> pages
+    --> Manager
+    --> RH
+    --> Employe
+    --> Candidate
+    --> Home
   --> 404.html
   --> 403.html
+  --> 500.html
+  --> base.html
 -- static
 -- migrate.py
