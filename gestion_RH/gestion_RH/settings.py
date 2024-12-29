@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.app',
     'apps.authentification',
-    'apps.conge'
-
+    'apps.conge',
+    'apps.contrat'
 ]
 
 MIDDLEWARE = [
