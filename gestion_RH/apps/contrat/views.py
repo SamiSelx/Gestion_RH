@@ -17,7 +17,7 @@ def ajouterContrat(request):
             return render(request,'pages/RH/tables/contrat/ajouterContrat.html',{'form':form})
     else:
         form = ContratForm()
-        return render(request,'pages/RH/tables/contrat/ajouterContrat.html',{'form':form})
+    return render(request,'pages/RH/tables/contrat/ajouterContrat.html',{'form':form})
 
 def modifierContrat(request,pk):
     contrat = Contrat.objects.get(id=pk)
@@ -28,7 +28,7 @@ def modifierContrat(request,pk):
             return redirect("listeContrat")
     else:
         form = ContratForm(instance=contrat)
-        return render(request,'pages/RH/tables/contrat/modifierContrat.html',{'form':form})
+    return render(request,'pages/RH/tables/contrat/modifierContrat.html',{'form':form})
 
 def supprimerContrat(request,pk):
     contrat = Contrat.objects.get(id=pk)
@@ -37,4 +37,4 @@ def supprimerContrat(request,pk):
         return redirect('listeContrat')
     else:
         form = ContratForm(instance=contrat)
-        return render(request,'pages/RH/tables/contrat/supprimerContrat.html',{'form':form})
+    return render(request,'pages/RH/tables/contrat/supprimerContrat.html',{'form':form})

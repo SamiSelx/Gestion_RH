@@ -16,7 +16,7 @@ def creer_conge(request):
             return redirect('liste_conges')  # Redirige vers la liste des congés
     else:
         form = CongeForm()  # Affiche un formulaire vide
-        return render(request, 'pages/RH/tables/conge/creer_conge.html', {'form': form})
+    return render(request, 'pages/RH/tables/conge/creer_conge.html', {'form': form})
 
 
 # Mettre à jour un congé

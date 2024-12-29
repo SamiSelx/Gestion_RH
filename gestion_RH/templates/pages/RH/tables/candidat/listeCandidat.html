@@ -1,0 +1,40 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Candidat
+{% endblock %}
+
+
+{% block content %}
+<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+    Liste des Candidats :
+  </div>
+  <div>
+    <a href="{% url 'ajouterCandidat' %}">Ajouter Candidat</a>
+  </div>
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Nom Candidat</td>
+            <td>Prenom Candidat</td>
+            <td>Adresse Candidat</td>
+            <td>Numéro Téléphone Candidat</td>
+            <td>Edit</td>
+            <td>Supprimer</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for candidat in candidats %}
+        <tr>
+            <td>{{candidat.nomC}}</td>
+            <td>{{candidat.prenomC}}</td>
+            <td>{{candidat.adresseC}}</td>
+            <td>{{candidat.tlfn_candidat}}</td>
+            <td><a href="{% url 'modifierCandidat' candidat.id %}" class="btn btn-success"> Edit </a></td>
+            <td><a href="{% url 'supprimerCandidat' candidat.id %}" class="btn btn-danger"> Supprimer </a></td>
+        </tr>
+        {% endfor%}
+    </tbody>
+</table>
+{% endblock %}
