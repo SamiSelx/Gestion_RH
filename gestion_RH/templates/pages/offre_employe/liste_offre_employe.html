@@ -1,0 +1,36 @@
+{% extends "../../base.html" %}
+
+{% block title %}
+Liste des Offres
+{% endblock %}
+
+{% block content %}
+<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+    Liste des Offres :
+</div>
+
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Titre de l'offre</td>
+            <td>Service</td>
+            <td>Modifier</td>
+            <td>Supprimer</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for offre in offres %}
+        <tr>
+            <td>{{ offre.titre_offre }}</td>
+            <td>{{ offre.code_service.description_service }}</td>
+            <td><a href="{% url 'update_offre_employe' offre.pk %}" class="btn btn-success">Modifier</a></td>
+            <td><a href="{% url 'delete_offre_employe' offre.pk %}" class="btn btn-danger">Supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'create_offre_employe' %}" class="btn btn-outline-dark">Ajouter offre</a>
+
+{% endblock %}

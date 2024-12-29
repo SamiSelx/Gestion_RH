@@ -38,3 +38,20 @@ class Service(models.Model):
 
     def __str__(self):
         return self.description_service
+
+class Formation(models.Model):
+    titre_formation = models.CharField(max_length=100)
+    description_formation = models.TextField()
+
+    def __str__(self):
+        return self.titre_formation
+
+
+
+class Offre_employe(models.Model):
+  
+    titre_offre = models.CharField(max_length=100)
+    code_service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='offres')
+
+    def __str__(self):
+        return self.titre_offre

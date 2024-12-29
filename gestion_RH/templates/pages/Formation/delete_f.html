@@ -1,0 +1,15 @@
+{% extends "../../base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+  <h2>Are you sure you want to delete this formation?</h2>
+  <p>{{ formation.titre_formation }}</p>
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit"  class="btn btn-outline-danger">Delete</button>
+  </form>
+  <a href="{% url 'ListeFormation' %}" class="btn btn-outline-dark">Cancel</a>
+  {% endblock %}
