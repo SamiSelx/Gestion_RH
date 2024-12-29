@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from apps.app.models import Employe  
+from django.core.paginator import Paginator
 from .forms import EmployeForm  
 
 
@@ -10,7 +11,11 @@ from .forms import EmployeForm
 
 
 def employe_list(request):
-    employes = Employe.objects.all()
+    employes_list = Employe.objects.all()  
+    paginator = Paginator(employes_list, 10)  
+
+    page_number = request.GET.get('page')  
+    employes = paginator.get_page(page_number)  
     return render(request, 'pages/Employe/employe_list.html', {'employes': employes})
 
 
