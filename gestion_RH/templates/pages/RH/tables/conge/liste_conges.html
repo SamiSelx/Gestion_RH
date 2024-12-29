@@ -1,0 +1,73 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Liste Conge
+{% endblock %}
+
+
+{% block content %}
+    <h1>Liste des Congés</h1>
+    <a href="{% url 'creer_conge' %}">Créer un nouveau congé</a>
+    <hr>
+    {% if conges %}
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Employé</th>
+                    <th>Type de Congé</th>
+                    <th>Date Début</th>
+                    <th>Date Fin</th>
+                    <td>Edit</td>
+                    <td>Supprimer</td>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for conge in conges %}
+                <tr>
+                    <td>{{ conge.code_employe }}</td>
+                    <td>{{ conge.type_conge }}</td>
+                    <td>{{ conge.date_debut }}</td>
+                    <td>{{ conge.date_fin }}</td>
+                    <td><a href="{% url 'modifier_conge' conge.id %}" class="btn btn-success"> Edit </a></td>
+                    <td><a href="{% url 'supprimer_conge' conge.id %}" class="btn btn-danger"> Supprimer </a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun congé disponible.</p>
+    {% endif %}
+
+{% endblock %}
+
+
+
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Conrat Type</td>
+            <td>Date Debut</td>
+            <td>Date Fin</td>
+            <td>Salaire</td>
+            <td>Etat</td>
+            <td>Employe</td>
+            <td>Edit</td>
+            <td>Supprimer</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for contrat in contrats %}
+        <tr>
+            <td>{{contrat.type_contrat}}</td>
+            <td> {{contrat.date_debut_contrat}} </td>
+            <td> {{contrat.date_fin_contrat}} </td>
+            <td> {{contrat.salaire}} </td>
+            <td> {{contrat.etat}} </td>
+            <td> {{contrat.code_employe}} </td>
+            <td><a href="{% url 'modifierContrat' contrat.id %}" class="btn btn-success"> Edit </a></td>
+            <td><a href="{% url 'supprimerContrat' contrat.id %}" class="btn btn-danger"> Supprimer </a></td>
+        </tr>
+        {% endfor%}
+    </tbody>
+</table>

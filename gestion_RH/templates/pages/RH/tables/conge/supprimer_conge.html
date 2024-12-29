@@ -1,0 +1,17 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Supprimer Conge
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Supprimer le Congé</h1>
+<p>Êtes-vous sûr de vouloir supprimer ce congé ?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Oui</button>
+</form>
+<a href="{% url 'liste_conges' %}" style="display: block; margin-top: 10px;">Retour à la liste des congés</a>
+{% endblock %}

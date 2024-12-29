@@ -1,0 +1,15 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Tables
+{% endblock %}
+
+{% block content %}
+<h1>Liste des tables:</h1>
+<ul>
+    <li><a href="{% url 'liste_conges'%}">Congé</a></li>
+    <li><a href="{% url 'listeContrat'%}">Contrat</a></li>
+    <li><a href="">Employe</a></li>
+    <li><a href="">Service</a></li>
+</ul>
+{%endblock%}
