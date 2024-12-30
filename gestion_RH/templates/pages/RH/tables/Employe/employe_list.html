@@ -1,0 +1,70 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Liste des Employés
+{% endblock %}
+
+{% block content %}
+<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+    Liste des Employés :
+</div>
+
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Code Employé</td>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Genre</td>
+            <td>Date Naissance</td>
+            <td>Modifier</td>
+            <td>Supprimer</td>
+            <td>Détails</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for employe in employes %}
+        <tr>
+            <td>{{ employe.id }}</td>
+            <td>{{ employe.nomE }}</td>
+            <td>{{ employe.prenomE }}</td>
+            <td>{{ employe.gender }}</td>
+            <td>{{ employe.date_naissance_E }}</td>
+            <td><a href="{% url 'employe_update' employe.id %}" class="btn btn-success">Modifier</a></td>
+            <td><a href="{% url 'employe_delete' employe.id %}" class="btn btn-danger">Supprimer</a></td>
+            <td><a href="{% url 'employe_detail' employe.id %}" class="btn btn-light">Voir</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class=" d-flex flex-column align-items-end position-absolute bottom-0 end-0 p-4"> 
+    <a href="{% url 'employe_create' %}" class="btn btn-outline-dark mb-2">Ajouter employé</a>
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        <ul class="pagination justify-content-center">
+            {% if employes.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ employes.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+    
+            {% for num in employes.paginator.page_range %}
+            <li class="page-item {% if employes.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+    
+            {% if employes.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ employes.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    
+    
+</div>
+
+
+{% endblock %}

@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'apps.contrat',
     'apps.competence',
     'apps.candidat',
-    'apps.objectif'
+    'apps.objectif',
+    'apps.employe',
+    'apps.service',
+    'apps.Formation',
+    'apps.OffreEmploi',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,18 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Modifier l'offre
+{% endblock %}
+
+{% block content %}
+<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+    Modifier l'offre :
+</div>
+
+<form method="POST" class="container my-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Modifier</button>
+</form>
+
+{% endblock %}

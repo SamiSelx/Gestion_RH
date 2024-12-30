@@ -25,6 +25,10 @@ urlpatterns = [
     path('rh/tables/', include('apps.contrat.urls')),
     path('rh/tables/', include('apps.competence.urls')),
     path('rh/tables/', include('apps.candidat.urls')),
-    path('rh/tables/', include('apps.objectif.urls'))
+    path('rh/tables/', include('apps.objectif.urls')),
+    path('rh/tables/', include('apps.employe.urls')),
+    path('rh/tables/', include('apps.service.urls')),
+    path('rh/tables/', include('apps.Formation.urls')),
+    path('rh/tables/', include('apps.OffreEmploi.urls')),
 ]
 

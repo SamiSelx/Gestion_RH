@@ -1,0 +1,16 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<h1>Are you sure you want to delete this service?</h1>
+<p>{{ service.description_service }}</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit"  class="btn btn-outline-danger">Delete</button>
+</form>
+<a href="{% url 'service_list' %}" class="btn btn-outline-dark">Cancel</a>
+
+{% endblock %}

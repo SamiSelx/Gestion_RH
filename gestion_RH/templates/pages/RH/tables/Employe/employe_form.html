@@ -1,0 +1,14 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+form_emp
+{% endblock %}
+
+{% block content %}
+<form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Save</button>
+      </form>
+      <a href="{% url 'employe_list' %}">Back to List</a>
+{% endblock %}

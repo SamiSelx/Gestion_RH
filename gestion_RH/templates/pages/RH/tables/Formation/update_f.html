@@ -1,0 +1,14 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+  <h2>Update Formation</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-outline-dark">Save Changes</button>
+  </form>
+{% endblock %}

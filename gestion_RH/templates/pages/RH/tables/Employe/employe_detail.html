@@ -1,0 +1,19 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+detail
+{% endblock %}
+
+{% block content %}
+
+<h1>Employee Detail</h1>
+<p><strong>Code:</strong> {{ employe.id }}</p>
+<p><strong>Name:</strong> {{ employe.nomE }} {{ employe.prenomE }}</p>
+<p><strong>Gender:</strong> {{ employe.get_gender_display }}</p>
+<p><strong>Date of Birth:</strong> {{ employe.date_naissance_E }}</p>
+<p><strong>Date of Hire:</strong> {{ employe.date_embauche_E }}</p>
+<p><strong>Address:</strong> {{ employe.adresse_E }}</p>
+<p><strong>Service Code:</strong> {{ employe.code_service }}</p>
+<a href="{% url 'employe_list' %}">Back to List</a>
+
+{% endblock %}
