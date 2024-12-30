@@ -36,3 +36,21 @@ class Conge(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.code_employe}"
+
+class Competence(models.Model):
+    nom_competence = models.CharField(max_length=255)
+    description_competence = models.TextField()
+
+    def __str__(self):
+        return self.nom_competence
+    
+class Candidat(models.Model):
+    nomC = models.CharField(max_length=100)
+    prenomC = models.CharField(max_length=100)
+    adresseC = models.TextField()
+    tlfn_candidat = models.CharField(max_length=20)
+
+class Objectif(models.Model):
+    description_objectif = models.TextField()
+    date_limite = models.DateField()
+    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='objectifs')

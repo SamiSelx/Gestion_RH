@@ -1,13 +1,14 @@
 {% extends "../../../../base.html" %}
 
 {% block title %}
-Supprimer Contrat
+Modifier contrat
 {% endblock %}
 
 {% block content %}
 <form method="post">
     {% csrf_token %}
-    <a href="{% url 'listeContrat' %}">Annuler</a>
-    <input type="submit" value="Supprimer" class="submit-btn">
+    {{form.as_p}}
+    <a href="{% url 'listeCompetence' %}">Annuler</a>
+    <input type="submit" value="Modifier" class="submit-btn">
 </form>
 {%endblock%}

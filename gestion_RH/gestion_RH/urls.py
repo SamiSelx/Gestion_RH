@@ -22,6 +22,9 @@ urlpatterns = [
     path('',include('apps.app.urls')),
     path('',include('apps.authentification.urls')),
     path('rh/tables/', include('apps.conge.urls')),
-    path('rh/tables/', include('apps.contrat.urls'))
+    path('rh/tables/', include('apps.contrat.urls')),
+    path('rh/tables/', include('apps.competence.urls')),
+    path('rh/tables/', include('apps.candidat.urls')),
+    path('rh/tables/', include('apps.objectif.urls'))
 ]
 
