@@ -23,9 +23,9 @@ urlpatterns = [
     path('',include('apps.authentification.urls')),
     path('rh/tables/', include('apps.conge.urls')),
     path('rh/tables/', include('apps.contrat.urls')),
-    path('employes/', include('apps.employe.urls')),
-    path('services/', include('apps.service.urls')),
-    path('formations/', include('apps.Formation.urls')),
-    path('OffreEmploi/', include('apps.OffreEmploi.urls')),
+    path('rh/tables/', include('apps.employe.urls')),
+    path('rh/tables/', include('apps.service.urls')),
+    path('rh/tables/', include('apps.Formation.urls')),
+    path('rh/tables/', include('apps.OffreEmploi.urls')),
 ]
 

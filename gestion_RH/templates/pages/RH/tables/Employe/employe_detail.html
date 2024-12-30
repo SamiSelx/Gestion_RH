@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "../../../../base.html" %}
 
 {% block title %}
 detail
@@ -7,7 +7,7 @@ detail
 {% block content %}
 
 <h1>Employee Detail</h1>
-<p><strong>Code:</strong> {{ employe.code_employe }}</p>
+<p><strong>Code:</strong> {{ employe.id }}</p>
 <p><strong>Name:</strong> {{ employe.nomE }} {{ employe.prenomE }}</p>
 <p><strong>Gender:</strong> {{ employe.get_gender_display }}</p>
 <p><strong>Date of Birth:</strong> {{ employe.date_naissance_E }}</p>

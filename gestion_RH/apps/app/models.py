@@ -38,21 +38,20 @@ class Conge(models.Model):
         return f"{self.id} - {self.code_employe}"
     
 class Fonctionnalite(models.Model):
-    code_fonctionnalite = models.AutoField(primary_key=True)
     path_fonctionnalite = models.CharField(max_length=100)
 
     def __str__(self):
         return self.path_fonctionnalite
 
-class Favoris(models.Model):
-    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
-    code_fonctionnalite = models.ForeignKey(Fonctionnalite, on_delete=models.CASCADE)
+# class Favoris(models.Model):
+#     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
+#     code_fonctionnalite = models.ForeignKey(Fonctionnalite, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ('code_employe', 'code_fonctionnalite')
+#     class Meta:
+#         unique_together = ('code_employe', 'code_fonctionnalite')
 
-    def __str__(self):
-        return f"Favoris for {self.code_employe}: {self.code_fonctionnalite}"
+#     def __str__(self):
+#         return f"Favoris for {self.code_employe}: {self.code_fonctionnalite}"
 
 class Formation(models.Model):
     titre_formation = models.CharField(max_length=100)

@@ -11,12 +11,12 @@ def add_service(request):
             return redirect('service_list')  
     else:
         form = ServiceForm()
-    return render(request, 'pages/service/add_service.html', {'form': form})
+    return render(request, 'pages/rh/tables/service/add_service.html', {'form': form})
 
 # READ: List all services
 def service_list(request):
     services = Service.objects.all()
-    return render(request, 'pages/service/service_list.html', {'services': services})
+    return render(request, 'pages/rh/tables/service/service_list.html', {'services': services})
 
 # UPDATE: Edit a service
 def edit_service(request, pk):
@@ -28,7 +28,7 @@ def edit_service(request, pk):
             return redirect('service_list')  
     else:
         form = ServiceForm(instance=service)
-    return render(request, 'pages/service/edit_service.html', {'form': form})
+    return render(request, 'pages/rh/tables/service/edit_service.html', {'form': form})
 
 # DELETE: Delete a service
 def delete_service(request, pk):
@@ -36,4 +36,4 @@ def delete_service(request, pk):
     if request.method == 'POST':
         service.delete()
         return redirect('service_list')  
-    return render(request, 'pages/service/delete_service.html', {'service': service})
+    return render(request, 'pages/rh/tables/service/delete_service.html', {'service': service})

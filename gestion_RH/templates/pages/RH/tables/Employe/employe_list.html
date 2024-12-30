@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "../../../../base.html" %}
 
 {% block title %}
 Liste des Employés
@@ -26,14 +26,14 @@ Liste des Employés
     <tbody class="table-group-divider">
         {% for employe in employes %}
         <tr>
-            <td>{{ employe.code_employe }}</td>
+            <td>{{ employe.id }}</td>
             <td>{{ employe.nomE }}</td>
             <td>{{ employe.prenomE }}</td>
             <td>{{ employe.gender }}</td>
             <td>{{ employe.date_naissance_E }}</td>
-            <td><a href="{% url 'employe_update' employe.code_employe %}" class="btn btn-success">Modifier</a></td>
-            <td><a href="{% url 'employe_delete' employe.code_employe %}" class="btn btn-danger">Supprimer</a></td>
-            <td><a href="{% url 'employe_detail' employe.code_employe %}" class="btn btn-light">Voir</a></td>
+            <td><a href="{% url 'employe_update' employe.id %}" class="btn btn-success">Modifier</a></td>
+            <td><a href="{% url 'employe_delete' employe.id %}" class="btn btn-danger">Supprimer</a></td>
+            <td><a href="{% url 'employe_detail' employe.id %}" class="btn btn-light">Voir</a></td>
         </tr>
         {% endfor %}
     </tbody>
