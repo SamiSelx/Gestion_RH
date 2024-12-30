@@ -1,0 +1,38 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Objectif
+{% endblock %}
+
+
+{% block content %}
+<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+    Liste des Objectifs :
+  </div>
+  <div>
+    <a href="{% url 'ajouterObjectif' %}">Ajouter Objectif</a>
+  </div>
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Description</td>
+            <td>Date Limité</td>
+            <td>Employe</td>
+            <td>Edit</td>
+            <td>Supprimer</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for objectif in objectifs %}
+        <tr>
+            <td>{{objectif.description_objectif}}</td>
+            <td> {{objectif.date_limite}} </td>
+            <td> {{objectif.code_employe}} </td>
+            <td><a href="{% url 'modifierObjectif' objectif.id %}" class="btn btn-success"> Edit </a></td>
+            <td><a href="{% url 'supprimerObjectif' objectif.id %}" class="btn btn-danger"> Supprimer </a></td>
+        </tr>
+        {% endfor%}
+    </tbody>
+</table>
+{% endblock %}
