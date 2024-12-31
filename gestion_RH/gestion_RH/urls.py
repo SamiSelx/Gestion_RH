@@ -30,5 +30,7 @@ urlpatterns = [
     path('rh/tables/', include('apps.service.urls')),
     path('rh/tables/', include('apps.Formation.urls')),
     path('rh/tables/', include('apps.OffreEmploi.urls')),
+    path('', include('apps.favoris.urls')),
+    
 ]
 

@@ -1,7 +1,8 @@
 {% extends "../../base.html" %}
 {% load static %}
 
-
+{% block favoris_drop_menu %}
+{% endblock %}
 
 {% block title %}
 Home Page
@@ -9,13 +10,14 @@ Home Page
 
 {% block side_menu %}
 {% endblock %}
+
 {% block content %}
 <div class="container">
     <h2>Bienvenu dans notre Site Web!</h2>
     <p>This content replaces the default content in the base template.</p>
     <hr style="border: 1px solid #474747; margin: 20px 0;">
 
-    <!-- cards  -->
+    <!-- cards -->
     <h1 class="text-center mb-5">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
             class="bi bi-envelope-paper-fill" viewBox="0 0 16 16">
@@ -24,40 +26,23 @@ Home Page
         </svg>
         offres de travail
     </h1>
-    <div class="d-flex justify-content-center  ">
-
-        <div class="card mx-2" style="width: 18rem;">
-            <img src="{% static 'images/offre.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-dark">Go somewhere</a>
-            </div>
-        </div>
-
-
-        <div class="card mx-2" style="width: 18rem;">
-            <img src="{% static 'images/offre.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-dark">Go somewhere</a>
-            </div>
-        </div>
-
-
-        <div class="card mx-2" style="width: 18rem;">
-            <img src="{% static 'images/offre.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-dark">Go somewhere</a>
-            </div>
-        </div>
-
+    <div class="row">
+        {% if offres %}
+            {% for offre in offres %}
+                <div class="col-md-4 mb-2">
+                    <div class="card" style="width: 19rem;">
+                        <img src="{% static 'images/offre.jpg' %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ offre.titre_offre }}</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-dark">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>pas d'offre d'emploi disponible</p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
