@@ -37,7 +37,7 @@ class Employe(models.Model):
 
 
 class Contrat(models.Model):
-    type_contrat = models.CharField(max_length=100)
+    type_contrat = models.CharField(max_length=100,choices=[('CDI', 'Contrats à durée indéterminée'), ('CDD', ' contrats à durée déterminée'),('Stage','stage')])
     date_debut_contrat = models.DateField()
     date_fin_contrat = models.DateField()
     salaire = models.DecimalField(max_digits=10, decimal_places=2)

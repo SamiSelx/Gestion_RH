@@ -41,5 +41,10 @@ Fonctionnalites List
     {% endfor %}
 </table>
 <br>
+{% for message in messages %}
+  <div class="alert alert-{{ message.tags }}" role="alert">
+    {{ message }}
+  </div>
+{% endfor %}
 <a href="{% url 'ajouter_fonctionnalite' %}" class="btn btn-outline-dark">Add New Fonctionnalite</a>
 {% endblock %}

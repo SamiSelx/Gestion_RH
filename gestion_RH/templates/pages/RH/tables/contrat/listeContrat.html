@@ -6,12 +6,32 @@ Contrat
 
 
 {% block content %}
+<!-- génération d’alertes pour les fins de contrat. -->
+{% if messages %}
+<div class="mt-4">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
 <div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
     Liste des Contrats :
   </div>
-  <div>
-    <a href="{% url 'ajouterContrat' %}">Ajouter Contrat</a>
-  </div>
+
+  <div class="container my-4">
+    <form method="get">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search" placeholder="Rechercher par nom d'employé" value="{{ request.GET.search }}">
+            <button class="btn btn-outline-secondary" type="submit">Rechercher</button>
+        </div>
+    </form>
+    <a class="btn btn-light mt-3" href="{% url 'listeContrat' %}" type="submit">Retour à la Liste</a>
+
+</div>
+  
 <table border="1px" class="container my-4 table table-sm align-middle">
     <thead class="table-dark">
         <tr>
@@ -23,6 +43,7 @@ Contrat
             <td>Employe</td>
             <td>Edit</td>
             <td>Supprimer</td>
+            <td>Détails</td>
         </tr>
     </thead>
 
@@ -37,8 +58,12 @@ Contrat
             <td> {{contrat.code_employe}} </td>
             <td><a href="{% url 'modifierContrat' contrat.id %}" class="btn btn-success"> Edit </a></td>
             <td><a href="{% url 'supprimerContrat' contrat.id %}" class="btn btn-danger"> Supprimer </a></td>
+            <td><a href="{% url 'contrat_detail' contrat.id %}" class="btn btn-light"> voir </a></td>
         </tr>
         {% endfor%}
     </tbody>
 </table>
+<div class="d-flex align-items-end position-absolute bottom-0 end-0 p-4">
+    <a href="{% url 'ajouterContrat' %}" class="btn btn-outline-dark">Ajouter Contrat</a>
+  </div>
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.messages import constants as messages
 from apps.app.models import Fonctionnalite, Favoris, Employe
 from .forms import FonctionnaliteForm
 from django.contrib.auth.decorators import login_required
@@ -26,24 +27,27 @@ def supprimerFonctionnalite(request, pk):
     return render(request, 'pages/fonctionnalite/supprimer_fonctionnalite.html', {'fonctionnalite': fonctionnalite})
 
 # Manage Favoris
-# @login_required
+
 def ajouterAuxFavoris(request, pk):
     fonctionnalite = get_object_or_404(Fonctionnalite, id=pk)
-    employe = Employe.objects.get(user=request.user)
 
     # Check if already in favoris
     if not Favoris.objects.filter(code_employe=employe, code_fonctionnalite=fonctionnalite).exists():
         Favoris.objects.create(code_employe=employe, code_fonctionnalite=fonctionnalite)
     return redirect('listeFonctionnalites')
 
-# @login_required
 def supprimerDesFavoris(request, pk):
+    employe = request.user.employes.first()
     fonctionnalite = get_object_or_404(Fonctionnalite, id=pk)
-    employe = get_object_or_404(Employe, user=request.user)
-
-    # Remove if exists
-    Favoris.objects.filter(code_employe=employe, code_fonctionnalite=fonctionnalite).delete()
-    return redirect('listeFonctionnalites')
+    
+    favorite = Favoris.objects.filter(code_employe=employe, code_fonctionnalite=fonctionnalite)
+    if favorite.exists():
+        favorite.delete()
+        messages.success(request, "Fonctionnalité retirée des favoris.")
+    else:
+        messages.warning(request, "Cette fonctionnalité n'est pas dans vos favoris.")
+    
+    return redirect('liste_fonctionnalites')
 
 # Favoris list
 # @login_required
