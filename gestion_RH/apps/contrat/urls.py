@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('contrat/',views.afficheContrat, name="listeContrat"),
+    path('contrat/fiche_journal/',views.fiche_journal_contrats, name="listeFiltrer"),
     path('contrat/<int:id>/', views.contrat_detail, name='contrat_detail'),
     path('contrat/ajouter/',views.ajouterContrat, name="ajouterContrat"),
     path("contrat/edit/<int:pk>",views.modifierContrat, name="modifierContrat"),

@@ -6,7 +6,7 @@ Contrat
 
 
 {% block content %}
-<!-- génération d’alertes . -->
+<!-- génération d’alertes. -->
 {% if messages %}
 <div class="mt-4">
     {% for message in messages %}
@@ -16,23 +16,28 @@ Contrat
     {% endfor %}
 </div>
 {% endif %}
-<!-- input de recherche -->
-<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-    Liste des Contrats :
-  </div>
 
-  <div class="container my-4">
-    <form method="get">
-        <div class="input-group">
-            <input type="text" class="form-control" name="search" placeholder="Rechercher par nom d'employé" value="{{ request.GET.search }}">
-            <button class="btn btn-outline-secondary" type="submit">Rechercher</button>
-        </div>
-    </form>
-    <a class="btn btn-light mt-3" href="{% url 'listeContrat' %}" type="submit">Retour à la Liste</a>
-    <a class="btn btn-light mt-3" href="{% url 'listeFiltrer' %}" type="submit">filter par categorie</a>
+ <!-- le filtrage   -->
+ <form method="get">
+    <div class="input-group">
+        
+        <input type="text" class="form-control" name="service" placeholder="Service" value="{{ request.GET.service }}">
+       
+        <input type="date" class="form-control" name="date_debut" value="{{ request.GET.date_debut }}">
+        
+        <input type="date" class="form-control" name="date_fin" value="{{ request.GET.date_fin }}">
+       
+        <select class="form-select" name="type">
+            <option value="">Type de contrat</option>
+            <option value="CDI" {% if request.GET.type == 'CDI' %}selected{% endif %}>CDI</option>
+            <option value="CDD" {% if request.GET.type == 'CDD' %}selected{% endif %}>CDD</option>
+            <option value="Stage" {% if request.GET.type == 'Stage' %}selected{% endif %}>Stage</option>
+        </select>
+        <button class="btn btn-outline-secondary" type="submit">Filtrer</button>
+    </div>
+</form>
+<a class="btn btn-light mt-3" href="{% url 'listeContrat' %}" type="submit">Retour à la Liste</a>
 
-</div>
- 
 </div>
  <!-- la table des contrats -->
 <table border="1px" class="container my-4 table table-sm align-middle">

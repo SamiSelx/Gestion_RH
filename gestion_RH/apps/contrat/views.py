@@ -99,3 +99,31 @@ def export_contrat_csv(request, contrat_id):
     ])
 
     return response
+
+
+
+def fiche_journal_contrats(request):
+    service_filter = request.GET.get('service', '')
+    date_debut_filter = request.GET.get('date_debut', '')
+    date_fin_filter = request.GET.get('date_fin', '')
+    type_filter = request.GET.get('type', '')
+    print(service_filter, date_debut_filter, date_fin_filter, type_filter)
+
+    contrats = Contrat.objects.all()
+
+    if service_filter:
+        contrats = contrats.filter(code_employe__code_service__id=service_filter)
+    
+    if date_debut_filter and date_fin_filter:
+        contrats = contrats.filter(
+            date_debut_contrat__gte=date_debut_filter, 
+            date_fin_contrat__lte=date_fin_filter
+        )
+    
+    if type_filter:
+        contrats = contrats.filter(type_contrat=type_filter)
+
+    if not contrats:
+        messages.info(request, "Aucun contrat ne correspond à vos critères de recherche.")
+
+    return render(request, 'pages/RH/tables/contrat/listeFiltrer.html', {'contrats': contrats})
