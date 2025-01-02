@@ -29,12 +29,13 @@ def ajouterContrat(request):
         form = ContratForm(request.POST)
         if form.is_valid():
             form.save()
-            form = ContratForm()
-            messages.success(request, "votre contrat a ete bien enregister")
+            messages.success(request, "Le contrat a été ajouté avec succès.")
             return redirect('listeContrat')
+        else:
+            messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
     else:
         form = ContratForm()
-    return render(request,'pages/RH/tables/contrat/ajouterContrat.html',{'form':form})
+    return render(request, 'pages/RH/tables/contrat/ajouterContrat.html', {'form': form})
 
 def modifierContrat(request,pk):
     contrat = Contrat.objects.get(id=pk)

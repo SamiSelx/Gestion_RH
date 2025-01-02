@@ -10,7 +10,7 @@ Ajouter Contrat
     {% csrf_token %}
     {{form.as_p}}
     <a href="{% url 'listeContrat' %}" class="btn btn-outline-danger">Annuler</a>
-    <a href="{% url 'listeContrat' %}" class="btn btn-outline-success">save</a>
+    <button type="submit" class="btn btn-outline-success">Save</button>
    
 </form>
 </div>
