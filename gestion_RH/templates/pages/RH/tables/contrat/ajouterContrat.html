@@ -5,10 +5,13 @@ Ajouter Contrat
 {% endblock %}
 
 {% block content %}
+<div class="container">
 <form method="post">
     {% csrf_token %}
     {{form.as_p}}
     <a href="{% url 'listeContrat' %}" class="btn btn-outline-danger">Annuler</a>
-    <button type="submit"  class="btn btn-outline-success">Save</button>
+    <a href="{% url 'listeContrat' %}" class="btn btn-outline-success">save</a>
+   
 </form>
+</div>
 {%endblock%}

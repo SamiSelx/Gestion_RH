@@ -15,8 +15,9 @@ def afficheContrat(request):
         if not contrats:
             messages.info(request, "Aucun contrat trouvé pour cet employé.")
     else:
-        contrats = Contrat.objects.all()
-
+        # contrats = Contrat.objects.all()
+        contrats = Contrat.objects.filter(archive=False)
+        
     return render(request,"pages/RH/tables/contrat/listeContrat.html",{'contrats':contrats})
 
 # def afficheContrat(request):
@@ -29,6 +30,7 @@ def ajouterContrat(request):
         if form.is_valid():
             form.save()
             form = ContratForm()
+            messages.success(request, "votre contrat a ete bien enregister")
             return redirect('listeContrat')
     else:
         form = ContratForm()
@@ -45,15 +47,18 @@ def modifierContrat(request,pk):
         form = ContratForm(instance=contrat)
     return render(request,'pages/RH/tables/contrat/modifierContrat.html',{'form':form})
 
-def supprimerContrat(request,pk):
-    contrat = Contrat.objects.get(id=pk)
-    if request.method == 'POST':
-        contrat.delete()
-        return redirect('listeContrat')
-    else:
-        form = ContratForm(instance=contrat)
-    return render(request,'pages/RH/tables/contrat/supprimerContrat.html',{'contrat': contrat})
 
+def archiveContrat(request):
+    contrats = Contrat.objects.filter(archive=True)
+    return render(request, "pages/RH/tables/contrat/archiveContrat.html", {'contrats': contrats})
+
+def supprimerContrat(request, pk):
+    contrat = get_object_or_404(Contrat, pk=pk) 
+  
+    contrat.archive = True
+    contrat.save()
+    messages.success(request, f"Le contrat {contrat.type_contrat} a été archivé avec succès.")
+    return redirect('archiveContrat') 
 
 def contrat_detail(request, id): 
     contrat = get_object_or_404(Contrat, id=id) 
@@ -109,7 +114,8 @@ def fiche_journal_contrats(request):
     type_filter = request.GET.get('type', '')
     print(service_filter, date_debut_filter, date_fin_filter, type_filter)
 
-    contrats = Contrat.objects.all()
+    # contrats = Contrat.objects.all()
+    contrats = Contrat.objects.filter(archive=False)
 
     if service_filter:
         contrats = contrats.filter(code_employe__code_service__id=service_filter)

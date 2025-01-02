@@ -1,0 +1,60 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Contrat
+{% endblock %}
+
+{% block content %}
+<!-- génération d’alertes . -->
+{% if messages %}
+<div class="mt-4">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="container">
+<h1>Les Archives</h1>
+
+<!-- la table des contrats -->
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Contrat Type</td>
+            <td>Date Debut</td>
+            <td>Date Fin</td>
+            <td>Salaire</td>
+            <td>Etat</td>
+            <td>Employe</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for contrat in contrats %}
+            
+            <tr>
+                <td>{{ contrat.type_contrat }}</td>
+                <td>{{ contrat.date_debut_contrat }}</td>
+                <td>{{ contrat.date_fin_contrat }}</td>
+                <td>{{ contrat.salaire }}</td>
+                <td>{{ contrat.etat }}</td>
+                <td>{{ contrat.code_employe }}</td>
+                
+            </tr>
+            
+        {% empty %}
+        <tr>
+            <td colspan="9">Aucun contrat est archivé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="d-flex align-items-end position-absolute bottom-0 end-0 p-4">
+    <a class="btn btn-light mt-3" href="{% url 'listeContrat' %}" type="submit">Retour à la Liste</a>
+</div>
+</div>
+{% endblock %}

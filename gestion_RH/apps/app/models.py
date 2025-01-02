@@ -42,6 +42,7 @@ class Contrat(models.Model):
     date_fin_contrat = models.DateField()
     salaire = models.DecimalField(max_digits=10, decimal_places=2)
     etat = models.CharField(max_length=50)
+    archive = models.BooleanField(default=False)
     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='contrats')
 
 class Conge(models.Model):

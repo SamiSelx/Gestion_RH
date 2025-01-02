@@ -5,3 +5,5 @@ class ContratForm(forms.ModelForm):
     class Meta:
         model = Contrat
         fields = "__all__"
+
+

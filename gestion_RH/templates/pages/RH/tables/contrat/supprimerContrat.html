@@ -16,6 +16,7 @@ Supprimer Contrat
     <p> {{contrat.date_fin_contrat}} </p>
     <p> pour l'employe :{{contrat.code_employe}} </p>
     <a href="{% url 'listeContrat' %}" class="btn btn-outline-primary">Annuler</a>
-    <input type="submit" value="Supprimer" class="btn btn-outline-danger">
+    <td><a href="{% url 'supprimerContrat' pk=contrat.id %}" class="btn btn-danger">Supprimer</a></td>
+
 </form>
 {%endblock%}
