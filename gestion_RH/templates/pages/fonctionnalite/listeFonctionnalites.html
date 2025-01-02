@@ -26,15 +26,15 @@ Fonctionnalites List
             <a href="{% url 'supprimer_fonctionnalite' item.id %} " class="btn btn-danger">Delete</a>
         </td>
         <td>
-            <form method="post" action="{% url 'ajouterAuxFavoris' item.id %}">
+            <form method="post" action="{% url 'ajouter_favoris' item.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success">Add to Favoris</button>
             </form>
         </td>
         <td>
-            <form method="post" action="{% url 'supprimerDesFavoris' item.id %}">
+            <form method="post" action="{% url 'retirer_favoris' item.id %}">
                 {% csrf_token %}
-                <button type="submit"  class="btn btn-outline-danger">Remove from Favoris</button>
+                <button type="submit"  class="btn btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir archiver ce contrat ?');">Remove from Favoris</button>
             </form>
         </td>
     </tr>

@@ -58,19 +58,20 @@ class Conge(models.Model):
 class Fonctionnalite(models.Model):
     name_Fonctionnalite = models.CharField(max_length=50)
     path_fonctionnalite = models.CharField(max_length=100)
+    favoris = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name_Fonctionnalite
 
-class Favoris(models.Model):
-    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
-    code_fonctionnalite = models.ForeignKey(Fonctionnalite, on_delete=models.CASCADE)
+# class Favoris(models.Model):
+#     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
+#     code_fonctionnalite = models.ForeignKey(Fonctionnalite, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ('code_employe', 'code_fonctionnalite')
+#     class Meta:
+#         unique_together = ('code_employe', 'code_fonctionnalite')
 
-    def __str__(self):
-        return f"Favoris for {self.code_employe}: {self.code_fonctionnalite}"
+#     def __str__(self):
+#         return f"Favoris for {self.code_employe}: {self.code_fonctionnalite}"
 
 class Offre_employe(models.Model):
   

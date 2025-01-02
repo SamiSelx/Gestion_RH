@@ -90,17 +90,12 @@
             <ul class="dropdown-menu">
               <hr style="border: 1px solid #474747; margin: 5px 0px;">
               <li><a class="dropdown-item" href="{% url 'listeFonctionnalites' %}">List of Fonctionnalites</a></li>
-
-              {% if favoris %}
-              <li><a class="dropdown-item" href="{% url 'listeFavoris' %}">My Favoris</a></li>
-              {% for fav in favoris %}
-              <li><a class="dropdown-item" href="{% url 'fonctionnalite_detail' fav.code_fonctionnalite.id %}">
-                  {{ fav.name_Fonctionnalite }}
-                </a></li>
+              
+              {% for fonctionnalite in favoris_list %}
+              <li><a class="dropdown-item" href="{{ fonctionnalite.path_fonctionnalite }}">{{ fonctionnalite.name_Fonctionnalite }}</a></li>
+              {% empty %}
+              <li><a class="dropdown-item" href="#">No favoris available</a></li>
               {% endfor %}
-              {% else %}
-              <li><a class="dropdown-item" href="#">No Favoris Yet</a></li>
-              {% endif %}
             </ul>
           </div>
           {% endblock %}
