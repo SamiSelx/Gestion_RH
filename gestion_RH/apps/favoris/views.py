@@ -30,7 +30,7 @@ def ajouterAuxFavoris(request, pk):
     fonctionnalite = get_object_or_404(Fonctionnalite, id=pk)
     fonctionnalite.favoris = True
     fonctionnalite.save()
-    messages.success(request, "La fonctionnalité a été ajouté avec aux favoris.")
+    messages.success(request, "La fonctionnalité a été ajouté  aux favoris.")
     return redirect('listeFonctionnalites')  
 
 def retirerDesFavoris(request, pk):

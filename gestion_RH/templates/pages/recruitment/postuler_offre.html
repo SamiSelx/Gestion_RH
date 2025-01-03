@@ -1,0 +1,29 @@
+{% extends "../../base.html" %}
+{% load static %}
+
+{% block title %}
+Postuler - {{ offre.titre_offre }}
+{% endblock %}
+
+{% block side_menu %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Postuler pour l'offre: {{ offre.titre_offre }}</h1>
+    <p class="text-muted text-center">Veuillez remplir les informations suivantes pour soumettre votre candidature.</p>
+    <div class="card mt-4">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <button type="submit" class="btn btn-success w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="mt-3 text-center">
+        <a href="{% url 'offreEmploye_detail' offre.id %}" class="btn btn-outline-secondary">Retour à l'offre</a>
+    </div>
+</div>
+{% endblock %}

@@ -76,6 +76,10 @@ class Fonctionnalite(models.Model):
 class Offre_employe(models.Model):
   
     titre_offre = models.CharField(max_length=100)
+    description = models.TextField()
+    location = models.CharField(max_length=100)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
     code_service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='offres')
 
     def __str__(self):
@@ -88,6 +92,37 @@ class Candidat(models.Model):
     prenomC = models.CharField(max_length=100)
     adresseC = models.TextField()
     tlfn_candidat = models.CharField(max_length=20)
+    def __str__(self):
+        return self.nomC
+
+class Candidature(models.Model):
+    candidat = models.ForeignKey(Candidat, on_delete=models.CASCADE, related_name='candidatures')
+    offre = models.ForeignKey(Offre_employe, on_delete=models.CASCADE, related_name='candidatures')
+    date_soumission = models.DateTimeField(auto_now_add=True)
+    statut = models.CharField(
+        max_length=50,
+        choices=[
+            ('Reçue', 'Reçue'),
+            ('En cours de traitement', 'En cours de traitement'),
+            ('Rejetée', 'Rejetée'),
+            ('Acceptée', 'Acceptée'),
+        ],
+        default='Reçue'
+    )
+    cv = models.FileField(upload_to='cvs/', null=True, blank=True)
+    
+    def __str__(self):
+        return f"Candidature {self.candidat.nomC} - {self.offre.titre_offre}"
+
+class Entretien(models.Model):
+    candidature = models.ForeignKey(Candidature, on_delete=models.CASCADE, related_name='entretiens')
+    date_entretien = models.DateTimeField()
+    lieu = models.CharField(max_length=200)
+    commentaires = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Entretien pour {self.candidature.candidat.nomC} - {self.date_entretien}"
+
 
 class Objectif(models.Model):
     description_objectif = models.TextField()
