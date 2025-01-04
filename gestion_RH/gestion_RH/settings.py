@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'seeder',
     'apps.app',
     'apps.authentification',
     'apps.conge',
@@ -59,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'apps.authentification.middleware.role_check.RoleBasedAccessMiddleware'
+    'apps.authentification.middleware.role_check.RoleBasedAccessMiddleware'
 ]
 
 ROOT_URLCONF = 'gestion_RH.urls'
@@ -142,3 +143,5 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = "/login/"
+# LOGOUT_REDIRECT_URL = '/'
+AUTH_USER_MODEL = 'authentification.CustomUser'

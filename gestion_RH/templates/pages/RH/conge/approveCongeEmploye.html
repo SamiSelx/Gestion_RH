@@ -1,0 +1,25 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Approve Conge
+{% endblock %}
+
+
+{% block content %}
+
+<h1>Approve le Congé</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Approve</button>
+</form>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+<a href="{% url 'listeCongeEmploye' %}" style="display: block; margin-top: 10px;">Retour à la liste des congés</a>
+{%endblock%}

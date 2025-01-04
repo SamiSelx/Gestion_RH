@@ -1,0 +1,91 @@
+{% extends "../../../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Liste Conge Employe
+{% endblock %}
+
+
+{% block content %}
+   <div class="container">
+    <h1>Liste des Congés</h1>
+    <hr>
+    <button onclick="sortByDate('asc')" class="btn btn-primary">Sort by Date (Asc)</button>
+    <button onclick="sortByDate('desc')" class="btn btn-secondary">Sort by Date (Desc)</button>
+   </div>
+    {% if conges %}
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Employé</th>
+                    <th>Type de Congé</th>
+                    <th>Date Début</th>
+                    <th>Date Fin</th>
+                    <th>Jours demandés</th>
+                    <th>Jours utilisés</th>
+                    <th>Jours restants</th>
+                    <th>Solde annuel</th>
+                    <th>Status</th>
+                    <td>Approver</td>
+                    <td>Terminer</td>
+                    <td>Edit</td>
+                    <td>Supprimer</td>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for conge in conges %}
+                <tr>
+                    <td>{{ conge.code_employe }}</td>
+                    <td>{{ conge.code_conge }}</td>
+                    <td>{{ conge.date_debut }}</td>
+                    <td>{{ conge.date_fin }}</td>
+                    <td>{{ conge.jours_demandes }}</td>
+                    <td>{{ conge.jours_utilises }}</td>
+                    <td>{{ conge.jours_restants }}</td>
+                    <td>{{ conge.code_employe.solde_annuel }}</td>
+                    <td>{{ conge.status }}</td>
+                    <td><a href="{% url 'approveCongeEmploye' conge.id %}" class="btn btn-success"> Approver </a></td>
+                    <td><a href="{% url 'termineCongeEmploye' conge.id %}" class="btn btn-success"> Terminer </a></td>
+                    <td><a href="" class="btn btn-success"> Edit </a></td>
+                    <td><a href="{% url 'supprimerDemandeConge' conge.id %}" class="btn btn-danger"> Supprimer </a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun congé disponible.</p>
+    {% endif %}
+    
+        <hr class="mt-5">
+    <form method="get" action="{% url 'listeCongeEmploye' %}" class="container mx-auto px-4">
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        <div class="row">
+            <div class="mb-3 col-2">
+                <label for="id_type_conge" class="form-label ">Type of Leave</label>
+                {{ form.type_conge|add_class:"form-select form-select-sm" }}
+            </div>
+            <div class="mb-3 col-2">
+                <label for="id_employe" class="form-label">Type of Leave</label>
+                {{ form.employe|add_class:"form-select" }}
+            </div>
+            <div class="mb-3 col-2">
+                <label for="id_date_debut_from" class="form-label">Type of Leave</label>
+                {{ form.date_debut_from|add_class:"form-select" }}
+            </div>
+            <div class="mb-3 col-2">
+                <label for="id_date_debut_to" class="form-label">Type of Leave</label>
+                {{ form.date_debut_to|add_class:"form-select" }}
+            </div>
+        </div>
+        <button type="submit" class="btn-dark btn form-control">Filter</button>
+    </form>
+<script>
+    function sortByDate(order) {
+        let url = new URL(window.location.href);
+        url.searchParams.set('sort_by_date', order);
+        window.location.href = url.toString();
+    }
+
+</script>
+{% endblock %}
+

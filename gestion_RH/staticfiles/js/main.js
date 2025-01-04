@@ -1,0 +1,41 @@
+// (async function() {
+// const data = [
+// { year: 2010, count: 10 },
+// { year: 2011, count: 20 },
+// { year: 2012, count: 15 },
+// { year: 2013, count: 25 },
+// { year: 2014, count: 22 },
+// { year: 2015, count: 30 },
+// { year: 2016, count: 28 },
+// ];
+
+// new Chart(
+// document.getElementById('acquisitions'), // id of canvas
+// {
+// type: 'bar',
+// data: {
+//   labels: data.map(row => row.year),
+//   datasets: [
+//     {
+//       label: 'Acquisitions by year',
+//       data: data.map(row => row.count)
+//     }
+//   ]
+// }
+// }
+// );
+// })();
+
+
+// var ctx = document.getElementById('genderDiversityChart').getContext('2d');
+// var genderData = {{ diversity_gender|safe }};
+// var genderChart = new Chart(ctx, {
+//     type: 'pie',
+//     data: {
+//         labels: genderData.map(item => item.gender),
+//         datasets: [{
+//             label: 'Gender Diversity',
+//             data: genderData.map(item => item.count),
+//         }]
+//     }
+// });
