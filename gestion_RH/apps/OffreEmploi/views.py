@@ -35,3 +35,7 @@ def delete_offre_employe(request, pk):
         offre.delete()
         return redirect('liste_offre_employe')
     return render(request, 'pages/rh/tables/offre_employe/delete_offre_employe.html', {'offre': offre})
+
+def offreEmploye_detail(request, id):
+    offre = get_object_or_404(Offre_employe, id=id) 
+    return render(request, 'pages/rh/tables/offre_employe/offreEmploye_detail.html', {'offre': offre})

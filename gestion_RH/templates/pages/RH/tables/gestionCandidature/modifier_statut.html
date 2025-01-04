@@ -1,0 +1,28 @@
+{% extends "../../../../base.html" %}
+{% load static %}
+
+{% block title %}
+Modifier Statut
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Modifier le Statut de la Candidature</h1>
+    <p>Pour :{{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
+    <p class="text-muted text-center">Modifier le statut de la candidature de {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }} pour l'offre "{{ candidature.offre.titre_offre }}"</p>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-warning w-100">Modifier le Statut</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-3 text-center">
+        <a href="{% url 'liste_candidatures' %}" class="btn btn-outline-secondary">Retour à la liste des candidatures</a>
+    </div>
+</div>
+{% endblock %}

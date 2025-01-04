@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from .models import Offre_employe
 # from django.contrib.auth.decorators import login_required
 from .models import Employe,Contrat
 from django.db.models import Count
@@ -7,7 +8,8 @@ from datetime import date
 
 # @login_required
 def home(request):
-    return render(request,"pages/home/index.html")
+    offres = Offre_employe.objects.all()
+    return render(request,"pages/home/index.html",{'offres': offres})
 
 # For Page RH ------------
 def RhTables(request):

@@ -4,46 +4,46 @@
 Contrat
 {% endblock %}
 
+
 {% block content %}
-<!-- génération d’alertes . -->
+<!-- génération d’alertes. -->
 {% if messages %}
 <div class="mt-4">
     {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}" role="alert">
-        {{ message }}
-    </div>
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
     {% endfor %}
 </div>
 {% endif %}
 
-<!-- input de recherche -->
-<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-    Liste des Contrats :
-</div>
+ <!-- le filtrage   -->
+ <form method="get">
+    <div class="input-group">
+        
+        <input type="text" class="form-control" name="service" placeholder="Service" value="{{ request.GET.service }}">
+       
+        <input type="date" class="form-control" name="date_debut" value="{{ request.GET.date_debut }}">
+        
+        <input type="date" class="form-control" name="date_fin" value="{{ request.GET.date_fin }}">
+       
+        <select class="form-select" name="type">
+            <option value="">Type de contrat</option>
+            <option value="CDI" {% if request.GET.type == 'CDI' %}selected{% endif %}>CDI</option>
+            <option value="CDD" {% if request.GET.type == 'CDD' %}selected{% endif %}>CDD</option>
+            <option value="Stage" {% if request.GET.type == 'Stage' %}selected{% endif %}>Stage</option>
+        </select>
+        <button class="btn btn-outline-secondary" type="submit">Filtrer</button>
+    </div>
+</form>
+<a class="btn btn-light mt-3" href="{% url 'listeContrat' %}" type="submit">Retour à la Liste</a>
 
-<div class="container my-4">
-    <form method="get">
-        <div class="input-group">
-            <input type="text" class="form-control" name="search" placeholder="Rechercher par nom d'employé"
-                value="{{ request.GET.search }}">
-            <button class="btn btn-outline-secondary" type="submit">Rechercher</button>
-        </div>
-    </form>
-    <a class="btn btn-light mt-3" href="{% url 'listeContrat' %}" type="submit">Retour à la Liste</a>
-    <a class="btn btn-light mt-3" href="{% url 'listeFiltrer' %}" type="submit">Filter par catégorie</a>
-    <a class="btn btn-light mt-3" href="{% url 'archiveContrat' %}" type="submit">Voir l'Archives</a>
-
 </div>
- 
- 
-</div>
-
-</div>
-<!-- la table des contrats -->
+ <!-- la table des contrats -->
 <table border="1px" class="container my-4 table table-sm align-middle">
     <thead class="table-dark">
         <tr>
-            <td>Contrat Type</td>
+            <td>Conrat Type</td>
             <td>Date Debut</td>
             <td>Date Fin</td>
             <td>Salaire</td>
@@ -57,7 +57,6 @@ Contrat
 
     <tbody class="table-group-divider">
         {% for contrat in contrats %}
-
         <tr>
             <td>{{contrat.type_contrat}}</td>
             <td> {{contrat.date_debut_contrat}} </td>
@@ -69,17 +68,16 @@ Contrat
             <td><a href="{% url 'supprimerContrat' contrat.id %}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir archiver ce contrat ?');"> Supprimer </a></td>
             <td><a href="{% url 'contrat_detail' contrat.id %}" class="btn btn-light"> voir </a></td>
         </tr>
-
-        {% empty %}
+        
         <tr>
             <td colspan="9">Aucun contrat trouvé.</td>
         </tr>
-        {% endfor %}
+        {% endfor%}
+
     </tbody>
 </table>
 
 <div class="d-flex align-items-end position-absolute bottom-0 end-0 p-4">
-    <a href="{% url 'ajouterContrat' %}" class="btn btn-outline-dark" type="submit">Ajouter Contrat</a>
-</div>
-
+    <a href="{% url 'ajouterContrat' %}" class="btn btn-outline-dark">Ajouter Contrat</a>
+  </div>
 {% endblock %}

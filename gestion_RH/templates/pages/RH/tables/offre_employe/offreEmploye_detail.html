@@ -1,0 +1,31 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Offre Détail
+{% endblock %}
+
+{% block side_menu %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Détail de l'Offre</h1>
+  <p><strong>Titre de l'offre:</strong> {{ offre.titre_offre }}</p>
+  <p><strong>Description:</strong> {{ offre.description }}</p>
+  <p><strong>Location:</strong> {{ offre.location }}</p>
+  <p><strong>Date de Publication:</strong> {{ offre.date_posted|date:"d M Y" }}</p>
+  <p><strong>Statut:</strong>   {{ offre.is_active}}  </p>
+  <p><strong>Service:</strong> {{ offre.code_service.description_service }}</p>
+
+ 
+  {% if offre.is_active %}
+    <a href="{% url 'postuler_offre' offre.id %}" class="btn btn-primary mt-4">Postuler</a>
+  {% else %}
+    <button class="btn btn-secondary mt-4" disabled>Offre Inactive</button>
+  {% endif %}
+   
+
+
+ 
+</div>
+{% endblock %}

@@ -1,14 +1,19 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script src="{% static 'js/chart.umd.js' %}"></script>
+<!--     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
     <title>{%block title%} {%endblock%}</title>
 </head>
+
 <body style="display: flex;">
     <!-- {% include "./partiel/header.html" %} -->
     {%  block side_menu %}
@@ -79,6 +84,31 @@
                     <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
                   </ul> -->
                   <div class="col-md-3 text-end align-self-end flex-grow-1">
+                              <!-- favoris drop menu -->
+
+                      {% block favoris_drop_menu %}
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                            class="bi bi-person-heart mx-3" viewBox="0 0 16 16">
+                            <path
+                              d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z" />
+                          </svg>
+                          Favoris
+                        </button>
+                        <ul class="dropdown-menu">
+                          <hr style="border: 1px solid #474747; margin: 5px 0px;">
+                          <li><a class="dropdown-item" href="{% url 'listeFonctionnalites' %}">List of Fonctionnalites</a></li>
+
+                          {% for fonctionnalite in favoris_list %}
+                          <li><a class="dropdown-item" href="{{ fonctionnalite.path_fonctionnalite }}">{{ fonctionnalite.name_Fonctionnalite }}</a></li>
+                          {% empty %}
+                          <li><a class="dropdown-item" href="#">No favoris available</a></li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endblock %}
                     {% if user.is_authenticated %}
                       <span>Logged In as {{user.username}} | </span>
                       <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">Logout</button></a>
@@ -90,11 +120,14 @@
                   {%endblock%}  
             </div>
         </header>
-        {%endblock%}
+    {%endblock%}
     {%block content%}
     {% endblock %}
     </main>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
 </body>
+
 </html>

@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+
 from datetime import date
 # from ..authentification.models import CustomUser
     
@@ -8,6 +11,20 @@ class Service(models.Model):
     def __str__(self):
         return self.description_service
 
+class Competence(models.Model):
+    nom_competence = models.CharField(max_length=255)
+    description_competence = models.TextField()
+
+    def __str__(self):
+        return self.nom_competence
+
+class Formation(models.Model):
+    titre_formation = models.CharField(max_length=100)
+    description_formation = models.TextField()
+
+    def __str__(self):
+        return self.titre_formation
+    
 class Employe(models.Model):
     ROLE_CHOICES = [
         ('RH', 'RH'),
@@ -22,6 +39,8 @@ class Employe(models.Model):
     adresse_E = models.CharField(max_length=100)
     solde_annuel = models.IntegerField(default=30) # par default 30 jours par année
     code_service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, related_name='employes')
+    competences = models.ManyToManyField('Competence', related_name='employes')
+    formations = models.ManyToManyField('Formation', related_name='employes')
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Employe')
 
     def __str__(self):
@@ -39,6 +58,7 @@ class Contrat(models.Model):
     date_fin_contrat = models.DateField()
     salaire = models.DecimalField(max_digits=10, decimal_places=2)
     etat = models.CharField(max_length=50)
+    archive = models.BooleanField(default=False)
     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='contrats')
 
 class Conge(models.Model):
@@ -114,10 +134,12 @@ class DemandeConge(models.Model):
             self.save()
     
 class Fonctionnalite(models.Model):
+    name_Fonctionnalite = models.CharField(max_length=50)
     path_fonctionnalite = models.CharField(max_length=100)
+    favoris = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.path_fonctionnalite
+        return self.name_Fonctionnalite
 
 # class Favoris(models.Model):
 #     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
@@ -129,35 +151,56 @@ class Fonctionnalite(models.Model):
 #     def __str__(self):
 #         return f"Favoris for {self.code_employe}: {self.code_fonctionnalite}"
 
-class Formation(models.Model):
-    titre_formation = models.CharField(max_length=100)
-    description_formation = models.TextField()
-
-    def __str__(self):
-        return self.titre_formation
-
-
-
 class Offre_employe(models.Model):
   
     titre_offre = models.CharField(max_length=100)
+    description = models.TextField()
+    location = models.CharField(max_length=100)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
     code_service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='offres')
 
     def __str__(self):
         return self.titre_offre
 
-class Competence(models.Model):
-    nom_competence = models.CharField(max_length=255)
-    description_competence = models.TextField()
 
-    def __str__(self):
-        return self.nom_competence
     
 class Candidat(models.Model):
     nomC = models.CharField(max_length=100)
     prenomC = models.CharField(max_length=100)
     adresseC = models.TextField()
     tlfn_candidat = models.CharField(max_length=20)
+    def __str__(self):
+        return self.nomC
+
+class Candidature(models.Model):
+    candidat = models.ForeignKey(Candidat, on_delete=models.CASCADE, related_name='candidatures')
+    offre = models.ForeignKey(Offre_employe, on_delete=models.CASCADE, related_name='candidatures')
+    date_soumission = models.DateTimeField(auto_now_add=True)
+    statut = models.CharField(
+        max_length=50,
+        choices=[
+            ('Reçue', 'Reçue'),
+            ('En cours de traitement', 'En cours de traitement'),
+            ('Rejetée', 'Rejetée'),
+            ('Acceptée', 'Acceptée'),
+        ],
+        default='Reçue'
+    )
+    cv = models.FileField(upload_to='cvs/', null=True, blank=True)
+    
+    def __str__(self):
+        return f"Candidature {self.candidat.nomC} - {self.offre.titre_offre}"
+
+class Entretien(models.Model):
+    candidature = models.ForeignKey(Candidature, on_delete=models.CASCADE, related_name='entretiens')
+    date_entretien = models.DateTimeField()
+    lieu = models.CharField(max_length=200)
+    commentaires = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Entretien pour {self.candidature.candidat.nomC} - {self.date_entretien}"
+
 
 class Objectif(models.Model):
     description_objectif = models.TextField()
