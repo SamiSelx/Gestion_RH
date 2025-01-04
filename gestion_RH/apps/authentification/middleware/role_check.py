@@ -9,8 +9,8 @@ class RoleBasedAccessMiddleware:
         # Define route and role mapping
         protected_routes = {
             '/manager/': 'Manager',
-            '/employee/': 'Employee',
-            '/hr/': 'RH',
+            '/employe/': 'Employe',
+            '/rh/': 'RH',
         }
 
         # Check if the request path matches any protected route
@@ -20,8 +20,10 @@ class RoleBasedAccessMiddleware:
                 if not request.user.is_authenticated:
                     return redirect('/login/')  # Redirect to login if not authenticated
                 
+                if required_role == 'Employe' and hasattr(request.user, 'employe') and not (request.user.employe is None):
+                    return self.get_response(request)
                 # Check if the user has the required role
-                if not hasattr(request.user, 'role') or request.user.role != required_role:
+                if not hasattr(request.user, 'employe') or (request.user.employe is None) or request.user.employe.role != required_role:
                     return HttpResponseForbidden(f"Access denied. Role '{required_role}' required.")
 
         # Proceed with the request if no restriction applies

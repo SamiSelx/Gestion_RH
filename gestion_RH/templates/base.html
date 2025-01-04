@@ -3,122 +3,131 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/chart.umd.js' %}"></script>
+<!--     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
-  <title>{%block title%} {%endblock%}</title>
+    <title>{%block title%} {%endblock%}</title>
 </head>
 
 <body style="display: flex;">
-  <!-- {% include "./partiel/header.html" %} -->
-  {% block side_menu %}
-  <div class="side-menu">
-    <div class="logo">Gestion RH</div>
-    <ul class="liste">
-      {% block liste_side_menu %}
-      <li data-id="dashboard"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
-            <path
-              d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z" />
-            <path
-              d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
-          </svg> <span>Dashboard</span></a></li>
-      <li data-id="tables"><a href="{% url 'tables' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
-            <path
-              d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3zM7.5 1H3.75L1.5 4h6zm1 0v3h6l-2.25-3zM15 5H1v10h14z" />
-          </svg><span>Tables</span></a></li>
-      <li data-id="Salaire"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
-            <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
-            <path
-              d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z" />
-          </svg> <span>Salaire</span></a></li>
-      <li data-id="conge"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-calendar" viewBox="0 0 16 16">
-            <path
-              d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-          </svg> <span>Congé</span></a></li>
-      <li data-id="contrat"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
-            <path
-              d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
-            <path
-              d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
-          </svg> <span>Contrat</span></a></li>
-      <li data-id="Analyse"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-              d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07" />
-          </svg><span>Analyse</span></a></li>
-      {% endblock %}
-    </ul>
-  </div>
-  {% endblock %}
-  <main class="flex-grow-1">
-    {%block header %}
-    <header class="border-bottom py-3 mb-4">
-      <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
-        <!-- will change if the user is authenticated -->
-        {%block navBar %}
-        <!-- <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <!-- {% include "./partiel/header.html" %} -->
+    {%  block side_menu %}
+    {% if request.path != '/' and request.path != '' %}
+        <div class="side-menu">
+            <div class="logo">Gestion RH</div>
+            <ul class="liste">
+                {% block liste_side_menu %}
+                {% if '/rh' in request.path %}
+                    <li style="background-color: {% if '/dashboard' in request.path %}#f6f6f6;{% endif %}"><a href="" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
+                        <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z"/>
+                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                      </svg> <span>Dashboard</span></a></li>
+                    <li style="background-color: {% if '/table' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'tables' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
+                        <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3zM7.5 1H3.75L1.5 4h6zm1 0v3h6l-2.25-3zM15 5H1v10h14z"/>
+                      </svg><span>Tables</span></a></li>
+                    <li style="background-color: {% if '/salaire' in request.path %}#f6f6f6;{% endif %}"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                      </svg> <span>Salaire</span></a></li>
+                    <li style="background-color: {% if '/conge' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'listeCongeEmploye' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                      </svg> <span>Congé</span></a></li>
+                    <li style="background-color: {% if '/contrat' in request.path %}#f6f6f6;{% endif %}"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                      </svg> <span>Contrat</span></a></li>
+                    <li style="background-color: {% if '/analyse' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'employeeAnalyses' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"/>
+                      </svg><span>Analyse</span></a></li>
+                {% elif '/manager' in request.path %}
+                  <li style="background-color: {% if '/information' in request.path %}#f6f6f6;{% endif %}"><a href="" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
+                    <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z"/>
+                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                  </svg> <span>Information</span></a></li>
+                <li style="background-color: {% if '/evaluation' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'tables' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
+                    <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3zM7.5 1H3.75L1.5 4h6zm1 0v3h6l-2.25-3zM15 5H1v10h14z"/>
+                  </svg><span>Evaluation</span></a></li>
+                {% elif '/employe' in request.path %}
+                <li style="background-color: {% if '/information' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'informationPersonnel' %}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
+                  <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z"/>
+                  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                </svg> <span>Informations</span></a></li>
+              <li style="background-color: {% if '/demandeConge' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'demandeConge' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                </svg> <span>Demande Congé</span></a></li>
+              <li style="background-color: {% if '/contrat' in request.path %}#f6f6f6;{% endif %}"><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                </svg> <span>Contrat Information</span></a></li>
+                {% endif %}
+                {% endblock %}
+            </ul>
+        </div>
+      {% endif %}
+    {% endblock %}
+    <main class="flex-grow-1">
+        {%block header %}
+        <header class="border-bottom py-3 mb-4">
+            <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
+                <!-- will change if the user is authenticated -->
+                    {%block navBar %}
+                  <!-- <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
                     <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
                     <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
                     <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
                     <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
                   </ul> -->
+                  <div class="col-md-3 text-end align-self-end flex-grow-1">
+                              <!-- favoris drop menu -->
 
-        <div class="col-md-3 text-end align-self-end flex-grow-1">
-          <!-- favoris drop menu -->
+                      {% block favoris_drop_menu %}
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                            class="bi bi-person-heart mx-3" viewBox="0 0 16 16">
+                            <path
+                              d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z" />
+                          </svg>
+                          Favoris
+                        </button>
+                        <ul class="dropdown-menu">
+                          <hr style="border: 1px solid #474747; margin: 5px 0px;">
+                          <li><a class="dropdown-item" href="{% url 'listeFonctionnalites' %}">List of Fonctionnalites</a></li>
 
-          {% block favoris_drop_menu %}
-          <div class="btn-group">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                class="bi bi-person-heart mx-3" viewBox="0 0 16 16">
-                <path
-                  d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z" />
-              </svg>
-              Favoris
-            </button>
-            <ul class="dropdown-menu">
-              <hr style="border: 1px solid #474747; margin: 5px 0px;">
-              <li><a class="dropdown-item" href="{% url 'listeFonctionnalites' %}">List of Fonctionnalites</a></li>
-              
-              {% for fonctionnalite in favoris_list %}
-              <li><a class="dropdown-item" href="{{ fonctionnalite.path_fonctionnalite }}">{{ fonctionnalite.name_Fonctionnalite }}</a></li>
-              {% empty %}
-              <li><a class="dropdown-item" href="#">No favoris available</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endblock %}
-
-
-          <a href="/login"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-          <a href="/register"><button type="button" class="btn btn-primary">Register</button></a>
-        </div>
-        {%endblock%}
-
-      </div>
-    </header>
+                          {% for fonctionnalite in favoris_list %}
+                          <li><a class="dropdown-item" href="{{ fonctionnalite.path_fonctionnalite }}">{{ fonctionnalite.name_Fonctionnalite }}</a></li>
+                          {% empty %}
+                          <li><a class="dropdown-item" href="#">No favoris available</a></li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endblock %}
+                    {% if user.is_authenticated %}
+                      <span>Logged In as {{user.username}} | </span>
+                      <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">Logout</button></a>
+                    {% else %}
+                      <a href="/login"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+                      <a href="/register"><button type="button" class="btn btn-primary">Register</button></a>
+                    {% endif %}
+                  </div>
+                  {%endblock%}  
+            </div>
+        </header>
     {%endblock%}
     {%block content%}
     {% endblock %}
-  </main>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'js/chart.umd.js' %}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-  <script src="{% static 'js/main.js' %}"></script>
-
-
+    </main>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>
