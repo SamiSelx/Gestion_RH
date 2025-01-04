@@ -106,3 +106,96 @@ body{
         font-size: 0.9em;
     }
 }
+
+.employe_information{
+    padding: 20px;
+    cursor: default;
+}
+
+.employe_information h1{
+    font-weight: bold;
+    color: #0075ff;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.employe_information .employe_name{
+    cursor: default;
+    color: #0075ff;
+    text-transform: uppercase;
+    font-weight: bold;
+    position: relative;
+}
+
+.employe_information .employe_name::before{
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background-color: #0075ff;
+    transition: 0.4s;
+}
+
+.employe_information .employe_name:hover:before{
+    width: 100%;
+}
+
+
+.project-finale{
+    overflow-x: auto;
+}
+.project-finale table{
+    min-width: 1000px;
+    width: 100%;
+    border: 1px solid var(--main-color);
+    border-spacing: 0;
+}
+table thead{
+    background-color: var(--main-color);
+    font-weight : 600;
+}
+.project-finale table tr td{
+    border: 1px solid var(--main-color);
+    padding-left: 20px;
+}
+.project-finale table tr td:not(:nth-of-type(1)){
+    padding: 20px;
+}
+.project-finale table tbody .imag{
+    position: relative;
+}
+.project-finale table tbody .imag img{
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.project-finale table tbody .imag img:nth-of-type(1){
+    left: 10px;
+}
+.project-finale table tbody .imag img:nth-of-type(2){
+    left: 30px;
+}
+.project-finale table tbody .imag img:nth-of-type(3){
+    left: 50px;
+}
+.project-finale table tbody .imag img:nth-of-type(4){
+    left: 70px;
+}
+table tbody td:nth-of-type(6) p{
+    padding: 5px 10px;
+    width: fit-content;
+    color: white;
+    border-radius: 8px;
+    font-size: 0.9em;
+}
+table tbody tr{
+    transition: 0.3s;
+}
+table tbody tr:hover{
+    background-color: var(--header-color);
+}

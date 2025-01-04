@@ -1,0 +1,23 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Demande Conge
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <a href="{% url 'employePage' %}">Annuler</a>
+    <input type="submit" value="Demande" class="submit-btn">
+</form>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+{%endblock%}
