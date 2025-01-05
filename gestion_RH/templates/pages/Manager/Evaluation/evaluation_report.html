@@ -1,0 +1,51 @@
+{% extends "../../../base.html" %}
+{% block title %}Rapport d'évaluation{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Rapport d'évaluation</h1>
+
+    <!-- Displaying structured report content -->
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h4>Employé</h4>
+            <p>{{ evaluation.employe.nomE }}</p>
+        </div>
+        <div class="col-12 col-md-6">
+            <h4>Manager</h4>
+            <p>{{ evaluation.employe_manager.nomE }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h4>Date d'Évaluation</h4>
+            <p>{{ evaluation.date_evaluation }}</p>
+        </div>
+        <div class="col-12 col-md-6">
+            <h4>Type d'Évaluation</h4>
+            <p>{{ evaluation.type_evaluation }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h4>Note Totale</h4>
+            <p>{{ evaluation.note_evaluation_totale }}</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="mt-4">
+        <h5>Contenu du Rapport</h5>
+        
+        <ul class="list-group">
+            {% for line in contenu_rapport %}
+                <li class="list-group-item">{{ line }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <a href="{% url 'list_evaluations' %}" class="btn btn-outline-dark mt-3">Retour à la liste</a>
+</div>
+{% endblock %}

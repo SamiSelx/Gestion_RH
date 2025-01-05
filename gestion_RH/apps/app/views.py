@@ -76,4 +76,10 @@ def informationPersonnel(request):
     return render(request,'pages/employe/information/informationPersonnel.html')
  
 
-#-------------------------
+
+#page Manager-------------------
+def Manager(request):
+    return redirect('managerPage')
+
+def ManagerEvaluation(request):
+    return render(request,'pages/Manager/Evaluation/list_evaluations.html')

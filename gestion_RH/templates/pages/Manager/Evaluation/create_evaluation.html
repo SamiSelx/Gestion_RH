@@ -1,0 +1,17 @@
+{% extends "../../../base.html" %}
+{% block title %}
+    Ajouter Évaluation
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+          <h1>Create Evaluation</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit"  class="btn btn-outline-success ">Ajouter Evaluation</button>
+    <a href="{% url 'list_evaluations' %}" class="btn btn-light">Retour a la liste</a>
+</form>
+</div>
+{% endblock %}

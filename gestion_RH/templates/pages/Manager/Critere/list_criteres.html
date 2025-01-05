@@ -1,0 +1,37 @@
+{% extends "../../../base.html" %}
+{% block title %}Liste des Critères{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Liste des Critères</h1>
+    <a href="{% url 'create_critere' %}" class="btn btn-primary mb-3">Ajouter un Critère</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for critere in criteres %}
+            <tr>
+                <td>{{ critere.id }}</td>
+                <td>{{ critere.description_critere }}</td>
+                <td>
+                    <a href="{% url 'update_critere' critere.id %}" class="btn btn-warning">Modifier</a>
+          </td>
+        
+                    <td><a href="{% url 'delete_critere' critere.id %}" class="btn btn-danger" > Supprimer </a></td>
+
+          
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">Aucun critère trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'apps.OffreEmploi',
     'apps.favoris',
     'apps.Candidature',
+    'apps.Evaluation',
 ]
 
 MIDDLEWARE = [

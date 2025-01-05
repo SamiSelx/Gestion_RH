@@ -1,0 +1,22 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+    Ajouter critère
+{% endblock %}
+
+{% block content %}
+<div class=" container">
+<h1>Ajouter critère Scores pour l'evaluation</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    </select>
+    <button type="submit"  class="btn btn-outline-success">Ajouter Score</button>
+    <a href="{% url 'list_evaluations' %}" class="btn btn-outline-dark" type="submit">Retour a la liste</a>
+    <a href="{% url 'list_criteres' %}" class="btn btn-outline-dark" type="submit">Ajouter un critere specific</a>
+
+
+</form>
+</div>
+{% endblock %}
