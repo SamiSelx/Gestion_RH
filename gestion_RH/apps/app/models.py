@@ -210,10 +210,6 @@ class Entretien(models.Model):
         return f"Entretien pour {self.candidature.candidat.nomC} - {self.date_entretien}"
 
 
-class Objectif(models.Model):
-    description_objectif = models.TextField()
-    date_limite = models.DateField()
-    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='objectifs')
 
 # ------------------------Evaluation -----------------------------
 class Evaluation(models.Model):
@@ -241,13 +237,19 @@ class EvaluerCritere(models.Model):
     code_evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE)
     note_critere_evaluer = models.FloatField()
 
+
 class RapportEvaluation(models.Model):
     date_rapport = models.DateField()
     contenu_rapport = models.TextField()
     code_evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE, related_name='rapports')
 
-    def __str__(self):
-        return f"Rapport for Evaluation {self.code_evaluation}"
+    def generate_objectives_summary(self):
+        objectifs = self.code_evaluation.objectifs_attient.all()
+        summary = "\n".join([
+            f"{objectif.code_objectif.description_objectif} : {'Atteint' if objectif.attient else 'Non atteint'}"
+            for objectif in objectifs
+        ])
+        return summary
 
 
 class RapportPartage(models.Model):

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
-from ..conge.views import demandeConge
+from ..conge.views import demandeConge 
 from django.shortcuts import render
 
 urlpatterns = [
@@ -13,5 +13,5 @@ urlpatterns = [
     path('employe/demandeConge',demandeConge,name='demandeConge'),
     path('employe/information',views.informationPersonnel,name='informationPersonnel'),
     path('manager/',views.Manager,name='managerPage'),
-    path('manager/evaluation',views.ManagerEvaluation,name='list_evaluations'),
+    path('manager/information',views.informationPersonnel,name='informationPersonnel'),
 ]

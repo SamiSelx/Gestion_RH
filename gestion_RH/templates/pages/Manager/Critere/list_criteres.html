@@ -2,10 +2,12 @@
 {% block title %}Liste des Critères{% endblock %}
 {% block content %}
 <div class="container">
-    <h1>Liste des Critères</h1>
-    <a href="{% url 'create_critere' %}" class="btn btn-primary mb-3">Ajouter un Critère</a>
-    <table class="table table-bordered">
-        <thead>
+    <div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+        Liste des Critères  :
+</div>
+    <a href="{% url 'create_critere' %}" class="btn btn-primary mb-3 mt-3">Ajouter un Critère</a>
+    <table border="1px" class="container my-4 table table-sm align-middle">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Description</th>

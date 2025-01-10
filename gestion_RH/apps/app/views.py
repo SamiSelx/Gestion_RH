@@ -79,7 +79,4 @@ def informationPersonnel(request):
 
 #page Manager-------------------
 def Manager(request):
-    return redirect('managerPage')
-
-def ManagerEvaluation(request):
-    return render(request,'pages/Manager/Evaluation/list_evaluations.html')
+    return redirect('informationPersonnel')

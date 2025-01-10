@@ -1,5 +1,5 @@
 from django import forms
-from apps.app.models import Evaluation, EvaluerCritere , CriterEvaluation
+from apps.app.models import Evaluation, EvaluerCritere , CriterEvaluation,Objectif
 
 class EvaluationForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,12 @@ class CriterEvaluationForm(forms.ModelForm):
     class Meta:
         model = CriterEvaluation
         fields = ['description_critere']
+
+class ObjectifForm(forms.ModelForm):
+    class Meta:
+        model = Objectif
+        fields = ['description_objectif', 'date_limite']
+        widgets = {
+            'description_objectif': forms.Textarea(attrs={'class': 'form-control'}),
+            'date_limite': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
