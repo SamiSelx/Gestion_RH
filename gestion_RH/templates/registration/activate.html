@@ -1,0 +1,8 @@
+{% comment %} skip any caracter {% endcomment %}
+{% autoescape off %}
+
+    Hi: {{user.username}}
+    Please verify your account by accessing this link
+    http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape %}

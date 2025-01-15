@@ -19,7 +19,7 @@
         <div class="card shadow p-4 w-100" style="max-width: 400px; border-radius: 15px;">
             <div class="card-body">
                 <h2 class="text-center mb-4 text-primary">Login</h2>
-                <form method="POST" action="">
+    {% comment %}            <form method="POST" action="">
                     {% csrf_token %}
                     <!-- Username -->
                     <div class="mb-3">
@@ -34,7 +34,24 @@
                                 {% endfor %}
                             </ul>
                         {% endif %}
-                    </div>
+                    </div> {% endcomment %}
+
+<form method="POST" action="">
+{% comment %}    <h1>Login</h1> {% endcomment %}
+    {% csrf_token %}
+    <!-- Email -->
+    <div class="mb-3">
+        <label for="InputEmail" class="form-label">Email</label>
+        <input type="text" name="email" class="form-control" placeholder="Email" aria-label="Email"
+            aria-describedby="addon-wrapping">
+        {% if form.email.errors %}
+        <ul class="text-danger">
+            {% for error in form.email.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
 
                     <!-- Password -->
                     <div class="mb-3">
