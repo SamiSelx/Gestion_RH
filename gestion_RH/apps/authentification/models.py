@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
     # ]
     # role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Candidat')
     # when u assign employe add role
-    employe = models.ForeignKey(Employe, on_delete=models.CASCADE, null=True, blank=True)
+    employe = models.OneToOneField('app.Employe', on_delete=models.CASCADE, null=True, blank=True,related_name='user')
 
     def __str__(self):
         return self.email
