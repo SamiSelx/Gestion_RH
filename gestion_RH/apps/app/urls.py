@@ -8,8 +8,8 @@ urlpatterns = [
     path('',views.home,name='home'),
     path('rh/tables/',views.RhTables,name='tables'),
     path('rh/',views.RhRedirect),
-    path('rh/analyse/employe',views.employeeAnalyses,name='employeeAnalyses'),
+    path('rh/analyse/employe/',views.employeeAnalyses,name='employeeAnalyses'),
     path('employe/',views.employe,name='employePage'),
-    path('employe/demandeConge',demandeConge,name='demandeConge'),
-    path('employe/information',views.informationPersonnel,name='informationPersonnel')
+    path('employe/demandeConge/',demandeConge,name='demandeConge'),
+    path('employe/information/',views.informationPersonnel,name='informationPersonnel'),
 ]

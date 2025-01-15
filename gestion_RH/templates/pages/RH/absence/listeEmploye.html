@@ -1,0 +1,156 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Liste des Employés
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">
+    Liste des Employés :
+</h1>
+<div class="text-center">
+    <a class="btn btn-outline-secondary" href="{% url 'absenceListe' %}">Consulter les Absences</a>
+</div>
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Code Employé</td>
+            <td>Nom</td>
+            <td>Prénom</td>
+            <td>Absence</td>
+            <td>Marque Absence</td>
+            <td>Détails</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for employe in employes %}
+        <tr>
+            <td>{{ employe.id }}</td>
+            <td>{{ employe.nomE }}</td>
+            <td>{{ employe.prenomE }}</td>
+            <td>{{ employe.absence }}</td>
+            {% comment %} <td>
+                <form method="POST" action="{% url 'marqueAbsence' employe.id %}">
+                    {% csrf_token %}
+                    <input 
+                        type="checkbox" 
+                        onchange="this.form.submit()" 
+                        {% if employe.absence == "OUI" %}checked{% endif %}>
+                </form>
+            </td> {% endcomment %}
+            <td>
+                <form method="POST" action="{% url 'marqueAbsence' employe.id %}">
+                    {% csrf_token %}
+                <button 
+                    type="button" 
+                    class="btn btn-primary"
+                    data-employe-name="{{ employe.nomE }} {{ employe.prenomE }}" 
+                    data-employe-id="{{ employe.id }}" 
+                    {% if employe.absence == "OUI" %}checked{% endif %}
+                    data-bs-toggle="modal" 
+                    data-bs-target="#confirmModal" 
+                    data-url="{% url 'marqueAbsence' employe.id %}"
+                    {% comment %} data-checked="{% if employe.absence == "OUI" %}}true{% else %}false{% endif %}" {% endcomment %}
+                    onclick="showConfirmModal(this)">{% if employe.absence == "NON" %} Marquer Absence {%else%} Annuler l'absence {%endif%}</button>
+                </form>
+            </td>
+            {% comment %} <td><a href="{% url 'marqueAbsence' employe.id %}" class="btn btn-success">Modifier</a></td> {% endcomment %}
+            <td><a href="{% url 'employe_detail' employe.id %}" class="btn btn-light">Voir</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class=" d-flex flex-column align-items-end position-absolute bottom-0 end-0 p-4"> 
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        <ul class="pagination justify-content-center">
+            {% if employes.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ employes.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+    
+            {% for num in employes.paginator.page_range %}
+            <li class="page-item {% if employes.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+    
+            {% if employes.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ employes.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    
+    
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous confirmer l'absence pour <span id="employee-name"></span> ?
+            </div>
+            <div class="modal-footer">
+                <form method="POST" id="absenceForm">
+                    {% csrf_token %}
+                    {% comment %} <input type="hidden" name="employe_id" id="employe-id"> {% endcomment %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    {% comment %} let currentForm = null; // To store the form associated with the checkbox clicked
+
+    function showConfirmModal(checkbox) {
+        currentForm = checkbox.closest('form'); // Get the form related to the checkbox
+        const employeeName = checkbox.getAttribute('data-employe-name'); // Get the employee's name
+        
+        // Update modal content with the employee's name
+        document.getElementById('employee-name').textContent = employeeName;
+
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        modal.show();
+    }
+
+    // Handle the confirm button in the modal
+    document.getElementById('confirmButton').addEventListener('click', function () {
+        if (currentForm) {
+            currentForm.submit(); // Submit the form
+        }
+
+        // Hide the modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
+        modal.hide();
+    }); {% endcomment %}
+
+    
+    {% comment %} Second solution {% endcomment %}
+    document.addEventListener('DOMContentLoaded', function () {
+        const confirmModal = document.getElementById('confirmModal');
+        confirmModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // Button that triggered the modal
+            const url = button.getAttribute('data-url'); // Extract URL from data-url attribute
+            const form = document.getElementById('absenceForm');
+            form.setAttribute('action', url); // Update the form's action attribute
+        });
+    });
+    function showConfirmModal(element){
+        const displayNameModel = document.getElementById('employee-name').innerHTML = element.dataset.employeName
+     }
+</script>
+
+{% endblock %}

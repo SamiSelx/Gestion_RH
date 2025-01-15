@@ -1,0 +1,90 @@
+{% extends "../../../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Employe Salaire Details
+{% endblock %}
+
+
+{% block content %}
+   <div class="container">
+    <h1>Employe Salaire Details</h1>
+    <hr>
+   </div>
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Code Employé</th>
+                    <th>Employé</th>
+                    <th>Salaire de base</th>
+                    <th>Salaire quotidien</th>
+                    <th>absences</th>
+                    <th>Primes</th>
+                    <th>Avance Salaire (MASSROUF)</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr>
+                    <td>{{ employe.id }}</td>
+                    <td>{{ employe }}</td>
+                    <td>{{ employe.salaire_base.salaire_base}}</td>
+                    <td>{{ employe.salaire_base.salaire_quotidien }}</td>
+                    <td>
+                        <p class="d-inline-flex gap-1">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                              voir les dates d'absence
+                            </button>
+                          </p>
+                          
+                    </td>
+                    <td>
+                        <p class="d-inline-flex gap-1">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrime" aria-expanded="false" aria-controls="collapsePrime">
+                              voir les primes
+                            </button>
+                          </p>
+                    </td>
+                    <td>
+                        <p class="d-inline-flex gap-1">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAvance" aria-expanded="false" aria-controls="collapseAvance">
+                              voir les Demandes accepté
+                            </button>
+                          </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <h3 class="text-center"> Absences: </h3> 
+              {% for absence in absences %}
+                <p>{{absence.date_absence}}</p>
+                {%endfor%}
+            </div>
+          </div>
+          <div class="collapse" id="collapsePrime">
+            <div class="card card-body">
+                <h3 class="text-center"> Primes: </h3> 
+              {% for prime in primes %}
+                <div class="row">
+                    <p>{{prime.prime_montant}}</p>
+                    <p>{{prime.date_attribuee}}</p>
+                </div>
+                {%endfor%}
+            </div>
+          </div>
+          <div class="collapse" id="collapseAvance">
+            <div class="card card-body">
+                <h3 class="text-center"> Demande d'avance Salaire: </h3> 
+                {% for avanceSalaire in avanceSalaires %}
+                <div class="row">
+                    <p>{{avanceSalaire.montant}}</p>
+                    <p>{{avanceSalaire.date_demande}}</p>
+                </div>
+                {%endfor%}
+            </div>
+          </div>
+
+        <td><a href="{% url 'listeEmployeSalaire'  %}" class="btn btn-outline-secondary"> Retourner a la liste </a></td>
+
+{% endblock %}

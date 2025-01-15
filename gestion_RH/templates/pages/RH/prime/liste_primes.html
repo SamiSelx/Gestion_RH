@@ -1,0 +1,40 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Liste prime
+{% endblock %}
+
+
+{% block content %}
+    <h1>Liste des Prime</h1>
+    <a href="{% url 'creer_prime' %}">Créer un nouveau Prime</a>
+    <hr>
+    {% if primes %}
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <td>Employe</td>
+                    <td>Montant</td>
+                    <td>Date Attribuee</td>
+                    <td>Edit</td>
+                    <td>Supprimer</td>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for prime in primes %}
+                <tr>
+                    <td>{{prime.code_employe}}</td>
+                    <td>{{ prime.prime_montant }}</td>
+                    <td>{{prime.date_attribuee}}</td>
+                    <td><a href="{% url 'modifier_prime' prime.id %}" class="btn btn-success"> Edit </a></td>
+                    <td><a href="{% url 'supprimer_prime' prime.id %}" class="btn btn-danger"> Supprimer </a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun prime disponible.</p>
+    {% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends "../../../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Liste Avance Salaire
+{% endblock %}
+
+
+{% block content %}
+   <div class="container">
+    <h1>Avance Salaire demandé</h1>
+    <hr>
+   </div>
+    {% if demandes %}
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Employé</th>
+                    <th>montant</th>
+                    <th>justifications</th>
+                    <th>date de demande</th>
+                    <th>approuvee</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for demande in demandes %}
+                <tr>
+                    <td>{{ demande.code_employe }}</td>
+                    <td>{{ demande.montant}}</td>
+                    <td>{{ demande.justifications }}</td>
+                    <td>{{ demande.date_demande }}</td>
+                    <td>{{ demande.approuvee }}</td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun Demande disponible.</p>
+    {% endif %}
+    
+{% endblock %}
+

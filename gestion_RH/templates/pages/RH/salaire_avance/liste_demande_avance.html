@@ -1,0 +1,96 @@
+{% extends "../../../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Liste Demande Avance
+{% endblock %}
+
+
+{% block content %}
+   <div class="container">
+    <h1>Liste Demande Avance (MASSROUF) </h1>
+    <hr>
+   </div>
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Code Employé</th>
+                    <th>Employé</th>
+                    <th>Date Demande</th>
+                    <th>Montant</th>
+                    <th>Justifications</th>
+                    <th>Status</th>
+                    <th>Change Status</th>
+                </tr>
+            </thead>
+            {% if avances %}
+            <tbody class="table-group-divider">
+                {% for avance in avances %}
+                <tr>
+                    <td>{{ avance.id }}</td>
+                    <td>{{ avance.code_employe }}</td>
+                    <td>{{ avance.date_demande}}</td>
+                    <td>{{ avance.montant }}</td>
+                    <td>{{ avance.justifications }}</td>
+                    <td>{{ avance.approuvee }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'approuveeAvance' avance.id %}">
+                            {% csrf_token %}
+                        <button 
+                            type="button" 
+                            class="btn btn-primary"
+                            data-employe-name="{{ avance.code_employe }}" 
+                            data-avance-id="{{ avance.id }}" 
+                            {% if avance.approuvee == True %}checked{% endif %}
+                            data-bs-toggle="modal" 
+                            data-bs-target="#confirmModal" 
+                            data-url="{% url 'approuveeAvance' avance.id %}"
+                            onclick="showConfirmModal(this)">{% if avance.approuvee == False %} approuvee l'avance {%else%} Annuler l'avance (MASSROUF) {%endif%}</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+        <td><a href="{% url 'listeEmployeSalaire'  %}" class="btn btn-outline-secondary"> Retourner a la liste </a></td>
+
+
+        <!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous confirmer demande d'avance pour <span id="employee-name"></span> ?
+            </div>
+            <div class="modal-footer">
+                <form method="POST" id="avanceForm">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const confirmModal = document.getElementById('confirmModal');
+        confirmModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // Button that triggered the modal
+            const url = button.getAttribute('data-url'); // Extract URL from data-url attribute
+            const form = document.getElementById('avanceForm');
+            form.setAttribute('action', url); // Update the form's action attribute
+        });
+    });
+    function showConfirmModal(element){
+       const displayNameModel = document.getElementById('employee-name').innerHTML = element.dataset.employeName
+    }
+</script>
+
+{% endblock %}
