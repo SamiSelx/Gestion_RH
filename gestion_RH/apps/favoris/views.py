@@ -40,6 +40,7 @@ def retirerDesFavoris(request, pk):
     messages.success(request, "La fonctionnalité a été retirer aux favoris.")
     return redirect('listeFonctionnalites')  
 
-def favoris_view(request):
-    favoris_list = Fonctionnalite.objects.filter(favoris=True)  
-    return render(request, 'base.html', {'favoris_list': favoris_list})
+# def favoris_view(request):
+#     favoris_list = Fonctionnalite.objects.filter(favoris=True)  
+#     return render(request, 'base.html', {'favoris_list': favoris_list})
+
