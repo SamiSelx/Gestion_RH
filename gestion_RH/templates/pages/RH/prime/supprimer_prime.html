@@ -1,17 +1,33 @@
 {% extends "../../../base.html" %}
 
 {% block title %}
-Supprimer prime
+Supprimer Prime
 {% endblock %}
 
-
 {% block content %}
+<div class="container mt-5">
+    <!-- Header -->
+    <div class="alert alert-danger text-center">
+        <h2>Supprimer le Prime</h2>
+        <p>Êtes-vous sûr de vouloir supprimer ce Prime ? Cette action est irréversible.</p>
+    </div>
 
-<h1>Supprimer le Prime</h1>
-<p>Êtes-vous sûr de vouloir supprimer ce Prime ?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Oui</button>
-</form>
-<a href="{% url 'liste_primes' %}" style="display: block; margin-top: 10px;">Retour à la liste des prime</a>
+    <!-- Confirmation Form -->
+    <form method="post" class="text-center">
+        {% csrf_token %}
+        
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'liste_primes' %}" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Annuler
+            </a>
+            <button type="submit" class="btn btn-danger">
+                Oui, supprimer
+            </button>
+        </div>
+    </form>
+
+    <!-- Back to List Link -->
+    <a href="{% url 'liste_primes' %}" class="d-block text-center mt-3 text-decoration-none">Retour à la liste des primes</a>
+</div>
 {% endblock %}

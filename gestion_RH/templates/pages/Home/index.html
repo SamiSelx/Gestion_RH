@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block title %}
-Home Page
+Page d'Accueil
 {% endblock %}
 
 {% block side_menu %}
@@ -13,32 +13,59 @@ Home Page
 
 {% block content %}
 <div class="container">
-    <!-- cards -->
-    <h1 class="text-center mb-5">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-            class="bi bi-envelope-paper-fill" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                d="M6.5 9.5 3 7.5v-6A1.5 1.5 0 0 1 4.5 0h7A1.5 1.5 0 0 1 13 1.5v6l-3.5 2L8 8.75zM1.059 3.635 2 3.133v3.753L0 5.713V5.4a2 2 0 0 1 1.059-1.765M16 5.713l-2 1.173V3.133l.941.502A2 2 0 0 1 16 5.4zm0 1.16-5.693 3.337L16 13.372v-6.5Zm-8 3.199 7.941 4.412A2 2 0 0 1 14 16H2a2 2 0 0 1-1.941-1.516zm-8 3.3 5.693-3.162L0 6.873v6.5Z" />
-        </svg>
-        offres de travail
-    </h1>
-    <div class="row">
-        {% if offres %}
-            {% for offre in offres %}
-                <div class="col-md-4 mb-2">
-                    <div class="card" style="width: 19rem;">
-                        <img src="{% static 'images/offre.jpg' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ offre.titre_offre }}</h5>
-                            <p class="card-text">{{ offre.description}}</p>
-                            <a href="{% url 'offreEmploye_detail' offre.id %}" class="btn btn-dark">Voir details</a>
+
+    <!-- Section À Propos -->
+    <section class="my-5">
+        <h1 class="text-center mb-4">À Propos de Nous</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% static 'images/homeIMG.jpg' %}" class="img-fluid rounded shadow" alt="Image de l'Entreprise">
+            </div>
+            <div class="col-md-6">
+                <h2>Notre Mission</h2>
+                <p>Chez [Nom de l'Entreprise], nous nous engageons à offrir des solutions innovantes pour aider les entreprises du monde entier. Nous visons à créer des produits et services de haute qualité qui laissent une empreinte durable sur nos clients et leurs consommateurs. Notre mission est de favoriser une culture de collaboration, d'innovation et d'excellence, en favorisant une croissance durable pour notre entreprise ainsi que pour les communautés que nous servons.</p>
+                
+                <h2>Notre Vision</h2>
+                <p>Nous imaginons un monde où la technologie et la créativité se combinent pour créer des expériences transformatrices. En repoussant constamment les limites de ce qui est possible, nous visons à être un leader dans notre secteur, en fournissant des solutions de pointe qui dépassent les attentes et établissent de nouvelles normes de réussite.</p>
+                
+                <h2>Nos Valeurs</h2>
+                <ul>
+                    <li><strong>Innovation :</strong> Nous encourageons la créativité et l'innovation dans tous les aspects de notre entreprise.</li>
+                    <li><strong>Intégrité :</strong> Nous respectons les normes les plus élevées d'intégrité et d'honnêteté dans tout ce que nous faisons.</li>
+                    <li><strong>Centricité Client :</strong> Les besoins et la satisfaction de nos clients sont au cœur de toutes nos décisions commerciales.</li>
+                    <li><strong>Excellence :</strong> Nous nous engageons à livrer des résultats exceptionnels et à maintenir des normes de qualité élevées.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Offres d'Emploi -->
+    <section class="my-5">
+        <h1 class="text-center mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-envelope-paper-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M6.5 9.5 3 7.5v-6A1.5 1.5 0 0 1 4.5 0h7A1.5 1.5 0 0 1 13 1.5v6l-3.5 2L8 8.75zM1.059 3.635 2 3.133v3.753L0 5.713V5.4a2 2 0 0 1 1.059-1.765M16 5.713l-2 1.173V3.133l.941.502A2 2 0 0 1 16 5.4zm0 1.16-5.693 3.337L16 13.372v-6.5Zm-8 3.199 7.941 4.412A2 2 0 0 1 14 16H2a2 2 0 0 1-1.941-1.516zm-8 3.3 5.693-3.162L0 6.873v6.5Z" />
+            </svg>
+            Offres de Travail
+        </h1>
+        <div class="row">
+            {% if offres %}
+                {% for offre in offres %}
+                    <div class="col-md-4 mb-2">
+                        <div class="card shadow" style="width: 19rem;">
+                            <img src="{% static 'images/offre.jpg' %}" class="card-img-top" alt="Image Offre">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ offre.titre_offre }}</h5>
+                                <p class="card-text">{{ offre.description }}</p>
+                                <a href="{% url 'offreEmploye_detail' offre.id %}" class="btn btn-dark">Voir Détails</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>pas d'offre d'emploi disponible</p>
-        {% endif %}
-    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center">Pas d'offre d'emploi disponible</p>
+            {% endif %}
+        </div>
+    </section>
+
 </div>
 {% endblock %}

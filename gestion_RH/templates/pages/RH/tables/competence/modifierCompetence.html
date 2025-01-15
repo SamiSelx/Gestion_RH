@@ -1,14 +1,23 @@
 {% extends "../../../../base.html" %}
 
 {% block title %}
-Modifier contrat
+Modifier Contrat
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <a href="{% url 'listeCompetence' %}">Annuler</a>
-    <input type="submit" value="Modifier" class="submit-btn">
-</form>
-{%endblock%}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Modifier Contrat</h2>
+    <form method="post" class="p-4 border rounded shadow-sm bg-light">
+        {% csrf_token %}
+        
+        <div class="form-group mb-3">
+            {{ form.as_p }}
+        </div>
+
+        
+            <a href="{% url 'listeCompetence' %}" class="btn btn-secondary">Annuler</a>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+       
+    </form>
+</div>
+{% endblock %}

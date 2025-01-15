@@ -1,14 +1,23 @@
 {% extends "../../../../base.html" %}
 
 {% block title %}
-Ajouter Competence
+Ajouter Compétence
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <a href="{% url 'listeCompetence' %}">Annuler</a>
-    <input type="submit" value="Ajouter" class="submit-btn">
-</form>
-{%endblock%}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Ajouter une Compétence</h2>
+    <form method="post" class="p-4 border rounded shadow-sm bg-light">
+        {% csrf_token %}
+        
+        <div class="form-group mb-3">
+            {{ form.as_p }}
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'listeCompetence' %}" class="btn btn-secondary">Annuler</a>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

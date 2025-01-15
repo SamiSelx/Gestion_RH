@@ -5,10 +5,26 @@ Modifier Candidat
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <a href="{% url 'listeCandidat' %}">Annuler</a>
-    <input type="submit" value="Modifier" class="submit-btn">
-</form>
-{%endblock%}
+<div class="container mt-5">
+    <!-- Form Header -->
+    <h1 class="mb-4">Modifier Candidat</h1>
+    
+    <!-- Form -->
+    <form method="post" class="bg-light p-4 rounded shadow-sm">
+        {% csrf_token %}
+        
+        <!-- Form Fields -->
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'listeCandidat' %}" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Annuler
+            </a>
+            <input type="submit" value="Modifier" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+{% endblock %}

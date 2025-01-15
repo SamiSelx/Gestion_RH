@@ -1,13 +1,28 @@
 {% extends "../../../../base.html" %}
 
 {% block title %}
-Supprimer Competence
+Supprimer Compétence
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    <a href="{% url 'listeCompetence' %}">Annuler</a>
-    <input type="submit" value="Supprimer" class="submit-btn">
-</form>
-{%endblock%}
+<div class="container mt-5">
+    <!-- Form Header -->
+    <div class="alert alert-danger text-center">
+        <h1 class="text-danger">Supprimer Compétence</h1>
+        <p class="lead">Êtes-vous sûr de vouloir supprimer cette compétence ? Cette action est irréversible.</p>
+    </div>
+    
+    <!-- Form -->
+    <form method="post" class="text-center">
+        {% csrf_token %}
+        
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'listeCompetence' %}" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Annuler
+            </a>
+            <input type="submit" value="Supprimer" class="btn btn-danger">
+        </div>
+    </form>
+</div>
+{% endblock %}
