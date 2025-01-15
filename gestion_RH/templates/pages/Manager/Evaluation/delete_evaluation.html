@@ -1,0 +1,17 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+    Supprimer Évaluation
+{% endblock %}
+
+{% block content %}
+
+<h1>Delete Evaluation</h1>
+<p>Are you sure you want to delete the evaluation for {{ evaluation.employe }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-danger">Confirm</button>
+    <a href="{% url 'list_evaluations' %}" class="btn btn-outline-dark" type="submit">Retour a la liste</a>
+
+</form>
+{% endblock %}

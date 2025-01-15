@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
-from ..conge.views import demandeConge
+from ..conge.views import demandeConge 
 from django.shortcuts import render
 
 urlpatterns = [
@@ -10,6 +10,9 @@ urlpatterns = [
     path('rh/',views.RhRedirect),
     path('rh/analyse/employe/',views.employeeAnalyses,name='employeeAnalyses'),
     path('employe/',views.employe,name='employePage'),
-    path('employe/demandeConge/',demandeConge,name='demandeConge'),
-    path('employe/information/',views.informationPersonnel,name='informationPersonnel'),
+    path('employe/demandeConge',demandeConge,name='demandeConge'),
+    path('employe/information',views.informationPersonnel,name='informationPersonnel'),
+    path('manager/',views.Manager,name='managerPage'),
+    path('manager/information',views.informationPersonnel,name='informationPersonnel'),
+
 ]

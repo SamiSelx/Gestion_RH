@@ -76,4 +76,7 @@ def informationPersonnel(request):
     return render(request,'pages/employe/information/informationPersonnel.html')
  
 
-#-------------------------
+
+#page Manager-------------------
+def Manager(request):
+    return redirect('informationPersonnel')

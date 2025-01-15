@@ -23,7 +23,14 @@ class Formation(models.Model):
 
     def __str__(self):
         return self.titre_formation
-    
+
+class Competence(models.Model):
+    nom_competence = models.CharField(max_length=50)
+    description_competence = models.TextField()
+
+    def __str__(self):
+        return f"Competence {self.nom_competence}"
+       
 class Employe(models.Model):
     ROLE_CHOICES = [
         ('RH', 'RH'),
@@ -205,10 +212,84 @@ class Entretien(models.Model):
         return f"Entretien pour {self.candidature.candidat.nomC} - {self.date_entretien}"
 
 
+
+# ------------------------Evaluation -----------------------------
+class Evaluation(models.Model):
+    date_evaluation = models.DateField()
+    note_evaluation_totale = models.FloatField(default=0.0)
+    type_evaluation = models.CharField(
+        max_length=20,
+        choices=[('Annual', 'Annual'), ('Semi-Annual', 'Semi-Annual')],
+        default='Annual'
+    )
+    employe_manager = models.ForeignKey(
+        'Employe', on_delete=models.CASCADE, related_name='evaluations_as_manager'
+    )
+    employe = models.ForeignKey(
+        'Employe', on_delete=models.CASCADE, related_name='evaluations_as_employee'
+    )
+
+class CriterEvaluation(models.Model):
+    description_critere = models.CharField(max_length=255)
+    def __str__(self):
+        return self.description_critere
+    
+class EvaluerCritere(models.Model):
+    code_critere = models.ForeignKey(CriterEvaluation, on_delete=models.CASCADE)
+    code_evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE)
+    note_critere_evaluer = models.FloatField()
+
+
+class RapportEvaluation(models.Model):
+    date_rapport = models.DateField()
+    contenu_rapport = models.TextField()
+    code_evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE, related_name='rapports')
+
+    def generate_objectives_summary(self):
+        objectifs = self.code_evaluation.objectifs_attient.all()
+        summary = "\n".join([
+            f"{objectif.code_objectif.description_objectif} : {'Atteint' if objectif.attient else 'Non atteint'}"
+            for objectif in objectifs
+        ])
+        return summary
+
+
+class RapportPartage(models.Model):
+    code_rapport = models.ForeignKey(RapportEvaluation, on_delete=models.CASCADE, related_name='shared_with')
+    code_employe = models.ForeignKey('Employe', on_delete=models.CASCADE, related_name='shared_reports')
+
+    def __str__(self):
+        return f"Rapport {self.code_rapport} shared with {self.code_employe}"
+
+#-----------------Objectif----------------------
 class Objectif(models.Model):
     description_objectif = models.TextField()
     date_limite = models.DateField()
-    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='objectifs')
+    code_employe = models.ForeignKey('Employe', on_delete=models.CASCADE, related_name='objectifs')
+
+    def __str__(self):
+        return f"Objectif for {self.code_employe}"
+
+class ObjectifAttient(models.Model):
+    code_evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE, related_name='objectifs_attient')
+    code_objectif = models.ForeignKey(Objectif, on_delete=models.CASCADE, related_name='objectifs_attient')
+    attient = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Objective {self.code_objectif} achieved: {self.attient}"
+
+
+#------------- Competence --------------------------
+
+    
+class DeveloperCompetence(models.Model):
+    code_evaluation = models.ForeignKey(Evaluation, on_delete=models.CASCADE, related_name='competences_developped')
+    code_competence = models.ForeignKey('Competence', on_delete=models.CASCADE)
+    niveau_CE = models.IntegerField()
+
+    def __str__(self):
+        return f"Competence {self.code_competence} in Evaluation {self.code_evaluation}"
+
 
 class Salaire(models.Model):
     salaire_base = models.DecimalField(max_digits=20 ,decimal_places=2)
@@ -250,3 +331,4 @@ class FicheDePaie(models.Model):
     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
     mois = models.DateField()
     salaire_net = models.DecimalField(max_digits=10, decimal_places=2) 
+

@@ -1,0 +1,44 @@
+{% extends "../../../base.html" %}
+
+{% block title %}Faire l'Évaluation{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Faire l'évaluation pour l'employé #{{ evaluation.id }}</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Description Critère</th>
+                    <th>Note</th>
+                    <th>Note Max</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for critere in criteria %}
+                <tr>
+                    <td>{{ critere.code_critere.description_critere }}</td>
+                    <td>
+                        <input type="number" name="score_{{ critere.id }}" class="form-control"
+                               max="{{ critere.note_critere_evaluer}}" required>
+                    </td>
+                    <td>{{ critere.note_critere_evaluer}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Soumettre l'Évaluation</button>
+        </div>
+    </form>
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'list_evaluations' %}" class="btn btn-outline-dark">Retour à la liste</a>
+    </div>
+</div>
+{% endblock %}
+score_max
