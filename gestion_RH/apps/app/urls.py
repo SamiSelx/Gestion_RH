@@ -13,6 +13,6 @@ urlpatterns = [
     path('employe/demandeConge',demandeConge,name='demandeConge'),
     path('employe/information',views.informationPersonnel,name='informationPersonnel'),
     path('manager/',views.Manager,name='managerPage'),
-    path('manager/information',views.informationPersonnel,name='informationPersonnel'),
+    path('manager/informationM',views.informationPersonnelM,name='informationPersonnelM'),
 
 ]
