@@ -12,5 +12,6 @@ urlpatterns = [
     path('rh/listesAvanceSalaire/',views.listeDemandeAvanceSalaireAll,name='listesAvanceSalaire'),
     path('rh/listesAvanceSalaire/approuvee/<int:avanceId>',views.approuveeDemandeAvance,name='approuveeAvance'),
     path('rh/salaire/<int:code_employe>/send_fiche_de_paie/',views.send_fiche_de_paie_view,name='send_fiche_de_paie'),
+    path('rh/salaire/<int:code_employe>/fiche_de_paie/',views.generate_fiche_de_paie,name='fiche_de_paie'),
     # path('rh/prime/add/<int:code_employe>',views.addPrimeEmploye,name='addPrimeEmploye'),
 ]

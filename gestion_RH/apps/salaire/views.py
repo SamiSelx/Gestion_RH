@@ -9,6 +9,12 @@ from django.utils import timezone
 from django.core.mail import EmailMessage,send_mail
 from django.template.loader import render_to_string
 from decimal import Decimal
+from django.conf import settings
+
+## PDF Library
+from django.http import FileResponse,HttpResponse
+import io
+from xhtml2pdf import pisa
 
 # Create your views here.
 
@@ -178,38 +184,42 @@ def approuveeDemandeAvance(request,avanceId):
 # generate and send fiche de paie
 
 def send_fiche_de_paie(employe):
+    if not hasattr(employe, 'user') or employe.user is None:
+        raise ValueError("employe n'a pas un compte")
+    today = date.today()
     # Retrieve necessary data
-    salaire = employe.salaire_base.salaire_base
-    primes = Prime.objects.filter(code_employe=employe.id, date_attribuee__month=date.today().month, date_attribuee__year=date.today().year) or 0
+    # salaire = employe.salaire_base.salaire_base
+    primes = Prime.objects.filter(code_employe=employe.id, date_attribuee__month=date.today().month, date_attribuee__year=date.today().year)
     total_prime= sum([prime.prime_montant for prime in primes])
    # Render HTML for pay slip
     html_content = render_to_string('fiche_de_paie.html', {
         'employe': employe,
-        'salaire': salaire,
+        'salaire': calcule_salaire_mensuel(employe,today.month,today.year,0),
         'primes': total_prime,
         'date': timezone.now().strftime('%Y-%m-%d')
     })
 
-    # Generate PDF using WeasyPrint
-    # pdf_file = HTML(string=html_content).write_pdf()
+    pdf_buffer = io.BytesIO()
+    pisa_status = pisa.CreatePDF(html_content, dest=pdf_buffer)
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF', status=400)
+    
+    # Move the cursor to the beginning of the BytesIO buffer
+    pdf_buffer.seek(0)
 
     # Prepare email
-    # email = EmailMessage(
-    #     subject="Votre Fiche de Paie",
-    #     body="Veuillez trouver ci-joint votre fiche de paie pour ce mois.",
-    #     from_email="yassersellal14@gmail.com",
-    #     to=['samifcb14@gmail.com'],
-    # )
-    # email.attach(f"fiche_de_paie_{employe.id}", 'html_content')
+    email = EmailMessage(
+        subject="Votre Fiche de Paie",
+        body="Veuillez trouver ci-joint votre fiche de paie pour ce mois.",
+        from_email=settings.EMAIL_FROM_USER,
+        to=[employe.user.email],  # Ensure this is the email of the employee
+    )
+
+    # Attach the PDF file to the email (provide the name and content)
+    email.attach(f"fiche_de_paie_{employe.id}.pdf", pdf_buffer.read(), "application/pdf")
 
     # Send email
-    # email.send()
-    subject = 'Hello from Django'
-    message = 'This is a test email sent from Django.'
-    from_email = 'yassersam1234@outlook.com'  # Same as EMAIL_HOST_USER
-    recipient_list = list(['samifcb14@gmail.com'] ) # Replace with recipient's email
-
-    send_mail(subject, message, from_email, recipient_list)
+    email.send()
 
 def send_fiche_de_paie_view(request, code_employe):
     employe = get_object_or_404(Employe, id=code_employe)
@@ -231,3 +241,27 @@ def send_fiche_de_paie_view(request, code_employe):
 #     employe = get_object_or_404(Employe,id=code_employe)
 #     if request.method == 'POST':
         
+
+def generate_fiche_de_paie(request,code_employe):
+    today = date.today()
+    # Retrieve necessary data
+    employe = Employe.objects.get(pk=code_employe)
+    # salaire = employe.salaire_base.salaire_base
+    primes = Prime.objects.filter(code_employe=employe.id, date_attribuee__month=date.today().month, date_attribuee__year=date.today().year)
+    total_prime= sum([prime.prime_montant for prime in primes])
+    # employe.salaire = calcule_salaire_mensuel(employe,today.month,today.year)
+    html_content = render_to_string('fiche_de_paie.html', {
+        'employe': employe,
+        'salaire': calcule_salaire_mensuel(employe,today.month,today.year,0),
+        'primes': total_prime,
+        'date': timezone.now().strftime('%Y-%m-%d')
+    })
+
+    pdf_buffer = io.BytesIO()
+    pisa_status = pisa.CreatePDF(html_content, dest=pdf_buffer)
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF', status=400)
+    
+    # Move the cursor to the beginning of the BytesIO buffer
+    pdf_buffer.seek(0)
+    return FileResponse(pdf_buffer, as_attachment=True, filename=f'fiche_de_paie.pdf')
