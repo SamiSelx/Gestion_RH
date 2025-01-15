@@ -29,10 +29,10 @@ urlpatterns = [
     path('rh/tables/', include('apps.employe.urls')),
     path('rh/tables/', include('apps.service.urls')),
     path('rh/tables/', include('apps.Formation.urls')),
-    path('rh/tables/', include('apps.OffreEmploi.urls')),
-    path('rh/tables/', include('apps.Candidature.urls')),
-    path('', include('apps.favoris.urls')),
-    
-    
+    path('', include('apps.OffreEmploi.urls')),
+    path('', include('apps.Candidature.urls')),
+    path('', include('apps.favoris.urls')),    
+    path('',include('apps.salaire.urls')),
+    path('',include('apps.prime.urls'))
 ]
 

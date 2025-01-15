@@ -1,9 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
-
-
+from django.utils.timezone import now
 from datetime import date
-# from ..authentification.models import CustomUser
+from django.conf import settings
+
     
 class Service(models.Model):
     description_service = models.CharField(max_length=100)
@@ -37,11 +36,14 @@ class Employe(models.Model):
     date_naissance_E = models.DateField()
     date_embauche_E = models.DateField()
     adresse_E = models.CharField(max_length=100)
+    # email = models.EmailField()
+    # phone = models.IntegerField()
     solde_annuel = models.IntegerField(default=30) # par default 30 jours par année
     code_service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, related_name='employes')
     competences = models.ManyToManyField('Competence', related_name='employes')
     formations = models.ManyToManyField('Formation', related_name='employes')
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Employe')
+    salaire_base = models.ForeignKey('Salaire',on_delete=models.SET_NULL,null=True,related_name='employes')
 
     def __str__(self):
         return f"{self.nomE} {self.prenomE}"
@@ -170,6 +172,7 @@ class Candidat(models.Model):
     prenomC = models.CharField(max_length=100)
     adresseC = models.TextField()
     tlfn_candidat = models.CharField(max_length=20)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,null=True,blank=True, related_name='candidat')
     def __str__(self):
         return self.nomC
 
@@ -206,3 +209,44 @@ class Objectif(models.Model):
     description_objectif = models.TextField()
     date_limite = models.DateField()
     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='objectifs')
+
+class Salaire(models.Model):
+    salaire_base = models.DecimalField(max_digits=20 ,decimal_places=2)
+    salaire_quotidien = models.DecimalField(max_digits=20 ,decimal_places=2,blank=True, null=True) # salaire quotidien est calculé (remove it from here)
+
+    def save(self, *args, **kwargs):
+        WORKING_DAYS_PER_MONTH = 22 
+        self.salaire_quotidien = round(self.salaire_base / WORKING_DAYS_PER_MONTH, 2)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.salaire_base}"
+
+class Absence(models.Model):
+    code_employe = models.ForeignKey(Employe,on_delete=models.CASCADE, related_name="absences")
+    date_absence = models.DateField()
+    def __str__(self):
+        return f"Absence de {self.code_employe} le {self.date_absence}"
+
+class Prime(models.Model):
+    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="primes")
+    prime_montant = models.DecimalField(max_digits=20 ,decimal_places=2)
+    date_attribuee = models.DateField(default=now)
+
+    def __str__(self):
+        return f"{self.code_employe.nomE} - {self.prime_montant} - {self.date_attribuee}"
+
+class DemandeAvanceSalaire(models.Model):
+    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="avances_salaire")
+    montant = models.DecimalField(max_digits=20, decimal_places=2)
+    date_demande = models.DateField(auto_now_add=True)
+    justifications = models.TextField(blank=True, null=True)
+    approuvee = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Avance de {self.montant} pour {self.code_employe} ({'Approuvée' if self.approuvee else 'En attente'})"
+
+class FicheDePaie(models.Model):
+    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
+    mois = models.DateField()
+    salaire_net = models.DecimalField(max_digits=10, decimal_places=2) 

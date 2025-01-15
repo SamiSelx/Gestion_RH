@@ -1,0 +1,39 @@
+{% extends "../../../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Demande Avance Salaire
+{% endblock %}
+
+{% block content %}
+
+<div class="card container mx-auto p-4">
+    <a href="{% url 'listeDemandeAvanceSalaire' %}" class="btn btn-outline-dark mb-2">Consulter les damandes d'avance de salaire</a>
+<form method="post" class="row card-body">
+    {% csrf_token %}
+    {% comment %} {{form.as_p}} {% endcomment %}
+    <div class="input-group mb-3">
+        <span class="input-group-text">$</span>
+        {{ form.montant|add_class:"form-control" }}
+        <span class="input-group-text">.00</span>
+      </div>
+    <div class="mb-3 col-2 w-100">
+        <label for="id_justifications" class="form-label ">Justifications</label>
+        {{ form.justifications|add_class:"form-control form-select-sm" }}
+    </div>
+    <div class="row gap-2">
+        <input type="submit" value="Demande" class="col-2 submit-btn btn btn-success flex-grow-1">
+        <a class="btn btn-secondary col-2 flex-grow-1" href="{% url 'employePage' %}">Annuler</a>
+    </div>
+</form>
+</div>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+{%endblock%}

@@ -44,7 +44,7 @@ def supprimer_conge(request, id):
 def demandeConge(request):
     employe = get_object_or_404(Employe, id=request.user.employe.id)
 
-    if employe.solde_annuel <=0 and request.POST['code_conge'] == 1:
+    if employe.solde_annuel <=0 and request.POST['code_conge'] == 1: ## code conge = 1 <=> congé annuel
         messages.error(request,f"{employe.nomE} pas de solde annuel suffisant")
     if request.method == 'POST':
         form = DemandeCongeForm(request.POST,employe_id=employe.id)

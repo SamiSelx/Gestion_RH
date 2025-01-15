@@ -5,7 +5,7 @@ from .forms import CandidatureForm , EntretienForm , CandidatureStatusForm
 def postuler_offre(request, offre_id):
     offre = get_object_or_404(Offre_employe, id=offre_id)
     if request.method == 'POST':
-        form = CandidatureForm(request.POST, request.FILES)  
+        form = CandidatureForm(request.POST, request.FILES, candidat_id = request.user.candidat.id)  
         if form.is_valid():
             candidature = form.save(commit=False)
             candidature.offre = offre

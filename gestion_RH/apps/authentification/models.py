@@ -1,8 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from ..app.models import Employe
+from ..app.models import Employe,Candidat
 
 class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('username',)
+    isActive = models.BooleanField(default=False)
     # ROLE_CHOICES = [
     #     ('RH', 'RH'),
     #     ('Manager', 'Manager'),
@@ -13,6 +17,5 @@ class CustomUser(AbstractUser):
     # when u assign employe add role
     employe = models.ForeignKey(Employe, on_delete=models.CASCADE, null=True, blank=True)
 
-
     def __str__(self):
-        return self.username
+        return self.email

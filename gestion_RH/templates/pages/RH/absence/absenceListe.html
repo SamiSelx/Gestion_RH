@@ -1,0 +1,56 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Liste des Absences :
+{% endblock %}
+
+{% block content %}
+
+<form method="get" class="container mx-auto px-4 row">
+    <div class="col-3">
+        <label for="month" class="form-label">Mois:</label>
+    <input class="form-control" type="number" name="month" id="month" min="1" max="12" value="{{ month }}">
+    </div>
+    
+    <div class="col-3">
+        <label for="day" class="form-label">Jour:</label>
+        <input class="form-control" type="number" name="day" id="day" min="1" max="31" value="{{ day }}">
+    </div>
+    
+    <button type="submit" class="btn btn-outline-dark mt-4 col-1">Filtrer</button>
+</form>
+<div class="text-center">
+    <a class="btn btn-outline-secondary mt-4" href="{% url 'absenceEmploye' %}">Aller a la gestion d'absence</a>
+</div>
+<h1 class="text-center">
+    Liste des Absences :
+</h1>
+<p class="text-muted text-xxl-center">Absences du mois {{ month }} et jour {{ day }}</p>
+<div class="card mt-4">
+    <div class="card-body">
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <td>Code Employé</td>
+                    <td>Nom</td>
+                    <td>Prénom</td>
+                    <td>Absence le</td>
+                </tr>
+            </thead>
+        
+            <tbody class="table-group-divider">
+                {% for absence in absences %}
+                <tr>
+                    <td>{{ absence.code_employe.id }}</td>
+                    <td>{{ absence.code_employe.nomE }}</td>
+                    <td>{{ absence.code_employe.prenomE }}</td>
+                    <td>{{ absence.date_absence }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "../../../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Employe Salaire
+{% endblock %}
+
+
+{% block content %}
+   <div class="container">
+    <h1>Gestion Salaire</h1>
+    <hr>
+    <form method="post" class="text-end">
+        {% csrf_token %}
+        <input type="hidden" name="employeId" value={{employ.id}}/>
+        <button type="submit" class="btn btn-outline-success"> Calcule Salaire </button>
+    </form>
+   </div>
+    {% if employes %}
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Employé</th>
+                    <th>Salaire de base</th>
+                    <th>Salaire quotidien</th>
+                    <th>Salaire de L'employé</th>
+                    <td>Heures Supplémentaires</td>
+                    <th>Calculer Salaire</th>
+                    <th>Fiche de paie</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for employe in employes %}
+                <tr>
+                    <td>{{ employe.id }}</td>
+                    <td>{{ employe.salaire_base.salaire_base}} $</td>
+                    <td>{{ employe.salaire_base.salaire_quotidien }} $</td>
+                    <td>{{ employe.salaire }} $</td>
+                    {% comment %} <td>{% if salaire_calcule %}{{salaire_calcule}} {%else%} 0.00 {%endif%}</td> {% endcomment %}
+                    {% comment %} <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-success"> Calcule Salaire </button>
+                        </form>
+                    </td> {% endcomment %}
+                        <form method="post" class="text-end">
+                            {% csrf_token %}
+                            <input type="hidden" name="employeId" value="{{employe.id}}"/>
+                            <td>
+                                <input type="number" name="heures_supp" value="0"/>
+                            </td>
+                            <td><button type="submit" class="btn btn-outline-success"> Calcule Salaire </button></td>
+                        </form>
+                    <td><a href="#" class="btn btn-outline-primary"> Download </a></td>
+                    <td>
+                        <form action="{% url 'send_fiche_de_paie' employe.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Envoyer Fiche de Paie</button>
+                        </form>
+                    </td>
+                    <td><a href="{% url 'employeSalaireDetail'  employe.id %}" class="btn btn-outline-secondary"> Details </a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun Employe disponible.</p>
+    {% endif %}
+    
+{% endblock %}
+
