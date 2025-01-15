@@ -4,6 +4,9 @@ from . import views
 urlpatterns = [
     path('manager/evaluations/', views.list_evaluations, name='list_evaluations'),
     path('rh/evaluations_consultation/', views.list_evaluations_consultation, name='list_evaluations_consultation'),
+    path('rh/evaluations/report/<int:pk>/', views.consultation_report_RH, name='consultation_report'),
+    path('rh/evaluations/top-employees/', views.top_employees_consultation, name='top_employees_consultation'),
+
     path('manager/evaluations/create/', views.create_evaluation, name='create_evaluation'),
     path('manager/evaluations/update/<int:pk>/', views.update_evaluation, name='update_evaluation'),
     path('manager/evaluations/delete/<int:pk>/', views.delete_evaluation, name='delete_evaluation'),

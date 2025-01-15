@@ -93,6 +93,28 @@ def generate_report(request, pk):
 
 #--------------------------------------------------------------
 
+def consultation_report_RH(request, pk):
+    evaluation = get_object_or_404(Evaluation, pk=pk)
+    contenu = f"Rapport d'évaluation pour {evaluation.employe.nomE}:\n"
+    contenu += f"Date d'évaluation: {evaluation.date_evaluation}\n"
+    contenu += f"Type: {evaluation.type_evaluation}\n"
+    contenu += f"Note totale: {evaluation.note_evaluation_totale}\n"
+
+   
+    report, created = RapportEvaluation.objects.get_or_create(
+        code_evaluation=evaluation,
+        defaults={'contenu_rapport': contenu, 'date_rapport': date.today()},
+    )
+
+   
+    objectifs = ObjectifAttient.objects.filter(code_evaluation=evaluation)
+    context = {
+    'evaluation': evaluation,
+    'report': report,
+    'contenu_rapport': report.contenu_rapport.split("\n"),
+    'objectifs': objectifs,
+     }
+    return render(request, 'pages/RH/consultation/consultation_report.html', context)
 
 
 
@@ -104,6 +126,14 @@ def top_employees(request):
     top_employees = evaluations.values('employe').annotate(avg_score=Avg('note_evaluation_totale')).order_by('-avg_score')[:5]
     return render(request, 'pages/Manager/Evaluation/top_employees.html', {'top_employees': top_employees, 'period': period})
     
+#-------------------------------------------------
+def top_employees_consultation(request):
+    period = request.GET.get('period', 'Annual')
+    evaluations = Evaluation.objects.filter(type_evaluation=period)
+    top_employees = evaluations.values('employe').annotate(avg_score=Avg('note_evaluation_totale')).order_by('-avg_score')[:5]
+    return render(request, 'pages/rh/consultation/top_employees_consultation.html', {'top_employees': top_employees, 'period': period})
+    
+
 
 def modal_criteria_view(request, evaluation_id):
     evaluation = get_object_or_404(Evaluation, id=evaluation_id)

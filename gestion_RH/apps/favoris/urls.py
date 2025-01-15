@@ -8,6 +8,6 @@ urlpatterns = [
     path('fonctionnalites/supprimer/<int:pk>/', views.supprimerFonctionnalite, name='supprimer_fonctionnalite'),
     path('fonctionnalites/ajouter-favoris/<int:pk>/', views.ajouterAuxFavoris, name='ajouter_favoris'),
     path('fonctionnalites/retirer-favoris/<int:pk>/', views.retirerDesFavoris, name='retirer_favoris'),
-    path('fonctionnalites/favoris/', views.favoris_view, name='favoris_view'),
+    # path('fonctionnalites/favoris/', views.favoris_view, name='favoris_view'),
 ]
 
