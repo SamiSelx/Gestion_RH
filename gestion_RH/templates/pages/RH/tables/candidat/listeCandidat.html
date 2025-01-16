@@ -4,37 +4,52 @@
 Candidat
 {% endblock %}
 
-
 {% block content %}
-<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-    Liste des Candidats :
-  </div>
-  <div>
-    <a href="{% url 'ajouterCandidat' %}">Ajouter Candidat</a>
-  </div>
-<table border="1px" class="container my-4 table table-sm align-middle">
-    <thead class="table-dark">
-        <tr>
-            <td>Nom Candidat</td>
-            <td>Prenom Candidat</td>
-            <td>Adresse Candidat</td>
-            <td>Numéro Téléphone Candidat</td>
-            <td>Edit</td>
-            <td>Supprimer</td>
-        </tr>
-    </thead>
+<div class="container mt-5">
+    <!-- Header Section -->
+    <div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
+        Liste des Candidats :
+    </div>
 
-    <tbody class="table-group-divider">
-        {% for candidat in candidats %}
-        <tr>
-            <td>{{candidat.nomC}}</td>
-            <td>{{candidat.prenomC}}</td>
-            <td>{{candidat.adresseC}}</td>
-            <td>{{candidat.tlfn_candidat}}</td>
-            <td><a href="{% url 'modifierCandidat' candidat.id %}" class="btn btn-success"> Edit </a></td>
-            <td><a href="{% url 'supprimerCandidat' candidat.id %}" class="btn btn-danger"> Supprimer </a></td>
-        </tr>
-        {% endfor%}
-    </tbody>
-</table>
+    <!-- Add Candidate Button -->
+    <div class="mb-4">
+        <a href="{% url 'ajouterCandidat' %}" class="btn btn-primary mt-3">
+            <i class="bi bi-person-plus"></i> Ajouter Candidat
+        </a>
+    </div>
+
+    <!-- Candidates Table -->
+    <table class="table table-bordered table-hover align-middle table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Adresse</th>
+                <th>Numéro Téléphone</th>
+                <th>Éditer</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidat in candidats %}
+            <tr>
+                <td>{{ candidat.nomC }}</td>
+                <td>{{ candidat.prenomC }}</td>
+                <td>{{ candidat.adresseC }}</td>
+                <td>{{ candidat.tlfn_candidat }}</td>
+                <td>
+                    <a href="{% url 'modifierCandidat' candidat.id %}" class="btn btn-success btn-sm">
+                        <i class="bi bi-pencil"></i> Éditer
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'supprimerCandidat' candidat.id %}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Supprimer
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

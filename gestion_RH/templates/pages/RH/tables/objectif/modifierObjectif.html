@@ -5,10 +5,17 @@ Modifier Objectif
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <a href="{% url 'listeObjectif' %}">Annuler</a>
-    <input type="submit" value="Modifier" class="submit-btn">
-</form>
-{%endblock%}
+<div class="container mt-5">
+    <h1 class="mb-4">Modifier Objectif</h1>
+    <form method="post" class="bg-light p-4 rounded shadow-sm">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        
+            <a href="{% url 'listeObjectif' %}" class="btn btn-secondary">Annuler</a>
+            <input type="submit" value="Modifier" class="btn btn-primary">
+       
+    </form>
+</div>
+{% endblock %}

@@ -65,6 +65,10 @@ def contrat_detail(request, id):
     contrat = get_object_or_404(Contrat, id=id) 
     return render(request, 'pages/rh/tables/contrat/contrat_detail.html', {'contrat': contrat})
 
+def contrat_detail_EMP(request): 
+    contrat = get_object_or_404(Contrat, id=request.user.employe.id) 
+    return render(request, 'pages/Employe/contrat/contrat_detail_EMP.html', {'contrat': contrat})
+
 
 def check_contrat_expiration(request):
     today = date.today()

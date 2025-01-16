@@ -1,0 +1,141 @@
+{% extends "../../../base.html" %}
+{% load static %}
+{% block content %}
+<div style="padding: 20px; text-align: center;">
+    <h1 style="color: #2c3e50; font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;">Analyse des Recrutements</h1>
+    <p style="color:rgb(115, 117, 119)"> dans les 12 mois </p>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin: 0 auto; max-width: 1200px;">
+    <div style="width: 90%; max-width: 800px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; background: #fff; padding: 20px;">
+        <canvas id="recrutementsChart"></canvas>
+    </div>
+    <div style="width: 90%; max-width: 800px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; background: #fff; padding: 20px;">
+        <canvas id="offresChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const recrutementsData = JSON.parse('{{ recrutements_data|escapejs }}');
+    const offresData = JSON.parse('{{ offres_data|escapejs }}');
+
+    // Graphique pour les recrutements
+    const ctx1 = document.getElementById('recrutementsChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: recrutementsData.months,
+            datasets: [{
+                label: 'Recrutements par mois',
+                data: recrutementsData.counts,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.4,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        color: '#34495e',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#34495e',
+                    titleColor: '#ecf0f1',
+                    bodyColor: '#ecf0f1',
+                    padding: 10,
+                    borderWidth: 1,
+                    borderColor: '#95a5a6'
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: '#ecf0f1'
+                    },
+                    ticks: {
+                        color: '#34495e'
+                    }
+                },
+                y: {
+                    grid: {
+                        color: '#ecf0f1'
+                    },
+                    ticks: {
+                        color: '#34495e'
+                    }
+                }
+            }
+        }
+    });
+
+    // Graphique pour les offres
+    const ctx2 = document.getElementById('offresChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: offresData.months,
+            datasets: [{
+                label: 'Offres publiées par mois',
+                data: offresData.counts,
+                borderColor: 'rgba(153, 102, 255, 1)',
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                tension: 0.4,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        color: '#34495e',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#34495e',
+                    titleColor: '#ecf0f1',
+                    bodyColor: '#ecf0f1',
+                    padding: 10,
+                    borderWidth: 1,
+                    borderColor: '#95a5a6'
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: '#ecf0f1'
+                    },
+                    ticks: {
+                        color: '#34495e'
+                    }
+                },
+                y: {
+                    grid: {
+                        color: '#ecf0f1'
+                    },
+                    ticks: {
+                        color: '#34495e'
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -5,97 +5,19 @@ Tables
 {% endblock %}
 
 {% block content %}
-<h1>Liste des tables:</h1>
-<div class="row">
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Congé</h5>
-                <p class="card-text">View and manage leave records.</p>
-                <a href="{% url 'liste_conges' %}" class="btn btn-primary">Go to Congé</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Contrat</h5>
-                <p class="card-text">View and manage contracts.</p>
-                <a href="{% url 'listeContrat' %}" class="btn btn-primary">Go to Contrat</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Competence</h5>
-                <p class="card-text">View and manage skills and competencies.</p>
-                <a href="{% url 'listeCompetence' %}" class="btn btn-primary">Go to Competence</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Candidat</h5>
-                <p class="card-text">View and manage candidates.</p>
-                <a href="{% url 'listeCandidat' %}" class="btn btn-primary">Go to Candidat</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Objectif</h5>
-                <p class="card-text">View and manage objectives.</p>
-                <a href="{% url 'listeObjectif' %}" class="btn btn-primary">Go to Objectif</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Employe</h5>
-                <p class="card-text">View and manage employees.</p>
-                <a href="{% url 'employe_list' %}" class="btn btn-primary">Go to Employe</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Service</h5>
-                <p class="card-text">View and manage services.</p>
-                <a href="{% url 'service_list' %}" class="btn btn-primary">Go to Service</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Formation</h5>
-                <p class="card-text">View and manage formations.</p>
-                <a href="{% url 'ListeFormation' %}" class="btn btn-primary">Go to Formation</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Offre Emploi</h5>
-                <p class="card-text">View and manage job offers.</p>
-                <a href="{% url 'liste_offre_employe' %}" class="btn btn-primary">Go to Offre Emploi</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Gestion des Candidatures</h5>
-                <p class="card-text">View and manage applications.</p>
-                <a href="{% url 'liste_candidatures' %}" class="btn btn-primary">Go to Gestion des Candidatures</a>
-            </div>
-        </div>
+<div class="container mt-5">
+    <h1 class="mb-4">Liste des tables:</h1>
+    <div class="list-group">
+        <a href="{% url 'liste_conges'%}" class="list-group-item list-group-item-action">Congé</a>
+        <a href="{% url 'listeContrat'%}" class="list-group-item list-group-item-action">Contrat</a>
+        <a href="{% url 'listeCompetence'%}" class="list-group-item list-group-item-action">Competence</a>
+        <a href="{% url 'listeCandidat'%}" class="list-group-item list-group-item-action">Candidat</a>
+        <a href="{% url 'listeObjectif'%}" class="list-group-item list-group-item-action">Objectif</a>
+        <a href="{% url 'employe_list'%}" class="list-group-item list-group-item-action">Employe</a>
+        <a href="{% url 'service_list'%}" class="list-group-item list-group-item-action">Service</a>
+        <a href="{% url 'ListeFormation'%}" class="list-group-item list-group-item-action">Formation</a>
+        <a href="{% url 'liste_offre_employe'%}" class="list-group-item list-group-item-action">Offre Emploi</a>
+        <a href="{% url 'liste_candidatures'%}" class="list-group-item list-group-item-action">Gestion des candidatures</a>
     </div>
 </div>
 {% endblock %}

@@ -1,36 +1,45 @@
 {% extends "../../../../base.html" %}
 
 {% block title %}
-Competence
+Compétence
 {% endblock %}
-
 
 {% block content %}
 <div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-    Liste des Competences :
-  </div>
-  <div>
-    <a href="{% url 'ajouterCompetence' %}">Ajouter Competence</a>
-  </div>
-<table border="1px" class="container my-4 table table-sm align-middle">
+    Liste des Compétences  :
+</div>
+
+
+<div class="my-4">
+    <a href="{% url 'ajouterCompetence' %}" class="btn btn-primary">Ajouter Compétence</a>
+</div>
+
+<table class="table table-striped table-hover table-bordered align-middle">
     <thead class="table-dark">
         <tr>
-            <td>Nom Competence</td>
-            <td>Description</td>
-            <td>Edit</td>
-            <td>Supprimer</td>
+            <th>Nom Compétence</th>
+            <th>Description</th>
+            <th>Éditer</th>
+            <th>Supprimer</th>
         </tr>
     </thead>
-
-    <tbody class="table-group-divider">
+    <tbody>
         {% for competence in competences %}
         <tr>
-            <td>{{competence.nom_competence}}</td>
-            <td>{{competence.description_competence}}</td>
-            <td><a href="{% url 'modifierCompetence' competence.id %}" class="btn btn-success"> Edit </a></td>
-            <td><a href="{% url 'supprimerCompetence' competence.id %}" class="btn btn-danger"> Supprimer </a></td>
+            <td>{{ competence.nom_competence }}</td>
+            <td>{{ competence.description_competence }}</td>
+            <td>
+                <a href="{% url 'modifierCompetence' competence.id %}" class="btn btn-success btn-sm">Éditer</a>
+            </td>
+            <td>
+                <a href="{% url 'supprimerCompetence' competence.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+            </td>
         </tr>
-        {% endfor%}
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center">Aucune compétence disponible</td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}

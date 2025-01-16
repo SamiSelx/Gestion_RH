@@ -1,0 +1,19 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Contrat Detail
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Contrat Detail</h1>
+  <p><strong>Type de Contrat:</strong> {{ contrat.get_type_contrat_display }}</p>
+  <p><strong>Date de Début:</strong> {{ contrat.date_debut_contrat }}</p>
+  <p><strong>Date de Fin:</strong> {{ contrat.date_fin_contrat }}</p>
+  <p><strong>Salaire:</strong> {{ contrat.salaire }} €</p>
+  <p><strong>État:</strong> {{ contrat.etat }}</p>
+  <p><strong>Employé:</strong> {{ contrat.code_employe.nomE }} {{ contrat.code_employe.prenomE }}</p>
+
+ 
+</div>
+{% endblock %}
