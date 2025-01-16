@@ -1,0 +1,27 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Détails Candidat
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+          <a href="{% url 'liste_candidatures' %}" class="btn btn-secondary">Retour liste candidatures</a>
+
+    <h1 class="text-center mb-4">Détails du Candidat</h1>
+    
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>{{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Adresse:</strong> {{ candidature.candidat.adresseC }}</p>
+            <p><strong>Téléphone:</strong> {{ candidature.candidat.tlfn_candidat }}</p>
+            <p><strong>Statut de la Candidature:</strong> {{ candidature.statut }}</p>
+            <p><strong>Date de Soumission:</strong> {{ candidature.date_soumission|date:"d/m/Y" }}</p>
+
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
