@@ -187,11 +187,11 @@ def send_fiche_de_paie(employe):
     if not hasattr(employe, 'user') or employe.user is None:
         raise ValueError("employe n'a pas un compte")
     today = date.today()
-    # Retrieve necessary data
+    
     # salaire = employe.salaire_base.salaire_base
     primes = Prime.objects.filter(code_employe=employe.id, date_attribuee__month=date.today().month, date_attribuee__year=date.today().year)
     total_prime= sum([prime.prime_montant for prime in primes])
-   # Render HTML for pay slip
+   
     html_content = render_to_string('fiche_de_paie.html', {
         'employe': employe,
         'salaire': calcule_salaire_mensuel(employe,today.month,today.year,0),

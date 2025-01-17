@@ -149,6 +149,15 @@ class Fonctionnalite(models.Model):
 
     def __str__(self):
         return self.name_Fonctionnalite
+    
+class Favoris(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='favoris')
+    path = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.path
 
 # class Favoris(models.Model):
 #     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
