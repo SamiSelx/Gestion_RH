@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from ..app.models import Employe,Absence,DemandeAvanceSalaire,Prime
+from ..app.models import Employe,Absence,DemandeAvanceSalaire,Prime,FicheDePaieS
 from django.core.paginator import Paginator
 from django.contrib import messages
 from datetime import date
@@ -97,20 +97,40 @@ def absenceListe(request):
     })
 
 def listeEmployeSalaire(request):
-     employes = Employe.objects.all()
-     today = date.today()
-     if request.method == 'POST':
-        employeUpdate = Employe.objects.get(pk=request.POST.get('employeId'))
+    employes = Employe.objects.all()
+    
+    today = date.today()
+    if request.method == 'POST':
+        employe = Employe.objects.get(pk=request.POST.get('employeId'))
+        fiche_de_paie = FicheDePaieS.objects.filter(
+            employe=employe,
+            month__year=today.year,
+            month__month=today.month
+        ).first()
+        if fiche_de_paie:
+            messages.add_message(request,messages.ERROR,'the salairy already calculed')
+            return redirect('listeEmployeSalaire')
+        
         heure_supp = Decimal(request.POST.get('heures_supp'))
-        # employe.salaire = calcule_salaire_mensuel(employe,today.month,today.year,heure_supp)
-        for employe in employes:
-            # salaire = calcule_salaire_mensuel(employe,today.month,today.year)
-            # employe.salaire = salaire
-            if employe.id == int(request.POST.get('employeId')):
-                employe.salaire = calcule_salaire_mensuel(employe,today.month,today.year,heure_supp)
-
-
-     return render(request,'pages/rh/salaire/listeEmployeSalaire.html',{'employes':employes}) 
+        salaire_mensuel = calcule_salaire_mensuel(employe,today.month,today.year,heure_supp)
+        FicheDePaieS.objects.get_or_create(
+            employe=employe,
+            month=today.replace(day=1),
+            salaire_mensuel = salaire_mensuel,
+            heures_supp = heure_supp,
+            defaults={'salaire_base': employe.salaire_base.salaire_base} 
+        )
+        # for employe in employes:
+        #     # salaire = calcule_salaire_mensuel(employe,today.month,today.year)
+        #     # employe.salaire = salaire
+        #     if employe.id == int(request.POST.get('employeId')):
+        #         employe.salaire = salaire_mensuel
+    fiche_de_paie = FicheDePaieS.objects.filter(
+            month__year=today.year,
+            month__month=today.month
+        )
+    
+    return render(request,'pages/rh/salaire/listeEmployeSalaire.html',{'employes':employes,'fiche_de_paie':fiche_de_paie}) 
 
 def employeSalaireDetail(request,code_employe):
      employe = Employe.objects.get(pk=code_employe)
@@ -250,10 +270,16 @@ def generate_fiche_de_paie(request,code_employe):
     primes = Prime.objects.filter(code_employe=employe.id, date_attribuee__month=date.today().month, date_attribuee__year=date.today().year)
     total_prime= sum([prime.prime_montant for prime in primes])
     # employe.salaire = calcule_salaire_mensuel(employe,today.month,today.year)
+    fiche_de_paie = FicheDePaieS.objects.filter(
+        employe = employe,
+        month__year=today.year,
+        month__month=today.month
+    ).first()
     html_content = render_to_string('fiche_de_paie.html', {
         'employe': employe,
-        'salaire': calcule_salaire_mensuel(employe,today.month,today.year,0),
+        'salaire': fiche_de_paie.salaire_mensuel,
         'primes': total_prime,
+        'heures_supp':fiche_de_paie.heures_supp,
         'date': timezone.now().strftime('%Y-%m-%d')
     })
 
