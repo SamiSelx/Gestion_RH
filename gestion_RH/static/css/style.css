@@ -254,6 +254,16 @@ table tbody tr:hover{
 
 .offre-emploi{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    column-gap: 20px;
+    row-gap: 30px;
+}
+
+.box-offre{
+    cursor: pointer;
+    transition: 0.4s;
+    box-shadow: 0 0 2px rgba(0 0 0/50%);
+}
+.box-offre:hover{
+    transform: translateY(-20px);
 }

@@ -1,20 +1,20 @@
 from django.contrib import admin
-from .models import Employe,Contrat,Service,Conge,DemandeConge,Competence,Formation,Objectif,Salaire,Prime,Absence,Candidat,Candidature,Offre_employe,FicheDePaieS
+from . import models
 
 # Register your models here.
-admin.site.register(Service)
-admin.site.register(Employe)
-admin.site.register(Contrat)
-admin.site.register(Conge)
-admin.site.register(DemandeConge)
-admin.site.register(Competence)
-admin.site.register(Formation)
-admin.site.register(Objectif)
-admin.site.register(Salaire)
-admin.site.register(Absence)
-admin.site.register(Prime)
-admin.site.register(Candidat)
-admin.site.register(Candidature)
-admin.site.register(Offre_employe)
-admin.site.register(FicheDePaieS)
+admin.site.register(models.Service)
+admin.site.register(models.Employe)
+admin.site.register(models.Contrat)
+admin.site.register(models.Conge)
+admin.site.register(models.DemandeConge)
+admin.site.register(models.Competence)
+admin.site.register(models.Formation)
+admin.site.register(models.Objectif)
+admin.site.register(models.Salaire)
+admin.site.register(models.Absence)
+admin.site.register(models.Prime)
+admin.site.register(models.Candidat)
+admin.site.register(models.Candidature)
+admin.site.register(models.Offre_employe)
+admin.site.register(models.FicheDePaieS)
 
