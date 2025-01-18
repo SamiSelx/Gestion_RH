@@ -3,6 +3,7 @@ from django.utils.timezone import now
 from datetime import date
 from django.conf import settings
 
+# cette fichier contient tous les modeles de notre application sauf CustomUser
     
 class Service(models.Model):
     description_service = models.CharField(max_length=100)
@@ -43,8 +44,6 @@ class Employe(models.Model):
     date_naissance_E = models.DateField()
     date_embauche_E = models.DateField()
     adresse_E = models.CharField(max_length=100)
-    # email = models.EmailField()
-    # phone = models.IntegerField()
     solde_annuel = models.IntegerField(default=30) # par default 30 jours par année
     code_service = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, related_name='employes')
     competences = models.ManyToManyField('Competence', related_name='employes')
@@ -91,12 +90,9 @@ class DateConge(models.Model):
 class DemandeConge(models.Model):
     code_employe = models.ForeignKey(Employe,on_delete=models.CASCADE, related_name='demandeConges')
     code_conge = models.ForeignKey(Conge, on_delete=models.CASCADE, related_name='demandeConges')
-    # date_debut = models.ForeignKey(DateConge, on_delete=models.CASCADE, related_name='demandeConges')
-    date_debut = models.DateField() # for testing then i'll do with foreignKey
+    date_debut = models.DateField() 
     date_fin = models.DateField()
     jours_demandes = models.IntegerField(null=True)
-    # add description
-    # description = models.CharField(max_length=200)
     status = models.CharField(
         max_length=20,
         choices=[('En attente', 'En attente'), ('Approuvé', 'Approuvé'), ('Rejeté', 'Rejeté'), ('Terminé', 'Terminé')],
@@ -132,7 +128,6 @@ class DemandeConge(models.Model):
     # si on click sur (change status) a terminé
     def cloturer_conge(self):
         if self.status != "Terminé":
-            # self.jours_utilises = jours_reellement_utilises
             jours_utilises = self.calculer_jours_reellement_utilises()
             # Remettre les jours non utilisés dans le solde annuel de l'employé
             if self.code_conge.type_conge == 'Annuel':
@@ -141,13 +136,6 @@ class DemandeConge(models.Model):
             self.code_employe.save()
             self.save()
     
-class Fonctionnalite(models.Model):
-    name_Fonctionnalite = models.CharField(max_length=50)
-    path_fonctionnalite = models.CharField(max_length=100)
-    favoris = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name_Fonctionnalite
     
 class Favoris(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='favoris')

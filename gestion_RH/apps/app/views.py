@@ -21,6 +21,12 @@ def home(request):
         })
     return render(request,"pages/home/index.html",{'offres': truncated_offres})
 
+
+# Handle Errors----------
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
 # For Page RH ------------
 def RhTables(request):
     return render(request,"pages/RH/tables/tables.html")
