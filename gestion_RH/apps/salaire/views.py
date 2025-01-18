@@ -6,10 +6,13 @@ from datetime import date
 from .forms import DemandeAvanceSalaireForm
 from datetime import date, timedelta
 from django.utils import timezone
-from django.core.mail import EmailMessage,send_mail
+from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from decimal import Decimal
 from django.conf import settings
+from django.db.models import Count
+import calendar
+
 
 ## PDF Library
 from django.http import FileResponse,HttpResponse
@@ -37,17 +40,6 @@ def employeList(request):
                 employe.absence = "OUI"
             else: 
                  employe.absence = "NON"
-    # if request.method == "POST":
-    #     for employe in employes:
-    #         is_absent = request.POST.get(f'absence_{employe.id}')
-    #         print(is_absent)
-    #         if not is_absent:
-    #             if not Absence.objects.filter(code_employe=employe.id,date_absence__day=today.day,date_absence__month=today.month,date_absence__year=today.year).exists():
-    #                 Absence.objects.create(code_employe=employe, date_absence=today)
-    #         else:
-    #             Absence.objects.filter(code_employe=employe.id, date_absence__day=today.day,date_absence__month=today.month,date_absence__year=today.year).delete()
-            
-    #     return redirect('absenceEmploye') 
 
     return render(request,'pages/rh/absence/listeEmploye.html',{'employes':employes})
 
@@ -94,6 +86,21 @@ def absenceListe(request):
         'absences': absences,
         'month': month,
         'day': day
+    })
+
+def analyseAbsence(request):
+    absences_by_month = (
+        Absence.objects.values('date_absence__month')
+        .annotate(count=Count('id'))
+        .order_by('date_absence__month')
+    )
+
+    labels = [calendar.month_name[item['date_absence__month']] for item in absences_by_month]
+    data = [item['count'] for item in absences_by_month]
+
+    return render(request, 'pages/rh/analyse/analyse_absence.html', {
+        'labels': labels,
+        'data': data,
     })
 
 def listeEmployeSalaire(request):

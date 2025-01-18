@@ -1,0 +1,90 @@
+{% extends "../../../base.html" %}
+{% load static %}
+{% block title %}
+Absence Analyses
+{% endblock %}
+
+
+{% block content %}
+<div class="analysis container mx-auto text-center m-4">
+    <h1>Analyse Absence</h1>
+
+    <div class="mt-4" style="height:70vh">
+        <canvas id="absenceChart" style="width:100%;height:80%"></canvas>
+    </div>
+        
+
+<script>
+    const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+    const dataValues = {{ data|safe }}; 
+    const maxValue = Math.max(...dataValues);
+    const monthColors = [
+    'rgba(213, 255, 99, 0.8)', // January
+    'rgba(54, 162, 235, 0.8)', // February
+    'rgba(255, 206, 86, 0.8)', // March
+    'rgba(75, 192, 192, 0.8)', // April
+    'rgba(153, 102, 255, 0.8)', // May
+    'rgba(255, 159, 64, 0.8)', // June
+    'rgba(201, 203, 207, 0.8)', // July
+    'rgba(255, 99, 132, 0.6)', // August
+    'rgba(54, 162, 235, 0.6)', // September
+    'rgba(255, 206, 86, 0.6)', // October
+    'rgba(75, 192, 192, 0.6)', // November
+    'rgba(153, 102, 255, 0.6)'  // December
+];
+        const barColors = dataValues.map((value, index) => 
+            value === maxValue ? 'rgba(255, 0, 0, 0.59)' : monthColors[index % monthColors.length]
+        );
+        const borderColors = dataValues.map((value, index) =>
+        value === maxValue ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'
+        );
+        const ctx = document.getElementById('absenceChart').getContext('2d');
+        const absenceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: months, 
+                datasets: [{
+                    label: 'Absences par mois',
+                    data: {{ data|safe }}, 
+                    backgroundColor: barColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1, 
+                            callback: function (value) {
+                                if (Number.isInteger(value)) {
+                                    return value; 
+                                }
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const month = labels[tooltipItem.dataIndex];
+                                const count = dataValues[tooltipItem.dataIndex];
+                                return `${month}: ${count} absences`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    {% endblock %}
