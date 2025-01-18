@@ -88,6 +88,13 @@ def login_view(request):
         if user is not None:
           login(request, user)
           messages.add_message(request,messages.SUCCESS, 'Login successful.')
+          if not (user.employe is None):
+              if user.employe.role == "Manager":
+                  return redirect("managerPage")
+              elif user.employe.role == "RH":
+                  return redirect("tables")
+              else: return redirect("employePage")
+
           return redirect("home") 
         else:
           messages.add_message(request,messages.ERROR, 'Invalid email or password.')

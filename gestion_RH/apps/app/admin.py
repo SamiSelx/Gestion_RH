@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Employe,Contrat,Service,Conge,DemandeConge,Competence,Formation,Objectif,Salaire,Prime,Absence,Candidat,Candidature,Offre_employe
+from .models import Employe,Contrat,Service,Conge,DemandeConge,Competence,Formation,Objectif,Salaire,Prime,Absence,Candidat,Candidature,Offre_employe,FicheDePaieS
 
 # Register your models here.
 admin.site.register(Service)
@@ -16,4 +16,5 @@ admin.site.register(Prime)
 admin.site.register(Candidat)
 admin.site.register(Candidature)
 admin.site.register(Offre_employe)
+admin.site.register(FicheDePaieS)
 

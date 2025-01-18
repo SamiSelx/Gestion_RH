@@ -80,7 +80,6 @@ class Conge(models.Model):
         ('Exceptionnel', 'Congé exceptionnel'),
     ]
     type_conge = models.CharField(max_length=20,choices=TYPE_CONGE_CHOICES,default='Annuel')
-    # code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='conges')  
 
     def __str__(self):
         return f"{self.type_conge}"
@@ -149,16 +148,15 @@ class Fonctionnalite(models.Model):
 
     def __str__(self):
         return self.name_Fonctionnalite
+    
+class Favoris(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='favoris')
+    path = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)
+    added_at = models.DateTimeField(auto_now_add=True)
 
-# class Favoris(models.Model):
-#     code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
-#     code_fonctionnalite = models.ForeignKey(Fonctionnalite, on_delete=models.CASCADE)
-
-#     class Meta:
-#         unique_together = ('code_employe', 'code_fonctionnalite')
-
-#     def __str__(self):
-#         return f"Favoris for {self.code_employe}: {self.code_fonctionnalite}"
+    def __str__(self):
+        return self.path
 
 class Offre_employe(models.Model):
   
@@ -327,8 +325,16 @@ class DemandeAvanceSalaire(models.Model):
     def __str__(self):
         return f"Avance de {self.montant} pour {self.code_employe} ({'Approuvée' if self.approuvee else 'En attente'})"
 
-class FicheDePaie(models.Model):
-    code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE)
-    mois = models.DateField()
-    salaire_net = models.DecimalField(max_digits=10, decimal_places=2) 
+class FicheDePaieS(models.Model):
+    employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='fiches_de_paie')
+    month = models.DateField()  # Use the first day of the month for simplicity
+    salaire_base = models.DecimalField(max_digits=10, decimal_places=2)
+    heures_supp = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    salaire_mensuel = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
 
+    def __str__(self):
+        return f"Fiche de Paie - {self.employe.nomE} - {self.month.strftime('%B %Y')}"
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['employe', 'month'], name='unique_salaire_per_month')
+        ]

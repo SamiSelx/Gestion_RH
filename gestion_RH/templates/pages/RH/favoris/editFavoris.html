@@ -1,0 +1,24 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Modifier Favoris
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Modifier le Favoris</h2>
+    
+    <form method="post" class="p-4 border rounded shadow-sm bg-light">
+        {% csrf_token %}
+        <input class="form-control form-control-sm" value={{favoris.name}} name="nameFavoris" type="text" placeholder="Enter a new name for this favorite" required/>        
+
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-between mt-3">
+            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        </div>
+    </form>
+
+    <!-- Back to list link -->
+    <a href="{% url 'gerer_favoris' %}" class="d-block text-center mt-3 text-decoration-none">Retour à la liste des favoris</a>
+</div>
+{% endblock %}
