@@ -121,7 +121,7 @@
                 <!-- will change if the user is authenticated -->
                     {%block navBar %}
                     {% if request.path == "/" %}
-                        <a href="{% url 'home' %}" class="text-body-secondary fw-bold fs-4 ">NameLess</a>
+                        <a href="{% url 'home' %}" class="text-body-secondary fw-bold fs-4 " style="margin-right:30%">NameLess</a>
                         {% comment %} <div style="width:150px">
                           <img  src="{% static 'images/logo.png' %}" alt="NameLess" style="width:100%;"/>
                         </div> {% endcomment %}

@@ -15,15 +15,12 @@ Page d'Accueil
 <div class="container">
 
     <!-- Section À Propos -->
-    <section class="my-5" id="about">
+    <section class="my-5 rounded shadow  p-lg-4" id="about">
         <h1 class="text-center mb-4">À Propos de Nous</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <img src="{% static 'images/homeIMG.jpg' %}" class="img-fluid rounded shadow" alt="Image de l'Entreprise">
-            </div>
+        <div class="row gap-4 justify-content-between">
             <div class="col-md-6">
                 <h2>Notre Mission</h2>
-                <p>Chez [Nom de l'Entreprise], nous nous engageons à offrir des solutions innovantes pour aider les entreprises du monde entier. Nous visons à créer des produits et services de haute qualité qui laissent une empreinte durable sur nos clients et leurs consommateurs. Notre mission est de favoriser une culture de collaboration, d'innovation et d'excellence, en favorisant une croissance durable pour notre entreprise ainsi que pour les communautés que nous servons.</p>
+                <p>Chez <span style="font-weight:bold">NameLess</span>, nous nous engageons à offrir des solutions innovantes pour aider les entreprises du monde entier. Nous visons à créer des produits et services de haute qualité qui laissent une empreinte durable sur nos clients et leurs consommateurs. Notre mission est de favoriser une culture de collaboration, d'innovation et d'excellence, en favorisant une croissance durable pour notre entreprise ainsi que pour les communautés que nous servons.</p>
                 
                 <h2>Notre Vision</h2>
                 <p>Nous imaginons un monde où la technologie et la créativité se combinent pour créer des expériences transformatrices. En repoussant constamment les limites de ce qui est possible, nous visons à être un leader dans notre secteur, en fournissant des solutions de pointe qui dépassent les attentes et établissent de nouvelles normes de réussite.</p>
@@ -36,6 +33,9 @@ Page d'Accueil
                     <li><strong>Excellence :</strong> Nous nous engageons à livrer des résultats exceptionnels et à maintenir des normes de qualité élevées.</li>
                 </ul>
             </div>
+            <div class="col-md-5">
+                <img src="{% static 'images/homeIMG.jpg' %}" class="img-fluid anim" alt="Image de l'Entreprise" >
+            </div>
         </div>
     </section>
 
@@ -47,11 +47,10 @@ Page d'Accueil
             </svg>
             Offres de Travail
         </h1>
-        <div class="row">
+        <div class="offre-emploi">
             {% if offres %}
                 {% for offre in offres %}
-                    <div class="col-md-4 mb-2">
-                        <div class="card shadow" style="width: 19rem;">
+                        <div class="card shadow">
                             <img src="{% static 'images/offre.jpg' %}" class="card-img-top" alt="Image Offre">
                             <div class="card-body">
                                 <h5 class="card-title">{{ offre.titre_offre }}</h5>
@@ -59,7 +58,6 @@ Page d'Accueil
                                 <a href="{% url 'offreEmploye_detail' offre.id %}" class="btn btn-dark">Voir Détails</a>
                             </div>
                         </div>
-                    </div>
                 {% endfor %}
             {% else %}
                 <p class="text-center">Pas d'offre d'emploi disponible</p>
