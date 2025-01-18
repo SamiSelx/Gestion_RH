@@ -21,18 +21,14 @@ def RhRedirect(request):
 def employeeAnalyses(request):
     total_employees = Employe.objects.count()
     diversity_gender = Employe.objects.values('gender').annotate(count=Count('gender'))
-    # top_performers = Employe.objects.filter(performance__gte=4).order_by('-performance')[:10]
     diversity_gender_list = list(diversity_gender)
     diversity_gender_json = json.dumps(diversity_gender_list)
-    # Query data for employees grouped by contract type
     contract_data= Contrat.objects.values('type_contrat').annotate(count=Count('type_contrat'))
 
-    # Convert QuerySet to a list of dictionaries
     contract_data_list = list(contract_data)
 
     # Serialize the data into JSON
     contract_data_json = json.dumps(contract_data_list)
-        # Age distribution (e.g., <25, 25-35, 35-50, >50)
     today = date.today()
     age_distribution = [
         {'range': '<25', 'count': Employe.objects.filter(date_naissance_E__gte=today.replace(year=today.year - 25)).count()},
@@ -84,3 +80,11 @@ def Manager(request):
 def informationPersonnelM(request):
     return render(request,'pages/Manager/information/informationPersonnelM.html')
  
+
+# page RH-------------------
+
+def dashboard(request):
+    nombre_employes = Employe.objects.count()
+    homme_employe = Employe.objects.filter(gender='M').count()
+    femelle_employe = Employe.objects.filter(gender='F').count()
+    return render(request,'pages/rh/dashboard/dashboard.html',{'nombre_employes':nombre_employes,'homme_employe':homme_employe,'femelle_employe':femelle_employe})

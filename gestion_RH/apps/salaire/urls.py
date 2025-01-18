@@ -5,6 +5,7 @@ urlpatterns = [
     path('rh/absence/',views.employeList,name='absenceEmploye'),
     path('rh/absence/<int:employeId>',views.marqueAbsence,name='marqueAbsence'),
     path('rh/absence/filter/',views.absenceListe,name='absenceListe'),
+    path('rh/analyse/absence/',views.analyseAbsence,name='analyseAbsence'),
     path('rh/salaire/',views.listeEmployeSalaire,name='listeEmployeSalaire'),
     path('rh/salaire/<int:code_employe>',views.employeSalaireDetail,name='employeSalaireDetail'),
     path('employe/demandeAvanceSalaire/',views.demandeAvanceSalaire,name='demandeAvanceSalaire'),

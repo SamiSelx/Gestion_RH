@@ -51,12 +51,12 @@ Employe Analyses
 
         var labels = contractData.map(item => item.type_contrat);
         var data = contractData.map(item => item.count);
-
+        const typeContrat = ['CDI','CDD','Stagiaire']
         var ctx = document.getElementById('contractChart').getContext('2d');
         var contractChart = new Chart(ctx, {
             type: 'bar', 
             data: {
-                labels: labels, 
+                labels: typeContrat, 
                 datasets: [{
                     label: 'Nombre des employés',
                     data: data, 

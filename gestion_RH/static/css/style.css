@@ -14,7 +14,6 @@
 }
 
 body{
-    background-color: red;
     min-height: 100vh;
 }
 
@@ -199,4 +198,36 @@ table tbody tr{
 }
 table tbody tr:hover{
     background-color: var(--header-color);
+}
+
+.header-dashboard{
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-analyse{
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+.box-analyse p{
+    font-weight: 600;
+    font-size: 1.1em;
+}
+.box-analyse span{
+    font-size: 1.2em;
+    font-weight: 500;
+}
+.box-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.box-content svg{
+    height: 25px;
+    width: 25px;
+}
+.boxes-analyse{
+    display: flex;
+    gap: 20px;
 }
