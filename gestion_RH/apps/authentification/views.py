@@ -82,7 +82,7 @@ def login_view(request):
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, email=email, password=password)
-        if not user.isActive:
+        if user is not None and not user.isActive:
             messages.add_message(request,messages.ERROR,'Email is not verified, please Check your email!!')
             return render(request,'registration/login.html')
         if user is not None:
