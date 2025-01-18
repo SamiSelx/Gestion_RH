@@ -63,12 +63,13 @@ def candidature_detail(request, id):
 
 
 
+
 def analyse_recrutement(request):
-    # Calculer les périodes (12 mois précédents)
+   
     today = date.today()
     start_date = today - timedelta(days=365)
 
-    # Taux d'évolution des nouveaux recrutés
+    
     recrutements_par_mois = (
         Candidature.objects.filter(date_soumission__gte=start_date)
         .annotate(month=TruncMonth('date_soumission'))
@@ -77,7 +78,7 @@ def analyse_recrutement(request):
         .order_by('month')
     )
 
-    # Taux d'évolution des offres publiées
+    
     offres_par_mois = (
         Offre_employe.objects.filter(date_posted__gte=start_date)
         .annotate(month=TruncMonth('date_posted'))
@@ -86,7 +87,16 @@ def analyse_recrutement(request):
         .order_by('month')
     )
 
-    # Formater les données pour les graphiques
+   
+    candidatures_acceptees = (
+        Candidature.objects.filter(statut='Acceptée', date_soumission__gte=start_date)
+        .annotate(month=TruncMonth('date_soumission'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
+
+    
     recrutements_data = {
         'months': [item['month'].strftime('%Y-%m') for item in recrutements_par_mois],
         'counts': [item['count'] for item in recrutements_par_mois],
@@ -95,10 +105,20 @@ def analyse_recrutement(request):
         'months': [item['month'].strftime('%Y-%m') for item in offres_par_mois],
         'counts': [item['count'] for item in offres_par_mois],
     }
+    candidatures_acceptees_data = {
+        'months': [item['month'].strftime('%Y-%m') for item in candidatures_acceptees],
+        'counts': [item['count'] for item in candidatures_acceptees],
+    }
 
     context = {
         'recrutements_data': recrutements_data,
         'offres_data': offres_data,
+        'candidatures_acceptees_data': candidatures_acceptees_data,
     }
 
     return render(request, 'pages/RH/analyse/analyse_recrutement.html', context)
+
+
+
+
+
