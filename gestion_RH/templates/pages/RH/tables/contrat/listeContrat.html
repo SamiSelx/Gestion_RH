@@ -32,13 +32,8 @@ Contrat
     <a class="btn btn-light mt-3" href="{% url 'listeContrat' %}" type="submit">Retour à la Liste</a>
     <a class="btn btn-light mt-3" href="{% url 'listeFiltrer' %}" type="submit">Filter par catégorie</a>
     <a class="btn btn-light mt-3" href="{% url 'archiveContrat' %}" type="submit">Voir l'Archives</a>
-
-</div>
- 
- 
 </div>
 
-</div>
 <!-- la table des contrats -->
 <table border="1px" class="container my-4 table table-sm align-middle">
     <thead class="table-dark">
@@ -57,19 +52,17 @@ Contrat
 
     <tbody class="table-group-divider">
         {% for contrat in contrats %}
-
-        <tr>
-            <td>{{contrat.type_contrat}}</td>
-            <td> {{contrat.date_debut_contrat}} </td>
-            <td> {{contrat.date_fin_contrat}} </td>
-            <td> {{contrat.salaire}} </td>
-            <td> {{contrat.etat}} </td>
-            <td> {{contrat.code_employe}} </td>
+        <tr {% if contrat.etat == 'non-actif' %}class="table-danger"{% endif %}>
+            <td>{{ contrat.type_contrat }}</td>
+            <td> {{ contrat.date_debut_contrat }} </td>
+            <td> {{ contrat.date_fin_contrat }} </td>
+            <td> {{ contrat.salaire }} </td>
+            <td> {{ contrat.etat }} </td>
+            <td> {{ contrat.code_employe }} </td>
             <td><a href="{% url 'modifierContrat' contrat.id %}" class="btn btn-success"> Edit </a></td>
             <td><a href="{% url 'supprimerContrat' contrat.id %}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir archiver ce contrat ?');"> Supprimer </a></td>
             <td><a href="{% url 'contrat_detail' contrat.id %}" class="btn btn-light"> voir </a></td>
         </tr>
-
         {% empty %}
         <tr>
             <td colspan="9">Aucun contrat trouvé.</td>

@@ -1,17 +1,31 @@
 {% extends "../../../base.html" %}
+
 {% block title %}
     Ajouter Évaluation
 {% endblock %}
 
 {% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Ajouter une Évaluation</h1>
 
-<div class="container">
-          <h1>Create Evaluation</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit"  class="btn btn-outline-success ">Ajouter Evaluation</button>
-    <a href="{% url 'list_evaluations' %}" class="btn btn-light">Retour a la liste</a>
-</form>
+    <!-- Form Section -->
+    <div class="card shadow-sm rounded-3 p-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <!-- Form Fields -->
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+
+                <!-- Buttons Section -->
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-outline-success w-48">Ajouter Évaluation</button>
+                    <a href="{% url 'list_evaluations' %}" class="btn btn-outline-light w-48">Retour à la liste</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
