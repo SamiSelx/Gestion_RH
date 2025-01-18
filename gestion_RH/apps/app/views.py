@@ -5,11 +5,21 @@ from .models import Employe,Contrat
 from django.db.models import Count
 import json
 from datetime import date
+from django.utils.text import Truncator
+
 
 # @login_required
 def home(request):
     offres = Offre_employe.objects.all()
-    return render(request,"pages/home/index.html",{'offres': offres})
+    truncated_offres = []
+
+    for offre in offres:
+        truncated_description = Truncator(offre.description).chars(100)
+        truncated_offres.append({
+            'offre': offre,
+            'truncated_description': truncated_description
+        })
+    return render(request,"pages/home/index.html",{'offres': truncated_offres})
 
 # For Page RH ------------
 def RhTables(request):
@@ -60,7 +70,10 @@ def employeeAnalyses(request):
         'seniority_distribution': json.dumps(seniority_distribution),
         # 'top_performers': top_performers,
     }
-    return render(request,'pages/rh/analyse/employeAnalyses.html',{'context':context})
+    nombre_employes = Employe.objects.count()
+    homme_employe = Employe.objects.filter(gender='M').count()
+    femelle_employe = Employe.objects.filter(gender='F').count()
+    return render(request,'pages/rh/analyse/employeAnalyses.html',{'context':context,'nombre_employes':nombre_employes,'homme_employe':homme_employe,'femelle_employe':femelle_employe})
 #-------------------------
 
 # For Page Employee ------------
@@ -84,7 +97,47 @@ def informationPersonnelM(request):
 # page RH-------------------
 
 def dashboard(request):
+    total_employees = Employe.objects.count()
+    diversity_gender = Employe.objects.values('gender').annotate(count=Count('gender'))
+    diversity_gender_list = list(diversity_gender)
+    diversity_gender_json = json.dumps(diversity_gender_list)
+    contract_data= Contrat.objects.values('type_contrat').annotate(count=Count('type_contrat'))
+
+    contract_data_list = list(contract_data)
+
+    contract_data_json = json.dumps(contract_data_list)
+    today = date.today()
+    age_distribution = [
+        {'range': '<25', 'count': Employe.objects.filter(date_naissance_E__gte=today.replace(year=today.year - 25)).count()},
+        {'range': '25-35', 'count': Employe.objects.filter(
+            date_naissance_E__lt=today.replace(year=today.year - 25),
+            date_naissance_E__gte=today.replace(year=today.year - 35)
+        ).count()},
+        {'range': '35-50', 'count': Employe.objects.filter(
+            date_naissance_E__lt=today.replace(year=today.year - 35),
+            date_naissance_E__gte=today.replace(year=today.year - 50)
+        ).count()},
+        {'range': '>50', 'count': Employe.objects.filter(date_naissance_E__lt=today.replace(year=today.year - 50)).count()},
+    ]
+
+    anciennete_distribution = [
+        {'range': '<5 years', 'count': Employe.objects.filter(date_embauche_E__gte=today.replace(year=today.year - 5)).count()},
+        {'range': '5-10 years', 'count': Employe.objects.filter(
+            date_embauche_E__lt=today.replace(year=today.year - 5),
+            date_embauche_E__gte=today.replace(year=today.year - 10)
+        ).count()},
+        {'range': '>10 years', 'count': Employe.objects.filter(date_embauche_E__lt=today.replace(year=today.year - 10)).count()},
+    ]
+    
+    context = {
+        'total_employees': total_employees,
+        'diversity_gender': diversity_gender_json,
+        'contract_data':contract_data_json,
+        'age_distribution': json.dumps(age_distribution),
+        'seniority_distribution': json.dumps(anciennete_distribution),
+        # 'top_performers': top_performers,
+    }
     nombre_employes = Employe.objects.count()
     homme_employe = Employe.objects.filter(gender='M').count()
     femelle_employe = Employe.objects.filter(gender='F').count()
-    return render(request,'pages/rh/dashboard/dashboard.html',{'nombre_employes':nombre_employes,'homme_employe':homme_employe,'femelle_employe':femelle_employe})
+    return render(request,'pages/rh/dashboard/dashboard.html',{'context':context,'nombre_employes':nombre_employes,'homme_employe':homme_employe,'femelle_employe':femelle_employe})

@@ -50,12 +50,12 @@ Page d'Accueil
         <div class="offre-emploi">
             {% if offres %}
                 {% for offre in offres %}
-                        <div class="card shadow">
+                        <div class="card shadow box-offre">
                             <img src="{% static 'images/offre.jpg' %}" class="card-img-top" alt="Image Offre">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ offre.titre_offre }}</h5>
-                                <p class="card-text">{{ offre.description }}</p>
-                                <a href="{% url 'offreEmploye_detail' offre.id %}" class="btn btn-dark">Voir Détails</a>
+                            <div class="card-body" style="display:flex;justify-content:space-between;flex-direction:column">
+                                <h5 class="card-title fw-bold">{{ offre.offre.titre_offre }}</h5>
+                                <p class="card-text">{{ offre.truncated_description }}</p>
+                                <a href="{% url 'offreEmploye_detail' offre.offre.id %}" class="btn btn-dark">Voir Détails</a>
                             </div>
                         </div>
                 {% endfor %}
