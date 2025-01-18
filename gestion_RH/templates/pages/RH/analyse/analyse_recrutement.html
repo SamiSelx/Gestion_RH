@@ -19,7 +19,6 @@
 <script>
     const recrutementsData = JSON.parse('{{ recrutements_data|escapejs }}');
     const offresData = JSON.parse('{{ offres_data|escapejs }}');
-
     if (recrutementsData.months.length && offresData.months.length) {
         // Graphique pour les recrutements
         const ctx1 = document.getElementById('recrutementsChart').getContext('2d');
