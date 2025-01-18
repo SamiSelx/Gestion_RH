@@ -5,13 +5,24 @@
 {% endblock %}
 
 {% block content %}
+<div class="container mt-5">
+    <!-- Header Section -->
+    <h1 class="text-center mb-4 text-danger">Supprimer l'Évaluation</h1>
+    <p class="text-center mb-4 text-danger">Êtes-vous sûr de vouloir supprimer l'évaluation pour {{ evaluation.employe }} ?</p>
 
-<h1>Delete Evaluation</h1>
-<p>Are you sure you want to delete the evaluation for {{ evaluation.employe }}?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-outline-danger">Confirm</button>
-    <a href="{% url 'list_evaluations' %}" class="btn btn-outline-dark" type="submit">Retour a la liste</a>
+    <!-- Form Section -->
+    <div class="card shadow-sm rounded-3 p-4">
+        <div class="card-body text-center">
+            <form method="post">
+                {% csrf_token %}
 
-</form>
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="submit" class="btn btn-outline-danger">Confirmer</button>
+                    <a href="{% url 'list_evaluations' %}" class="btn btn-outline-dark">Retour à la liste</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -9,11 +9,13 @@ Offre Détail
 {% endblock %}
 
 {% block content %}
-<a href="{% url 'home' %}" class="btn btn-outline-dark">back home</a> 
-  <div class="d-flex bg-warning bg-opacity-10 pt-0" style="min-height: 100vh;"> 
-    
+<!-- Main content wrapper -->
+<div class="d-flex flex-column" style="min-height: 100vh;">
+  
+  <!-- Content section -->
+  <div class="d-flex bg-warning bg-opacity-10 pt-0 flex-grow-1"> 
     <div class="container d-flex flex-column justify-content-center pt-0">
-      
+
       <div class="row">
         
         <!-- Text content section -->
@@ -30,7 +32,8 @@ Offre Détail
             <a href="{% url 'postuler_offre' offre.id %}" class="btn btn-warning btn-lg mt-4">Postuler</a>
           {% else %}
             <button class="btn btn-secondary mt-4" disabled>Offre Inactive</button>
-          {% endif %}
+            
+            {% endif %}
         </div>
 
         <!-- Image section -->
@@ -38,6 +41,15 @@ Offre Détail
           <img src="{% static 'images/offreD.jpg' %}" class="img-fluid rounded-5 rounded-top-0" alt="...">
         </div>
       </div>
+      <div class="mt-3  ">
+        <a href="{% url 'home' %}" class="btn btn-outline-dark">Back to Home</a>
+      </div>
     </div>
+    
   </div>
+  
+ 
+  
+  
+</div>
 {% endblock %}

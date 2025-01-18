@@ -28,7 +28,11 @@ def ajouterContrat(request):
     if request.method == 'POST':
         form = ContratForm(request.POST)
         if form.is_valid():
-            form.save()
+            contrat = form.save()
+            if form.cleaned_data['date_fin_contrat'] == date.today():
+                contrat.etat = 'non-actif'
+                contrat.save()
+
             messages.success(request, "Le contrat a été ajouté avec succès.")
             return redirect('listeContrat')
         else:
@@ -37,17 +41,25 @@ def ajouterContrat(request):
         form = ContratForm()
     return render(request, 'pages/RH/tables/contrat/ajouterContrat.html', {'form': form})
 
-def modifierContrat(request,pk):
+def modifierContrat(request, pk):
     contrat = Contrat.objects.get(id=pk)
+    
     if request.method == 'POST':
-        form = ContratForm(request.POST,instance=contrat)
+        form = ContratForm(request.POST, instance=contrat)
         if form.is_valid():
-            form.save()
+            if form.cleaned_data['date_fin_contrat'] == date.today():
+                contrat.etat = 'non-actif'
+                contrat.save()
+            if form.cleaned_data['date_fin_contrat'] != date.today():
+                contrat.etat = 'actif'
+                contrat.save()
+
+            form.save()  # Save the form data
             return redirect("listeContrat")
     else:
         form = ContratForm(instance=contrat)
-    return render(request,'pages/RH/tables/contrat/modifierContrat.html',{'form':form})
 
+    return render(request, 'pages/RH/tables/contrat/modifierContrat.html', {'form': form})
 
 def archiveContrat(request):
     contrats = Contrat.objects.filter(archive=True)
@@ -69,18 +81,25 @@ def contrat_detail_EMP(request):
     contrat = get_object_or_404(Contrat, id=request.user.employe.id) 
     return render(request, 'pages/Employe/contrat/contrat_detail_EMP.html', {'contrat': contrat})
 
-
 def check_contrat_expiration(request):
     today = date.today()
-    contrats_a_expirer = Contrat.objects.filter(date_fin_contrat=today, etat='actif')  # Filtre pour les contrats dont la date de fin est aujourd'hui
+    # Fetch active contracts that expire today
+    contrats_a_expirer = Contrat.objects.filter(date_fin_contrat=today, etat='actif')
 
     for contrat in contrats_a_expirer:
-      if request.user == contrat.code_employe.user:
-        messages.warning(request, f"Votre contrat avec {contrat.code_employe.nomE} expire aujourd'hui ({contrat.date_fin_contrat}).")
+        # Check if the current user matches the contract's employee
+        if request.user == contrat.code_employe:
+            messages.warning(
+                request, 
+                f"Votre contrat avec {contrat.code_employe.nomE} expire aujourd'hui ({contrat.date_fin_contrat})."
+            )
+        
+        
+        contrat.etat = 'non-actif'
+        contrat.save()
 
-    return render(request, 'pages/RH/tables/contrat/listeContrat.html')
-
-
+    return redirect('listeContrat')
+    
 
 def export_contrat_csv(request, contrat_id):
     contrat = Contrat.objects.get(id=contrat_id)
@@ -117,13 +136,12 @@ def fiche_journal_contrats(request):
     date_debut_filter = request.GET.get('date_debut', '')
     date_fin_filter = request.GET.get('date_fin', '')
     type_filter = request.GET.get('type', '')
-    print(service_filter, date_debut_filter, date_fin_filter, type_filter)
 
-    # contrats = Contrat.objects.all()
+    
     contrats = Contrat.objects.filter(archive=False)
 
     if service_filter:
-        contrats = contrats.filter(code_employe__code_service__id=service_filter)
+        contrats = contrats.filter(code_employe__code_service__description_service=service_filter)
     
     if date_debut_filter and date_fin_filter:
         contrats = contrats.filter(

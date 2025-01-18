@@ -69,9 +69,10 @@ Contrat
             <td><a href="{% url 'contrat_detail' contrat.id %}" class="btn btn-light"> voir </a></td>
         </tr>
         
-        <tr>
-            <td colspan="9">Aucun contrat trouvé.</td>
-        </tr>
+        {% empty %}
+    <tr>
+        <td colspan="9">Aucun contrat trouvé.</td>
+    </tr>
         {% endfor%}
 
     </tbody>
