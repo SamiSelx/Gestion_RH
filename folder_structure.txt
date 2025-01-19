@@ -1,16 +1,17 @@
-git clone https://github.com/wsvincent/lithium.git
-
 -- Gestion_RH
 -- apps:
-  -- Account : register/login
   -- app
-    --> models (folder include all models + CustomUserModel = Utilisateur)
+    --> models (folder include all models - CustomUserModel = Utilisateur)
     --> views (for home page)
+  -- authentification : register/login/logout..
   -- section1
   -- section2
   -- section3
+  .....
+-- gestion_RH (project folder)
+-- static (static files)
 -- Templates
-  --> auth
+  --> registration
   --> pages
     --> Manager
     --> RH
@@ -21,25 +22,6 @@ git clone https://github.com/wsvincent/lithium.git
   --> 403.html
   --> 500.html
   --> base.html
--- static
+  --> fiche_de_paie.html (template fiche de paie)
+-- requirements.txt (include all libraries)
 -- migrate.py
-
-
-<!-- <li><a href="{% url 'dashboard' %}" ><i class="fa-regular fa-chart-bar fa-fw"></i> <span>Dashboard</span></a></li>
-            <li><a href="{% url 'tables' %}"><i class="fa-solid fa-gear fa-fw"></i> <span>Tables</span></a></li>
-            <li><a href="{% url 'salaire' %}"><i class="fa-regular fa-user fa-fw"></i> <span>Salaire</span></a></li>
-            <li><a href="{% url 'conge' %}"><i class="fa-solid fa-diagram-project fa-fw"></i> <span>Congé</span></a></li>
-            <li><a href="{% url 'contrat' %}"><i class="fa-solid fa-graduation-cap fa-fw"></i> <span>Contrat</span></a></li>
-            <li><a href="{% url 'analyse' %}"><i class="fa-regular fa-circle-user fa-fw"></i> <span>Analyse</span></a></li>
-             -->
-
-                 <!-- <header class="header">
-        <div class="container-lg flex">
-            {%block navBar %}
-            <ul  class="flex-row gap-4 header-liste">
-                    <li><a href="/login">login</a></li>
-                    <li><a href="/register">register</a></li>
-            </ul>
-            {% endblock %}
-        </div>
-    </header> -->

@@ -41,11 +41,10 @@ Ce projet vise à créer une application web de gestion des ressources humaines 
 
 ## Fonctionnalités de l'Application
 - **Système de rôles** : Gestion des permissions basée sur les rôles attribués aux utilisateurs (Employé, Candidat, RH, Manager).
-- **Gestion automatisée** : Pages dédiées pour chaque rôle afin de simplifier les processus RH.
+- **Authentification à deux facteurs** : Sécurisation des comptes utilisateurs avec un système d'authentification en deux étapes.
+- **Pages spécifiques pour chaque rôle** : Interfaces dédiées pour chaque rôle afin de simplifier l'expérience utilisateur et d'automatiser les tâches associées.
+- **Gestion automatisée** : Simplification des processus RH grâce à des fonctionnalités dédiées.
 - **Génération de documents** : Création de fiche de paie en format PDF.
 
 ## Aperçu Technique
 L'application suit les bonnes pratiques de développement Django, avec une architecture bien structurée pour assurer la maintenabilité et l'évolutivité.
-
-
-
