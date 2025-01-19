@@ -62,12 +62,9 @@ def register(request):
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=password)
-            # login(request, user)
             send_activation_mail(user,request)
             messages.add_message(request,messages.SUCCESS,'Email is sent, please check your email to verify your Account')
             return redirect('login')
-            # messages.success(request, 'Registration successful.')
-            # return redirect("home")  
         else:
             messages.add_message(request,messages.ERROR, 'Registration failed. Please correct the errors below.')
     else:
@@ -92,7 +89,7 @@ def login_view(request):
               if user.employe.role == "Manager":
                   return redirect("managerPage")
               elif user.employe.role == "RH":
-                  return redirect("tables")
+                  return redirect("dashboard")
               else: return redirect("employePage")
 
           return redirect("home") 
