@@ -12,13 +12,13 @@ Ce projet vise à créer une application web de gestion des ressources humaines 
 1. **Cloner le dépôt GitHub**
    ```bash
    git clone https://github.com/SamiSelx/Gestion_RH
-   cd Gestion-RH/gestion_RH
+   cd Gestion_RH/gestion_RH
    ```
 
 2. **Créer et activer un environnement virtuel**
    ```bash
    python -m venv env
-   source env\Scripts\activate   # Sous Linux : env/bin/activate
+    env\Scripts\activate   # Sous Linux : source env/bin/activate
    ```
 
 3. **Installer les dépendances**
