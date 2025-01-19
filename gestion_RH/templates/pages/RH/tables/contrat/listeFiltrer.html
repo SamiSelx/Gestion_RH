@@ -1,0 +1,84 @@
+{% extends "../../../../base.html" %}
+
+{% block title %}
+Contrat
+{% endblock %}
+
+
+{% block content %}
+<!-- génération d’alertes. -->
+{% if messages %}
+<div class="mt-4">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+ <!-- le filtrage   -->
+ <form method="get">
+    <div class="input-group">
+        
+        <input type="text" class="form-control" name="service" placeholder="Service" value="{{ request.GET.service }}">
+       
+        <input type="date" class="form-control" name="date_debut" value="{{ request.GET.date_debut }}">
+        
+        <input type="date" class="form-control" name="date_fin" value="{{ request.GET.date_fin }}">
+       
+        <select class="form-select" name="type">
+            <option value="">Type de contrat</option>
+            <option value="CDI" {% if request.GET.type == 'CDI' %}selected{% endif %}>CDI</option>
+            <option value="CDD" {% if request.GET.type == 'CDD' %}selected{% endif %}>CDD</option>
+            <option value="Stage" {% if request.GET.type == 'Stage' %}selected{% endif %}>Stage</option>
+        </select>
+        <button class="btn btn-outline-secondary" type="submit">Filtrer</button>
+    </div>
+</form>
+<a class="btn btn-light mt-3" href="{% url 'listeContrat' %}" type="submit">Retour à la Liste</a>
+
+</div>
+ <!-- la table des contrats -->
+<table border="1px" class="container my-4 table table-sm align-middle">
+    <thead class="table-dark">
+        <tr>
+            <td>Conrat Type</td>
+            <td>Date Debut</td>
+            <td>Date Fin</td>
+            <td>Salaire</td>
+            <td>Etat</td>
+            <td>Employe</td>
+            <td>Edit</td>
+            <td>Supprimer</td>
+            <td>Détails</td>
+        </tr>
+    </thead>
+
+    <tbody class="table-group-divider">
+        {% for contrat in contrats %}
+        <tr>
+            <td>{{contrat.type_contrat}}</td>
+            <td> {{contrat.date_debut_contrat}} </td>
+            <td> {{contrat.date_fin_contrat}} </td>
+            <td> {{contrat.salaire}} </td>
+            <td> {{contrat.etat}} </td>
+            <td> {{contrat.code_employe}} </td>
+            <td><a href="{% url 'modifierContrat' contrat.id %}" class="btn btn-success"> Edit </a></td>
+            <td><a href="{% url 'supprimerContrat' contrat.id %}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir archiver ce contrat ?');"> Supprimer </a></td>
+            <td><a href="{% url 'contrat_detail' contrat.id %}" class="btn btn-light"> voir </a></td>
+        </tr>
+        
+        {% empty %}
+    <tr>
+        <td colspan="9">Aucun contrat trouvé.</td>
+    </tr>
+        {% endfor%}
+
+    </tbody>
+</table>
+
+<div class="d-flex align-items-end position-absolute bottom-0 end-0 p-4">
+    <a href="{% url 'ajouterContrat' %}" class="btn btn-outline-dark">Ajouter Contrat</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Ajouter Prime
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Créer une Prime</h2>
+    
+    <!-- Form for adding a Prime -->
+    <form method="post" class="p-4 border rounded shadow-sm bg-light">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <!-- Submit Button -->
+        <div class="d-flex justify-content-between mt-3">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </form>
+
+    <!-- Back to list link -->
+    <a href="{% url 'liste_primes' %}" class="d-block text-center mt-3 text-decoration-none">Retour à la liste des primes</a>
+</div>
+{% endblock %}

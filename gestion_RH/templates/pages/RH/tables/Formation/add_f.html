@@ -1,20 +1,21 @@
 {% extends "../../../../base.html" %}
 
 {% block title %}
-
+Create Formation
 {% endblock %}
-
-
 
 {% block content %}
-  <h2>Create Formation</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-outline-dark">Save</button>
-
-
-  </form>
-  <!-- <a href="{% url 'ListeFormation' %}">Back to List</a> -->
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Créer une Formation</h2>
+    
+    <form method="POST" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <div class="d-flex justify-content-end mt-3">
+            <button type="submit" class="btn btn-outline-dark mx-2">Sauvegarder</button>
+            <a href="{% url 'ListeFormation' %}" class="btn btn-outline-secondary">Retour à la liste</a>
+        </div>
+    </form>
+</div>
 {% endblock %}
-

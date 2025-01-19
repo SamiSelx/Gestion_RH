@@ -1,0 +1,120 @@
+{% extends "../../../base.html" %}
+{% block title %}Rapport d'évaluation{% endblock %}
+{% block content %}
+
+<div class="container">
+    <a href="{% url 'list_evaluations' %}" class="btn btn-outline-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-backspace" viewBox="0 0 16 16">
+            <path d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
+            <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/>
+        </svg>
+    </a>
+    <h1 class="text-center mb-4">Rapport d'évaluation</h1>
+
+    <!-- Employee and Manager Details -->
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Employé</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ evaluation.employe.nomE }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Manager</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ evaluation.employe_manager.nomE }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Evaluation Details -->
+    <div class="row g-4 mt-3">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Date d'Évaluation</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ evaluation.date_evaluation }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">Type d'Évaluation</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ evaluation.type_evaluation }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Score -->
+    <div class="row mt-3">
+        <div class="col-md-6 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Note Totale</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0 text-center">{{ evaluation.note_evaluation_totale }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <!-- Objectives Section -->
+    <div class="mt-4">
+        <h5 class="text-center mb-3">Suivi des Objectifs</h5>
+        <table class="table table-bordered shadow-sm">
+            <thead>
+                <tr>
+                    <th>Objectif</th>
+                    <th>Date Limite</th>
+                    <th>Atteint</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objectif_attient in objectifs %}
+                <tr>
+                    <td>{{ objectif_attient.code_objectif.description_objectif }}</td>
+                    <td>{{ objectif_attient.code_objectif.date_limite }}</td>
+                    <td>
+                        {% if objectif_attient.attient %}
+                            ✅
+                        {% else %}
+                            ❌
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Report Content -->
+    <div class="mt-4">
+        <h5 class="text-center mb-3">Contenu du Rapport</h5>
+        <ul class="list-group shadow-sm">
+            {% for line in contenu_rapport %}
+            <li class="list-group-item">{{ line }}</li>
+            {% empty %}
+            <li class="list-group-item text-muted">Aucun contenu trouvé pour ce rapport.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

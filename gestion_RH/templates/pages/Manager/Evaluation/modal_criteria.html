@@ -1,0 +1,33 @@
+{% extends "../../../base.html" %}
+{% block title %}Critères pour l'évaluation {% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Critères pour l'évaluation #{{ evaluation.id }}</h1>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Liste des Critères</h5>
+        </div>
+        <div class="card-body">
+            {% if evaluation.evaluercritere_set.exists %}
+            <ul class="list-group">
+                {% for critere in evaluation.evaluercritere_set.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ critere.code_critere.description_critere }}</span>
+                    <span class="badge bg-success rounded-pill fs-6">note : {{ critere.note_critere_evaluer }} </span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-center text-muted">Aucun critère trouvé pour cette évaluation.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'list_evaluations' %}" class="btn btn-outline-dark">Retour à la liste</a>
+    </div>
+</div>
+
+{% endblock %}

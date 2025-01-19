@@ -1,0 +1,49 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+Information
+{% endblock %}
+
+{% block content %}
+<div class="employe_information">
+    <h1>Information personnal</h1>
+    <h2>Hey, <span class="employe_name">{{user.employe.nomE}} {{user.employe.prenomE}}</span></h2>
+    <ul>
+        <li>Sexe: {{user.employe.gender}}</li>
+        <li>Date de naissance: {{user.employe.date_naissance_E}}</li>
+        <li>Date embauche: {{user.employe.date_embauche_E}}</li>
+        <li>Solde annuel: {{user.employe.solde_annuel}}</li>
+        <li>Service: {{user.employe.code_service}}</li>
+        <li>Le Role: {{user.employe.role}}</li>
+    </ul>
+    <div class="project-finale box-dashboard">
+        <table>
+            <thead>
+             <tr>
+                <td>Nom</td>
+                <td>Prenom</td>
+                <td>Date De Naissance</td>
+                <td>Sexe</td>
+                <td>Service</td>
+                <td>Date Embauche</td>
+                <td>Solde Annuel</td>
+                <td>Role</td>
+             </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{user.employe.nomE}}</td>
+                    <td>{{user.employe.prenomE}}</td>
+                    <td>{{user.employe.date_naissance_E}}</td>
+                    <td>{{user.employe.gender}}</td>
+                    <td>{{user.employe.code_service}}</td>
+                    <td>{{user.employe.date_embauche_E}}</td>
+                    <td>{{user.employe.solde_annuel}}</td>
+                    <td>{{user.employe.role}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{%endblock%}

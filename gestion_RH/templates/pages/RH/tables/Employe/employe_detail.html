@@ -1,19 +1,80 @@
 {% extends "../../../../base.html" %}
 
 {% block title %}
-detail
+Employee Detail
 {% endblock %}
 
 {% block content %}
+<div class="container">
+  <h1>Employee Detail</h1>
+  <p><strong>Code:</strong> {{ employe.id }}</p>
+  <p><strong>Name:</strong> {{ employe.nomE }} {{ employe.prenomE }}</p>
+  <p><strong>Gender:</strong> {{ employe.get_gender_display }}</p>
+  <p><strong>Date of Birth:</strong> {{ employe.date_naissance_E }}</p>
+  <p><strong>Date of Hire:</strong> {{ employe.date_embauche_E }}</p>
+  <p><strong>Address:</strong> {{ employe.adresse_E }}</p>
+  <p><strong>Service:</strong> {{ employe.code_service.description_service }}</p>
 
-<h1>Employee Detail</h1>
-<p><strong>Code:</strong> {{ employe.id }}</p>
-<p><strong>Name:</strong> {{ employe.nomE }} {{ employe.prenomE }}</p>
-<p><strong>Gender:</strong> {{ employe.get_gender_display }}</p>
-<p><strong>Date of Birth:</strong> {{ employe.date_naissance_E }}</p>
-<p><strong>Date of Hire:</strong> {{ employe.date_embauche_E }}</p>
-<p><strong>Address:</strong> {{ employe.adresse_E }}</p>
-<p><strong>Service Code:</strong> {{ employe.code_service }}</p>
-<a href="{% url 'employe_list' %}">Back to List</a>
+  <!-- Competences -->
+  <h2>Competences</h2>
+  <ul>
+    {% for competence in employe.competences.all %}
+      <li>
+        <strong>Name:</strong> {{ competence.nom_competence }}
+        <br><strong>Description:</strong> {{ competence.description_competence }}
+      </li>
+    {% empty %}
+      <p>No competences listed.</p>
+    {% endfor %}
+  </ul>
+  <hr style="border: 1px solid #474747; margin: 20px 0;">
 
+  <!-- Formations -->
+  <h2>Formations :</h2>
+  <ul>
+    {% for formation in employe.formations.all %}
+      <li>
+        <strong>Title:</strong> {{ formation.titre_formation }}
+        <br><strong>Description:</strong> {{ formation.description_formation }}
+      </li>
+    {% empty %}
+      <p>No formations listed.</p>
+    {% endfor %}
+  </ul>
+  <hr style="border: 1px solid #474747; margin: 20px 0;">
+
+  <!-- Objectifs -->
+  <h2>Objectifs :</h2>
+  <ul>
+    {% for objectif in employe.objectifs.all %}
+      <li>
+         <strong>Description:</strong> {{ objectif.description_objectif }}
+        <br><strong>Deadline:</strong> {{ objectif.date_limite }}
+      </li>
+    {% empty %}
+      <p>No objectives listed.</p>
+    {% endfor %}
+  </ul>
+  <hr style="border: 1px solid #474747; margin: 20px 0;">
+
+  <!-- Historique Conges -->
+  <h2>Historique Conges :</h2>
+  <ul>
+    {% for conge in employe.conges.all %}
+      <li>
+         <strong>Start Date:</strong> {{ conge.date_debut }}
+        <br><strong>End Date:</strong> {{ conge.date_fin }}
+        <br><strong>Type:</strong> {{ conge.type_conge }}
+        <br><strong>Description:</strong> {{ conge.description|default:"No description provided." }}
+      </li>
+      <hr style="border: 1px solid #474747; margin: 5px 0px;">
+    {% empty %}
+      <p>No leave history listed.</p>
+    {% endfor %}
+  </ul>
+  <div class="d-flex justify-content-end mb-3">
+    <a href="{% url 'employe_list' %}" class="btn btn-outline-dark mx-2">Back to List</a>
+    <a href="{% url 'export_employe_csv' employe.id %}" class="btn btn-outline-dark">Download Employee Data</a>
+  </div>
+</div>
 {% endblock %}

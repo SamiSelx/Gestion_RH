@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fiche de Paie</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Fiche de Paie - {{ employe.nomE }}</h1>
+    <p>Date: {{ date }}</p>
+    <table>
+        <tr>
+            <th>Élément</th>
+            <th>Montant</th>
+        </tr>
+        <tr>
+            <td>Salaire de Base</td>
+            <td>{{ employe.salaire_base.salaire_base }} DZD</td>
+        </tr>
+        <tr>
+            <td>Primes</td>
+            <td>{{ primes }} DZD</td>
+        </tr>
+        <tr>
+            <td>Heures Supplémentaires</td>
+            <td>{{heures_supp}}</td>
+        </tr>
+        <tr>
+            <td>Salaire Mensuel</td>
+            <td>{{ salaire }} DZD</td>
+        </tr>
+    </table>
+</body>
+</html>

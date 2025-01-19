@@ -1,0 +1,33 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+    Ajouter critère
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Ajouter Critère de Scores pour l'Évaluation</h1>
+
+    <!-- Form Section -->
+    <div class="card shadow-sm rounded-3 p-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <!-- Form Fields -->
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+                
+                <!-- Buttons Section -->
+                <div class="d-flex mt-4">
+                    <button type="submit" class="btn btn-success w-48 me-2">Ajouter Score</button>
+                    <a href="{% url 'list_evaluations' %}" class="btn btn-outline-dark w-48 me-2">Retour à la liste</a>
+                    <a href="{% url 'list_criteres' %}" class="btn btn-outline-primary">Ajouter un critère spécifique</a>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

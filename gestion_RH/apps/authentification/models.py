@@ -1,3 +1,21 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from ..app.models import Employe,Candidat
 
-# Create your models here.
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('username',)
+    isActive = models.BooleanField(default=False)
+    # ROLE_CHOICES = [
+    #     ('RH', 'RH'),
+    #     ('Manager', 'Manager'),
+    #     ('Employee', 'Employee'),
+    #     ('Candidat', 'Candidat'),
+    # ]
+    # role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Candidat')
+    # when u assign employe add role
+    employe = models.OneToOneField('app.Employe', on_delete=models.CASCADE, null=True, blank=True,related_name='user')
+
+    def __str__(self):
+        return self.email

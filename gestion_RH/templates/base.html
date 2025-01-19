@@ -1,71 +1,208 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static "images/logo.png" %}" type="image/icon type">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/chart.umd.js' %}"></script>
+<!--     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
     <title>{%block title%} {%endblock%}</title>
 </head>
+
 <body style="display: flex;">
-    <!-- {% include "./partiel/header.html" %} -->
     {%  block side_menu %}
+    {% if request.path != '/' and request.path != '' %}
         <div class="side-menu">
-            <div class="logo">Gestion RH</div>
+           <div class="logo">
+              {% if '/rh' in request.path %}
+                Gestion RH
+              {% elif '/manager' in request.path %}
+                Gestion Manager
+              {% elif '/employe' in request.path %}
+                Employe
+              {% endif %}
+           </div> 
             <ul class="liste">
                 {% block liste_side_menu %}
-                    <li><a href="" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
+                {% if '/rh' in request.path %}
+                    <li style="background-color: {% if '/dashboard' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'dashboard' %}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
                         <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z"/>
                         <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                       </svg> <span>Dashboard</span></a></li>
-                    <li><a href="{% url 'tables' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
+                    <li style="background-color: {% if '/table' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'tables' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
                         <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3zM7.5 1H3.75L1.5 4h6zm1 0v3h6l-2.25-3zM15 5H1v10h14z"/>
                       </svg><span>Tables</span></a></li>
-                    <li><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
-                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
-                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
-                      </svg> <span>Salaire</span></a></li>
-                    <li><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-                      </svg> <span>Congé</span></a></li>
-                    <li><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                      <li style="background-color: {% if '/contrat' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'listeContrat' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
                         <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
                         <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
                       </svg> <span>Contrat</span></a></li>
-                    <li><a href=""><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
+                    <li style="background-color: {% if '/salaire' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'listeEmployeSalaire' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                      </svg> <span>Salaire</span></a></li>
+                      <li style="background-color: {% if '/listesAvanceSalaire' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'listesAvanceSalaire' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
+                        <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
+                      </svg> <span>Liste Demande Avance Salaire</span></a></li>
+                      <li style="background-color: {% if '/prime' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'liste_primes' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
+                        <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                        <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+                      </svg> <span>Primes</span></a></li>
+                      <li style="background-color: {% if 'rh/absence' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'absenceEmploye' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                      </svg> <span>Absences</span></a></li>
+                    <li style="background-color: {% if '/conge' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'listeCongeEmploye' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                      </svg> <span>Congé</span></a></li>
+                      <li style="background-color: {% if '/list_evaluations_consultation' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'list_evaluations_consultation' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6 8V1h1v6.117L8.743 6.07a.5.5 0 0 1 .514 0L11 7.117V1h1v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8"/>
+                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"/>
+                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"/>
+                      </svg><span>Consulter evaluation</span></a></li>
+                    {% comment %} <li style="background-color: {% if '/analyse' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'employeeAnalyses' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"/>
-                      </svg><span>Analyse</span></a></li>
+                      </svg><span>Analyse</span></a></li> {% endcomment %}
+                      <li style="background-color: {% if request.path == "/rh/analyse/absence/" %}#f6f6f6;{% endif %}"><a href="{% url 'analyseAbsence' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"/>
+                      </svg><span>Analyse Absence</span></a></li>
+                      <li style="background-color: {% if '/AnalyseRecrutements' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'analyse_recrutement' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
+                        <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
+                      </svg><span>Analyse des recrutements</span></a></li>
+
+
+
+                      
+                {% elif '/manager' in request.path %}
+                <li style="background-color: {% if '/informationM' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'informationPersonnelM' %}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
+                  <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z"/>
+                  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                </svg> <span>Informations</span></a></li>
+                <li style="background-color: {% if '/evaluation' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'list_evaluations' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
+                    <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3zM7.5 1H3.75L1.5 4h6zm1 0v3h6l-2.25-3zM15 5H1v10h14z"/>
+                  </svg><span>Evaluation</span></a></li>
+                  <li style="background-color: {% if '/criteres' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'list_criteres' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
+                    <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3zM7.5 1H3.75L1.5 4h6zm1 0v3h6l-2.25-3zM15 5H1v10h14z"/>
+                  </svg><span>criteres</span></a></li>
+
+
+                {% elif '/employe' in request.path %}
+                <li style="background-color: {% if '/information' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'informationPersonnel' %}" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-bar-graph" viewBox="0 0 16 16">
+                  <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z"/>
+                  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                </svg> <span>Informations</span></a></li>
+              <li style="background-color: {% if '/demandeConge' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'demandeConge' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                </svg> <span>Demande Congé</span></a></li>
+                <li style="background-color: {% if '/demandeAvanceSalaire' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'demandeAvanceSalaire' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
+                  <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                  <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z"/>
+                </svg> <span>Demande Avance Salaire</span></a></li>
+              <li style="background-color: {% if '/contratEMP' in request.path %}#f6f6f6;{% endif %}"><a href="{% url 'contrat_detail_EMP' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                </svg> <span>Contrat Information</span></a></li>
+                {% endif %}
                 {% endblock %}
             </ul>
         </div>
+      {% endif %}
     {% endblock %}
     <main class="flex-grow-1">
         {%block header %}
-        <header class="border-bottom py-3 mb-4">
+        <header class="border-bottom py-3 ">
             <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
                 <!-- will change if the user is authenticated -->
                     {%block navBar %}
-                  <!-- <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
-                  </ul> -->
-                  <div class="col-md-3 text-end align-self-end flex-grow-1">
-                    <a href="/login"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
-                    <a href="/register"><button type="button" class="btn btn-primary">Register</button></a>
+                    {% if request.path == "/" %}
+                        <a href="{% url 'home' %}" class="text-body-secondary fw-bold fs-4 " style="margin-right:30%">NameLess</a>
+                        {% comment %} <div style="width:150px">
+                          <img  src="{% static 'images/logo.png' %}" alt="NameLess" style="width:100%;"/>
+                        </div> {% endcomment %}
+                      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="#about" class="nav-link px-2 link-dark">About</a></li>
+                        <li><a href="#offre" class="nav-link px-2 link-dark">Offre Emploi</a></li>
+                      </ul> 
+                    {% endif %}
+                  <div class="col-md-3 text-end align-self-end flex-grow-1" >
+                              <!-- favoris drop menu -->
+                      {% if '/rh' in request.path %}
+                      {% block favoris_drop_menu %}
+                        <div class="btn-group" >
+                          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                              class="bi bi-person-heart mx-3" viewBox="0 0 16 16">
+                              <path
+                                d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z" />
+                            </svg>
+                            Favoris
+                          </button>
+                          <ul class="dropdown-menu p-2"  style="width:350px">
+        
+  
+                            {% comment %} {% for fonctionnalite in favoris_list %}
+                            <li><a class="dropdown-item" href="{{ fonctionnalite.path_fonctionnalite }}">{{ fonctionnalite.name_Fonctionnalite }}</a></li>
+                            {% empty %}
+                            <li><a class="dropdown-item" href="#">No favoris available</a></li>
+                            {% endfor %} {% endcomment %}
+                            {% for favoris in favoris_list %}
+                            <li><a class="dropdown-item " href="{{ favoris.path }}">{{ favoris.name }}</a></li>
+                            {% empty %}
+                            <li><a class="dropdown-item" href="#">No favoris available</a></li>
+                            {% endfor %}
+
+                            <hr style="border: 1px solid #474747; margin: 5px 0px;">
+                            <li>
+                              <form method="post" action="{% url 'ajouter_to_favoris' %}">
+                                {% csrf_token %}
+                                <input name="fonctionnalite" type="hidden" value={{ request.path }}/>
+                                <input class="form-control form-control-sm" type="text" name="nameFonctionnalite" placeholder="Enter a name for this favorite" required>
+                                <div class="d-flex justify-content-between">
+                                  <button type="submit" class="btn btn-primary mt-2" style="padding:5px">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                    </svg>
+                                  </button>
+                                  <a href="{% url 'gerer_favoris' %}" class="btn btn-outline-secondary" style="padding:5px">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                    </svg>
+                                  </a>
+                                </div>
+                              </form>
+                            </li>
+                            {% comment %} <li><a class="dropdown-item" href="">Gerer Favoris</a></li> {% endcomment %}
+                          </ul>
+                 
+                      </div>
+                    {% endblock %}
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                      <span>Logged In as {{user.username}} | </span>
+                      <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary">Logout</button></a>
+                    {% else %}
+                      <a href="/login"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>
+                      <a href="/register"><button type="button" class="btn btn-primary">Register</button></a>
+                    {% endif %}
                   </div>
                   {%endblock%}  
             </div>
         </header>
-        {%endblock%}
+    {%endblock%}
     {%block content%}
     {% endblock %}
     </main>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/chart.umd.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
 </body>
+
 </html>

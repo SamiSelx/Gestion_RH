@@ -1,14 +1,26 @@
 {% extends "../../../../base.html" %}
 
 {% block title %}
-Modifier contrat
+Modifier Contrat
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <a href="{% url 'listeContrat' %}">Annuler</a>
-    <input type="submit" value="Modifier" class="submit-btn">
-</form>
-{%endblock%}
+<div class="container mt-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-primary text-white text-center">
+      <h2>Modifier Contrat</h2>
+    </div>
+    <div class="card-body">
+      <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <div class="text-end mt-3">
+          <a href="{% url 'listeContrat' %}" class="btn btn-outline-danger me-2">Annuler</a>
+          <button type="submit" class="btn btn-success">Modifier</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

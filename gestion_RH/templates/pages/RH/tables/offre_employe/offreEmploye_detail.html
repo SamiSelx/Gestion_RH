@@ -1,0 +1,55 @@
+{% extends "../../../../base.html" %}
+{% load static %}
+
+{% block title %}
+Offre Détail
+{% endblock %}
+
+{% block side_menu %}
+{% endblock %}
+
+{% block content %}
+<!-- Main content wrapper -->
+<div class="d-flex flex-column" style="min-height: 100vh;">
+  
+  <!-- Content section -->
+  <div class="d-flex bg-warning bg-opacity-10 pt-0 flex-grow-1"> 
+    <div class="container d-flex flex-column justify-content-center pt-0">
+
+      <div class="row">
+        
+        <!-- Text content section -->
+        <div class="col-md-5">
+          <h1>Détail de l'Offre</h1>
+          <p><strong>Titre de l'offre:</strong> {{ offre.titre_offre }}</p>
+          <p><strong>Description:</strong> {{ offre.description }}</p>
+          <p><strong>Location:</strong> {{ offre.location }}</p>
+          <p><strong>Date de Publication:</strong> {{ offre.date_posted|date:"d M Y" }}</p>
+          <p><strong>Statut:</strong>   {{ offre.is_active }} </p>
+          <p><strong>Service:</strong> {{ offre.code_service.description_service }}</p>
+
+          {% if offre.is_active %}
+            <a href="{% url 'postuler_offre' offre.id %}" class="btn btn-warning btn-lg mt-4">Postuler</a>
+          {% else %}
+            <button class="btn btn-secondary mt-4" disabled>Offre Inactive</button>
+            
+            {% endif %}
+        </div>
+
+        <!-- Image section -->
+        <div class="col-md-6">
+          <img src="{% static 'images/offreD.jpg' %}" class="img-fluid rounded-5 rounded-top-0" alt="...">
+        </div>
+      </div>
+      <div class="mt-3  ">
+        <a href="{% url 'home' %}" class="btn btn-outline-dark">Back to Home</a>
+      </div>
+    </div>
+    
+  </div>
+  
+ 
+  
+  
+</div>
+{% endblock %}

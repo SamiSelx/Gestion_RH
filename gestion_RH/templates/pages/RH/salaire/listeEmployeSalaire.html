@@ -1,0 +1,143 @@
+{% extends "../../../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Employe Salaire
+{% endblock %}
+
+
+{% block content %}
+   <div class="container">
+    <h1>Gestion Salaire</h1>
+    <hr>
+    {% comment %} <form method="post" class="text-end">
+        {% csrf_token %}
+        <input type="hidden" name="employeId" value={{employ.id}}/>
+        <button type="submit" class="btn btn-outline-success"> Calcule Salaire </button>
+    </form> {% endcomment %}
+   </div>
+    {% if employes %}
+        <table border="1px" class="container my-4 table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Employé</th>
+                    <th>Salaire de base</th>
+                    <th>Salaire quotidien</th>
+                    <th>Salaire de L'employé</th>
+                    {% comment %} <td>Heures Supplémentaires</td> {% endcomment %}
+                    <th>Calculer Salaire</th>
+                    <th>Fiche de paie</th>
+                    <th>envoyer Fiche de paie</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for employe in employes %}
+                <tr>
+                    <td>{{ employe}}</td>
+                    <td>{{ employe.salaire_base.salaire_base}} $</td>
+                    <td>{{ employe.salaire_base.salaire_quotidien }} $</td>
+                    <td>
+                        {% with fiche=fiches_de_paie|get_fiche_by_employe:employe.id %}
+                        {% if fiche %}
+                            <p>{{ fiche.salaire_mensuel }} $</p>
+                        {% else %}
+                            <p>Salary not calculated yet</p>
+                        {% endif %}
+                    {% endwith %}
+                    </td>
+                    {% comment %} <td>{% if salaire_calcule %}{{salaire_calcule}} {%else%} 0.00 {%endif%}</td> {% endcomment %}
+                    {% comment %} <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-success"> Calcule Salaire </button>
+                        </form>
+                    </td> {% endcomment %}
+                        <form method="post" class="text-end">
+                            {% csrf_token %}
+                            {% comment %} <input type="hidden" name="employeId" value="{{employe.id}}"/> {% endcomment %}
+                            {% comment %} <td>
+                                <input type="number" name="heures_supp" value="0"/>
+                            </td> {% endcomment %}
+                            <td>
+                                {% comment %} <button type="submit" class="btn btn-outline-success"> Calcule Salaire </button> {% endcomment %}
+                                <button 
+                                type="button" 
+                                class="btn btn-outline-success"
+                                data-employe-name="{{ employe.nomE }} {{ employe.prenomE }}" 
+                                data-employe-id={{ employe.id }}
+                                data-bs-toggle="modal" 
+                                data-bs-target="#confirmModal" 
+                                onclick="showConfirmModal(this)">Calculer Salaire</button>
+                            </td>
+                        </form>
+
+                    <td><a href="{% url 'fiche_de_paie' employe.id %}" class="btn btn-outline-primary"> Download </a></td>
+                    <td>
+                        <form action="{% url 'send_fiche_de_paie' employe.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Envoyer Fiche de Paie</button>
+                        </form>
+                    </td>
+                    <td><a href="{% url 'employeSalaireDetail'  employe.id %}" class="btn btn-outline-secondary"> Details </a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+        {% if messages %}
+                        <ul class="mt-3">
+                            {% for message in messages %}
+                                <p class="alert alert-info small">{{ message }}</p>
+                            {% endfor %}
+                        </ul>
+        {% endif %}
+    {% else %}
+        <p>Aucun Employe disponible.</p>
+    {% endif %}
+    
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ajouter les heures supplémentaires s'il existe pour calculer le salaire de <span id="employee-name"></span> ?
+            </div>
+            <div class="modal-footer">
+                <form method="POST" id="salaireForm" class="row">
+                    {% csrf_token %}
+                    <input type="hidden" name="employeId" id="employe-id">
+                    <label class="form-label fw-bold">Heures Supplémentaires</label>
+                    <input class="form-control col" type="number" name="heures_supp" value="0"/>
+                    <button class="form-control btn btn btn-btn-outline-danger col" type="button"  data-bs-dismiss="modal">Annuler</button>
+                    <button class="form-control btn btn-success col" type="submit">Confirmer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    
+    {% comment %} Second solution {% endcomment %}
+    document.addEventListener('DOMContentLoaded', function () {
+        const confirmModal = document.getElementById('confirmModal');
+        confirmModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // Button that triggered the modal
+            const form = document.getElementById('salaireForm');
+            form.setAttribute('action', url); // Update the form's action attribute
+        });
+    });
+    function showConfirmModal(element){
+        const displayNameModel = document.getElementById('employee-name').innerHTML = element.dataset.employeName
+        document.getElementById('employe-id').value = element.dataset.employeId
+     }
+</script>
+
+{% endblock %}
+
+

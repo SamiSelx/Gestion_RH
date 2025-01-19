@@ -1,0 +1,31 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+    Demande Conge
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="text-center">Demande de Congé</h2>
+        
+        {% if messages %}
+            <div class="alert alert-danger">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+
+            
+                <a href="{% url 'employePage' %}" class="btn btn-secondary">Annuler</a>
+                <input type="submit" value="Demande" class="btn btn-primary">
+            
+        </form>
+    </div>
+{% endblock %}

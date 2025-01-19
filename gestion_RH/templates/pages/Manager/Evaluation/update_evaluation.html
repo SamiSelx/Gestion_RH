@@ -1,0 +1,23 @@
+{% extends "../../../base.html" %}
+
+{% block title %}
+    Modifier Evaluation
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Modifier l'Évaluation</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        
+      
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+
+      
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+{% endblock %}

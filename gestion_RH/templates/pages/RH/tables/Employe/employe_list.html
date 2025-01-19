@@ -17,6 +17,7 @@ Liste des Employés
             <td>Prénom</td>
             <td>Genre</td>
             <td>Date Naissance</td>
+            <td>Solde Annuel</td>
             <td>Modifier</td>
             <td>Supprimer</td>
             <td>Détails</td>
@@ -31,6 +32,7 @@ Liste des Employés
             <td>{{ employe.prenomE }}</td>
             <td>{{ employe.gender }}</td>
             <td>{{ employe.date_naissance_E }}</td>
+            <td>{{ employe.solde_annuel }}</td>
             <td><a href="{% url 'employe_update' employe.id %}" class="btn btn-success">Modifier</a></td>
             <td><a href="{% url 'employe_delete' employe.id %}" class="btn btn-danger">Supprimer</a></td>
             <td><a href="{% url 'employe_detail' employe.id %}" class="btn btn-light">Voir</a></td>

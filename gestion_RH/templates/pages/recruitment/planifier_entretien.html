@@ -1,0 +1,32 @@
+{% extends "../../base.html" %}
+{% load static %}
+
+{% block title %}
+Planifier un Entretien 
+{% endblock %}
+
+{% block side_menu %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Planifier un Entretien</h1>
+    <p>Pour Candidature {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
+    <p class="text-muted text-center">Veuillez remplir les informations suivantes pour planifier un entretien pour le candidat: {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-success w-100">Planifier l'Entretien</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-3 text-center">
+        <a href="{% url 'liste_candidatures' %}" class="btn btn-outline-secondary">Retour à la liste des candidatures</a>
+    </div>
+</div>
+{% endblock %}

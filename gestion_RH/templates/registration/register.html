@@ -1,0 +1,114 @@
+{% extends "../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{%  block side_menu %}
+{%endblock%}
+
+{% block content %}
+<div  class=" bg-dark  vh-100 d-flex justify-content-end ">
+        <div class="bg-light w-50 d-flex justify-content-center align-items-center flex-column">  
+                <div class="card shadow p-4 w-100" style="max-width: 80%; border-radius: 15px;">          
+                <div class="card-body">
+                <h2 class="text-center mb-4 text-primary">Register</h2>
+                <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class"row">
+                                <div class="row">
+                                        <div class="mb-2 col">
+                                                <label for="nom" class="form-label fw-bold">Nom</label>
+                                                <input type="text" class="form-control p-2" autofocus id="nom" name="nom" placeholder="Nom"/>
+                                        </div>
+                                        <div class="mb-2 col">
+                                                <label for="prenom" class="form-label fw-bold">Prenom</label>
+                                                <input type="text" class="form-control p-2" id="prenom" name="prenom" placeholder="Prenom"/>
+                                        </div>
+                                </div>
+                                <div class="row">
+                                        <div class="mb-2 col">
+                                                <label for="phone" class="form-label fw-bold">Numéro Téléphone</label>
+                                                <input type="number" class="form-control p-2" id="phone" name="phone" placeholder="Numéro Téléphone"/>
+                                        </div>
+                                        <div class="mb-2 col">
+                                                <label for="adresse" class="form-label fw-bold">Adresse</label>
+                                                <input type="text" class="form-control p-2" id="adresse" name="adresse" placeholder="Adresse"/>
+                                        </div>
+                                </div>
+                                 <!-- username -->
+                                <div class="mb-2 col">
+                                        <label for="exampleFormControlInput1" class="form-label fw-bold">Username</label>
+                                        {{form.username|add_class:"form-control p-2"}}
+                                        {% if form.username.errors %}
+                                        <ul class="text-danger">
+                                                {% for error in form.username.errors %}
+                                                <li>{{ error }}</li>
+                                                {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                </div>
+                             <!-- email -->
+                        <div class="mb-2 col">
+                                <label for="exampleFormControlInput1" class="form-label fw-bold">Email address</label>
+                                {{form.email|add_class:"form-control p-2"}}
+                                {% if form.email.errors %}
+                                <ul class="text-danger">
+                                        {% for error in form.email.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                </ul>
+                                {% endif %}
+                                
+                        </div>
+
+                        <!-- password -->
+                        <div class="mb-2 col">
+                                <label for="InputPassword1" class="form-label fw-bold">Password</label>
+                                {{form.password1|add_class:"form-control p-2"}}
+                                {% if form.password1.errors %}
+                                <ul class="text-danger">
+                                        {% for error in form.password1.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                </ul>
+                                {% endif %}
+                                
+                        </div>
+                        <!-- password -->
+                        <div class="mb-2 col">
+                                <label for="InputPassword1" class="form-label fw-bold">Confirme Password</label>
+                                {{form.password2|add_class:"form-control p-2"}}
+                                {% if form.password2.errors %}
+                                <ul class="text-danger">
+                                        {% for error in form.password2.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                </ul>
+                                {% endif %}
+                                
+                        </div>
+                        </div>
+   
+                        <input class="btn btn-primary rounded-pill btn-lg w-100 mt-4" type="submit" value="Register">
+                </form>
+                <div style="width:100%;margin-top:20px;text-align:center">
+                        <a href="{% url 'login' %}">Login</a>
+                    </div>
+        </div>
+</div>
+                {% if messages %}
+                <ul class="mt-3">
+                        {% for message in messages %}
+                        <li class="alert alert-info">{{ message }}</li>
+                        {% endfor %}
+                </ul>
+                {% endif %}
+                
+        </div>
+</div>
+{% endblock %}
