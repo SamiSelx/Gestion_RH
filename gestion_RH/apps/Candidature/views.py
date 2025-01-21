@@ -1,10 +1,11 @@
-from apps.app.models import Candidature ,Offre_employe
+from apps.app.models import Candidature ,Offre_employe , Entretien
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import CandidatureForm , EntretienForm , CandidatureStatusForm 
 from django.db.models import Count, F
 from django.db.models.functions import TruncMonth
 from datetime import date, timedelta
 import json
+from django.contrib import messages
 
 def success_page(request):
     return render(request, 'pages/recruitment/successPage.html')
@@ -32,17 +33,32 @@ def liste_candidatures(request):
 
 def planifier_entretien(request, candidature_id):
     candidature = get_object_or_404(Candidature, id=candidature_id)
+    
+   
+    if candidature.statut == "Rejetée":
+        # return render(
+        #     request, 
+        #     'pages/recruitment/planifier_entretien.html', 
+        #     {
+        #         'error': "La candidature a été rejetée. Vous ne pouvez pas planifier un entretien.",
+        #         'candidature': candidature
+        #     }
+        # )
+        messages.add_message(request,messages.ERROR,"La candidature a été rejetée. Vous ne pouvez pas planifier un entretien.")
+        return redirect("liste_candidatures")
+    
     if request.method == 'POST':
         form = EntretienForm(request.POST)
         if form.is_valid():
             entretien = form.save(commit=False)
             entretien.candidature = candidature
             entretien.save()
-            return redirect('liste_candidatures')
+            return redirect('liste_candidatures')  # Redirect after saving
     else:
         form = EntretienForm()
+    
+    # Render the form and pass the candidature context
     return render(request, 'pages/recruitment/planifier_entretien.html', {'form': form, 'candidature': candidature})
-
 
 def modifier_statut(request, candidature_id):
     candidature = get_object_or_404(Candidature, id=candidature_id)
@@ -120,4 +136,26 @@ def analyse_recrutement(request):
 
 
 
+def planification_entretien_list(request):
+    entretiens = Entretien.objects.select_related('candidature', 'candidature__candidat', 'candidature__offre').all()
+    return render(request, 'pages/RH/planification/planification_entretien_list.html', {'entretiens': entretiens})
 
+
+def modifier_entretien(request, entretien_id):
+    entretien = get_object_or_404(Entretien, id=entretien_id)
+    if request.method == 'POST':
+        form = EntretienForm(request.POST, instance=entretien)
+        if form.is_valid():
+            form.save()
+            return redirect('planification_entretien_list')  
+    else:
+        form = EntretienForm(instance=entretien)
+    return render(request, 'pages/RH/planification/modifier_entretien.html', {'form': form, 'entretien': entretien})
+
+def supprimer_entretien(request, entretien_id):
+    entretien = get_object_or_404(Entretien, id=entretien_id)
+    if request.method == 'POST':
+        entretien.delete()
+        messages.success(request, "L'entretien a été supprimé avec succès.")
+        return redirect('planification_entretien_list')  
+    return render(request, 'pages/RH/planification/supprimer_entretien.html', {'entretien': entretien})
