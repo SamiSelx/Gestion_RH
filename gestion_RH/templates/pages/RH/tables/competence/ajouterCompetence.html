@@ -1,23 +1,37 @@
 {% extends "../../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
 Ajouter Compétence
 {% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Ajouter une Compétence</h2>
-    <form method="post" class="p-4 border rounded shadow-sm bg-light">
-        {% csrf_token %}
-        
-        <div class="form-group mb-3">
-            {{ form.as_p }}
-        </div>
+    <!-- Page Header -->
+    <h2 class="text-center text-primary mb-4">Ajouter une Nouvelle Compétence</h2>
 
-        <div class="d-flex justify-content-between">
-            <a href="{% url 'listeCompetence' %}" class="btn btn-secondary">Annuler</a>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
+    <!-- Form -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" class="p-4 border rounded shadow bg-light">
+                {% csrf_token %}
+
+                <!-- Form Fields -->
+                <div class="mb-3">
+                    <label for="id_nom_competence" class="form-label">Nom de la Compétence</label>
+                    {{ form.nom_competence|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_description_competence" class="form-label">Description</label>
+                    {{ form.description_competence|add_class:"form-control" }}
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'listeCompetence' %}" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 {% endblock %}

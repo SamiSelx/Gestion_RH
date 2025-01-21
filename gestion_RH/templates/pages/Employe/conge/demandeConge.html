@@ -1,5 +1,5 @@
 {% extends "../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
     Demande Conge
 {% endblock %}
@@ -19,7 +19,23 @@
         <form method="post" class="mt-4">
             {% csrf_token %}
             <div class="form-group">
-                {{ form.as_p }}
+                
+        <div class="mb-3">
+            <label for="id_code_conge" class="form-label">Code Congé</label>
+            {{ form.code_conge|add_class:"form-control" }}
+        </div>
+
+        
+        <div class="mb-3">
+            <label for="id_date_debut" class="form-label">Date de Début</label>
+            {{ form.date_debut|add_class:"form-control" }}
+        </div>
+
+      
+        <div class="mb-3">
+            <label for="id_date_fin" class="form-label">Date de Fin</label>
+            {{ form.date_fin|add_class:"form-control" }}
+        </div>
             </div>
 
             

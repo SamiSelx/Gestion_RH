@@ -1,14 +1,26 @@
 {% extends "../../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
-Edit_service
+Edit Service
 {% endblock %}
 
 {% block content %}
-<h1>Edit Service</h1>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-outline-dark">Save Changes</button>
-</form>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Service</h1>
+    <form method="POST" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        
+        <!-- Description Field -->
+        <div class="mb-3">
+            <label for="id_description_service" class="form-label">Description de Service</label>
+            {{ form.description_service|add_class:"form-control" }}
+        </div>
+        
+        <!-- Save Button -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-outline-dark">Save Changes</button>
+            <a href="{% url 'service_list' %}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

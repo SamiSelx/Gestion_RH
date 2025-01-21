@@ -1,40 +1,47 @@
 {% extends "../../../base.html" %}
 
 {% block title %}
-Contrat Detail
+Détails du Contrat
 {% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-  {% if contrat.etat == 'non-actif' %}
-  <div class="alert alert-warning text-center" role="alert">
-    <strong>Attention:</strong> Ce contrat est actuellement <span class="text-uppercase">non-actif</span>.
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary">Détails du Contrat</h1>
+    <a href="{% url 'listeContrat' %}" class="btn btn-secondary">
+      Retour à la Liste
+    </a>
   </div>
-  {% endif %}
-  
+
+  <!-- Contract Details -->
   <div class="card shadow-sm border-0">
-    <div class="card-header bg-primary text-white text-center">
-      <h2>Contrat Detail</h2>
-    </div>
     <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <p><strong>Type de Contrat:</strong> {{ contrat.get_type_contrat_display }}</p>
-          <p><strong>Date de Début:</strong> {{ contrat.date_debut_contrat }}</p>
-          <p><strong>Date de Fin:</strong> {{ contrat.date_fin_contrat }}</p>
-        </div>
-        <div class="col-md-6">
-          <p><strong>Salaire:</strong> {{ contrat.salaire }} €</p>
-          <p><strong>État:</strong> 
-            <span class="badge 
-              {% if contrat.etat == 'actif' %}bg-success{% else %}bg-secondary{% endif %}">
-              {{ contrat.etat|title }}
-            </span>
-          </p>
-          <p><strong>Employé:</strong> {{ contrat.code_employe.nomE }} {{ contrat.code_employe.prenomE }}</p>
-        </div>
-      </div>
+      <h4 class="card-title text-dark">Informations sur le Contrat</h4>
+      <hr>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>Type de Contrat:</strong> {{ contrat.get_type_contrat_display }}
+        </li>
+        <li class="list-group-item">
+          <strong>Date de Début:</strong> {{ contrat.date_debut_contrat }}
+        </li>
+        <li class="list-group-item">
+          <strong>Date de Fin:</strong> {{ contrat.date_fin_contrat }}
+        </li>
+        <li class="list-group-item">
+          <strong>Salaire:</strong> {{ contrat.salaire }} €
+        </li>
+        <li class="list-group-item">
+          <strong>État:</strong> {{ contrat.etat }}
+        </li>
+        <li class="list-group-item">
+          <strong>Employé:</strong> {{ contrat.code_employe.nomE }} {{ contrat.code_employe.prenomE }}
+        </li>
+      </ul>
     </div>
+  </div>
+
   </div>
 </div>
 {% endblock %}

@@ -1,5 +1,6 @@
 {% extends "../../../../base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}
 Modifier Statut
@@ -7,21 +8,36 @@ Modifier Statut
 
 {% block content %}
 <div class="container mt-5">
-    <h1 class="text-center">Modifier le Statut de la Candidature</h1>
-    <p>Pour :{{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
-    <p class="text-muted text-center">Modifier le statut de la candidature de {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }} pour l'offre "{{ candidature.offre.titre_offre }}"</p>
+    <h1 class="text-center mb-4">Modifier le Statut de la Candidature</h1>
+    
+    <p class="text-center">
+        Pour <strong>{{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</strong>
+    </p>
+    <p class="text-muted text-center mb-4">
+        Modifier le statut de la candidature pour l'offre "<strong>{{ candidature.offre.titre_offre }}</strong>"
+    </p>
 
-    <div class="card mt-4">
+    <!-- Card Section for the Form -->
+    <div class="card shadow-sm rounded-3">
         <div class="card-body">
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-warning w-100">Modifier le Statut</button>
+
+                <!-- Statut Dropdown -->
+                <div class="mb-3">
+                    <label for="id_statut" class="form-label">Sélectionner le Statut :</label>
+                    {{ form.statut|add_class:"form-control" }}
+                    <div class="form-text">Veuillez sélectionner le statut actuel de la candidature.</div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-warning w-100 mt-3">Modifier le Statut</button>
             </form>
         </div>
     </div>
 
-    <div class="mt-3 text-center">
+    <!-- Back to List -->
+    <div class="mt-4 text-center">
         <a href="{% url 'liste_candidatures' %}" class="btn btn-outline-secondary">Retour à la liste des candidatures</a>
     </div>
 </div>

@@ -1,5 +1,5 @@
 {% extends "../../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
 Modifier Candidat
 {% endblock %}
@@ -15,7 +15,31 @@ Modifier Candidat
         
         <!-- Form Fields -->
         <div class="mb-3">
-            {{ form.as_p }}
+            <div class="col-md-8">
+                <form method="post" class="p-4 bg-light rounded shadow-sm">
+                    {% csrf_token %}
+                    
+                    <!-- Form Fields -->
+                    <div class="mb-3">
+                        <label for="id_nomC" class="form-label">Nom</label>
+                        {{ form.nomC|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_prenomC" class="form-label">Prénom</label>
+                        {{ form.prenomC|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_adresseC" class="form-label">Adresse</label>
+                        {{ form.adresseC|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_tlfn_candidat" class="form-label">Téléphone</label>
+                        {{ form.tlfn_candidat|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_user" class="form-label">Utilisateur (optionnel)</label>
+                        {{ form.user|add_class:"form-select" }}
+                    </div>
         </div>
         
         <!-- Action Buttons -->

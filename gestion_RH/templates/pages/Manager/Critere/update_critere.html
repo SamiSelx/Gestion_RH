@@ -1,11 +1,15 @@
 {% extends "../../../base.html" %}
+{% load custom_filters %}
 {% block title %}Modifier un Critère{% endblock %}
 {% block content %}
 <div class="container">
     <h1>Modifier un Critère</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="mb-3">
+            <label for="id_description_critere" class="form-label">Description du Critère</label>
+            {{ form.description_critere|add_class:"form-control" }}
+        </div>
         <button type="submit" class="btn btn-primary">Modifier</button>
         <a href="{% url 'list_criteres' %}" class="btn btn-secondary">Annuler</a>
     </form>

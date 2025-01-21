@@ -6,9 +6,13 @@ Objectif
 
 
 {% block content %}
+
+
 <div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
     Liste des Objectifs :
   </div>
+
+<div class="container">
   <div>
     <a href="{% url 'ajouterObjectif' %}" class="btn btn-outline-dark mt-3">Ajouter Objectif</a>
   </div>
@@ -35,4 +39,5 @@ Objectif
         {% endfor%}
     </tbody>
 </table>
+</div>
 {% endblock %}

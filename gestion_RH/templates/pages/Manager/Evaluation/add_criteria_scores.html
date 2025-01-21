@@ -1,5 +1,5 @@
 {% extends "../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
     Ajouter critère
 {% endblock %}
@@ -16,7 +16,15 @@
                 
                 <!-- Form Fields -->
                 <div class="mb-3">
-                    {{ form.as_p }}
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label for="id_code_critere" class="form-label">Critère</label>
+                            {{ form.code_critere|add_class:"form-select" }}
+                        </div>
+        
+                        <label for="id_note_critere_evaluer" class="form-label">Note du Critère</label>
+                        {{ form.note_critere_evaluer|add_class:"form-control" }}
+                    </div>
                 </div>
                 
                 <!-- Buttons Section -->

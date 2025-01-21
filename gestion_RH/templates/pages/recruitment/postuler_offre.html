@@ -1,5 +1,6 @@
 {% extends "../../base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}
 Postuler - {{ offre.titre_offre }}
@@ -16,7 +17,11 @@ Postuler - {{ offre.titre_offre }}
         <div class="card-body">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <div class="mb-3">
+                    <label for="id_cv" class="form-label">Téléchargez votre CV</label>
+                    {{ form.cv|add_class:"form-control" }}
+                    <div class="form-text">Veuillez télécharger votre CV en format PDF ou Word.</div>
+                </div>
                 
                 <button type="submit" class="btn btn-success w-100">Submit</button>
             </form>
