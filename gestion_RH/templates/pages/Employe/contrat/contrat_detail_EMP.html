@@ -40,6 +40,10 @@ Détails du Contrat
         </li>
       </ul>
     </div>
+    {% if contrat %}
+      <a href="{% url 'export_contrat_pdf_employe' contrat.id %}" class="btn btn-outline-dark mx-2">Télécharger le Contrat PDF</a>
+    {% endif %}
+
   </div>
 
   </div>

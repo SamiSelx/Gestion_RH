@@ -7,6 +7,9 @@ import csv
 from django.http import HttpResponse,FileResponse
 from django.template.loader import render_to_string
 from django.utils import timezone
+from django.core.mail import EmailMessage
+from django.conf import settings
+
 
 ## PDF Library
 from django.http import FileResponse,HttpResponse
@@ -85,7 +88,8 @@ def contrat_detail(request, id):
     return render(request, 'pages/rh/tables/contrat/contrat_detail.html', {'contrat': contrat})
 
 def contrat_detail_EMP(request): 
-    contrat = get_object_or_404(Contrat, code_employe=request.user.employe.id)
+    # contrat = get_object_or_404(Contrat, code_employe=request.user.employe.id)
+    contrat = Contrat.objects.filter(code_employe = request.user.employe.id).first()
     return render(request, 'pages/Employe/contrat/contrat_detail_EMP.html', {'contrat': contrat})
 
 def check_contrat_expiration(request):
@@ -180,3 +184,46 @@ def generate_fiche_de_contrat(request,contrat_id):
     # Move the cursor to the beginning of the BytesIO buffer
     pdf_buffer.seek(0)
     return FileResponse(pdf_buffer, as_attachment=True, filename=f'fiche_de_contrat.pdf')
+
+def send_fiche_de_contrat(contrat):
+    if not hasattr(contrat.code_employe, 'user') or contrat.code_employe.user is None:
+        raise ValueError("employe n'a pas un compte")
+    
+    contrat = Contrat.objects.get(id=contrat.id)
+    html_content = render_to_string('fiche_de_contrat.html', {
+        'employe': contrat.code_employe,
+        'contrat': contrat,
+        'date': timezone.now().strftime('%Y-%m-%d')
+    })
+
+    pdf_buffer = io.BytesIO()
+    pisa_status = pisa.CreatePDF(html_content, dest=pdf_buffer)
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF', status=400)
+    
+    # Move the cursor to the beginning of the BytesIO buffer
+    pdf_buffer.seek(0)
+
+    # Prepare email
+    email = EmailMessage(
+        subject="Votre Fiche de contrat",
+        body="Veuillez trouver ci-joint votre fiche de contrat.",
+        from_email=settings.EMAIL_FROM_USER,
+        to=[contrat.code_employe.user.email], 
+    )
+
+    
+    email.attach(f"fiche_de_contrat_{contrat.id}.pdf", pdf_buffer.read(), "application/pdf")
+
+    # Send email
+    email.send()
+
+def send_fiche_de_contrat_view(request, contrat_id):
+    contrat = get_object_or_404(Contrat, id=contrat_id)
+    try:
+        send_fiche_de_contrat(contrat)
+        messages.success(request, f"Fiche de contrat envoyée à {contrat.code_employe.nomE}.")
+    except Exception as e:
+        messages.error(request, f"Erreur lors de l'envoi: {e}")
+
+    return redirect('listeContrat') 

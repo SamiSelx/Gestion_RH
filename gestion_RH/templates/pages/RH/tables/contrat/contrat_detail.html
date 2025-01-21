@@ -51,10 +51,13 @@ Détails du Contrat
       Supprimer le Contrat
     </a>
        <a href="{% url 'export_contrat_pdf' contrat.id %}" class="btn btn-outline-dark mx-2">Télécharger le Contrat PDF</a>
-    <a href="{% url 'export_contrat_csv' contrat.id %}" class="btn btn-dark">
+    <a href="{% url 'export_contrat_csv' contrat.id %}" class="btn btn-dark mx-2">
       Télécharger le Contrat CSV
     </a>
-
+    <a href="{% url 'send_fiche_de_contrat' contrat.id %}" class="btn btn-primary">
+      Envoyer fiche de paie au employe
+    </a>
+    
   </div>
 </div>
 {% endblock %}

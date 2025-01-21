@@ -13,4 +13,6 @@ urlpatterns = [
     path('rh/tables/contrat/check_expiration/', views.check_contrat_expiration, name="checkContratExpiration") , 
     path('rh/tables/contrat/<int:contrat_id>/export/excel', views.export_contrat_csv, name='export_contrat_csv'),
     path('rh/tables/contrat/<int:contrat_id>/export/pdf', views.generate_fiche_de_contrat, name='export_contrat_pdf'),
+     path('rh/tables/contrat/<int:contrat_id>/send_fiche_de_contrat/',views.send_fiche_de_contrat_view,name='send_fiche_de_contrat'),
+    path('employe/contrat/<int:contrat_id>/export/pdf', views.generate_fiche_de_contrat, name='export_contrat_pdf_employe'),
 ]
