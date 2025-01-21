@@ -20,6 +20,10 @@ Approve Conge
         </div>
     {% endfor %}
 </div>
+{% for message in messages %}
+        {% with message as _ %} 
+        {% endwith %}
+    {% endfor %}
 {% endif %}
 <a href="{% url 'listeCongeEmploye' %}" style="display: block; margin-top: 10px;">Retour à la liste des congés</a>
 {%endblock%}

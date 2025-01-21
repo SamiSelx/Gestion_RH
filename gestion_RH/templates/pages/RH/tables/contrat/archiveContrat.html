@@ -17,6 +17,10 @@ Contrat
         </div>
         {% endfor %}
     </div>
+    {% for message in messages %}
+        {% with message as _ %} 
+        {% endwith %}
+    {% endfor %}
     {% endif %}
 
     <!-- Page Title -->

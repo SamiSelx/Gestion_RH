@@ -107,6 +107,10 @@ Login
                         <li class="alert alert-info">{{ message }}</li>
                         {% endfor %}
                 </ul>
+                {% for message in messages %}
+        {% with message as _ %} 
+        {% endwith %}
+    {% endfor %}
                 {% endif %}
                 
         </div>

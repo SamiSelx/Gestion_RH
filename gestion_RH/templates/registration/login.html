@@ -64,6 +64,10 @@
                                 <p class="alert alert-info small">{{ message }}</p>
                             {% endfor %}
                         </ul>
+                        {% for message in messages %}
+        {% with message as _ %} 
+        {% endwith %}
+    {% endfor %}
                     {% endif %}
 
                 </form>

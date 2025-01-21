@@ -35,5 +35,9 @@ Demande Avance Salaire
         </div>
     {% endfor %}
 </div>
+{% for message in messages %}
+        {% with message as _ %} 
+        {% endwith %}
+    {% endfor %}
 {% endif %}
 {%endblock%}

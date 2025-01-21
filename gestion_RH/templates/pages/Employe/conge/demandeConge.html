@@ -15,6 +15,10 @@
                     <div>{{ message }}</div>
                 {% endfor %}
             </div>
+            {% for message in messages %}
+        {% with message as _ %} 
+        {% endwith %}
+    {% endfor %}
         {% endif %}
 
         <form method="post" class="card mt-4 container mx-auto p-lg-4">

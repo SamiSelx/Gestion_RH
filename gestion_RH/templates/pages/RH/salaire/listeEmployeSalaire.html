@@ -90,7 +90,11 @@ Employe Salaire
                                 <p class="alert alert-info small">{{ message }}</p>
                             {% endfor %}
                         </ul>
-        {% endif %}
+                        {% for message in messages %}
+        {% with message as _ %} 
+        {% endwith %}
+    {% endfor %}
+        {% endif %} 
     {% else %}
         <p>Aucun Employe disponible.</p>
     {% endif %}

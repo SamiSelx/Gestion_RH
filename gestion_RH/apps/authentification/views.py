@@ -84,7 +84,7 @@ def login_view(request):
             return render(request,'registration/login.html')
         if user is not None:
           login(request, user)
-          messages.add_message(request,messages.SUCCESS, 'Login successful.')
+        #   messages.add_message(request,messages.SUCCESS, 'Login successful.')
           if not (user.employe is None):
               if user.employe.role == "Manager":
                   return redirect("managerPage")
