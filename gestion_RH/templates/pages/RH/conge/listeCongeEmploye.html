@@ -13,7 +13,6 @@ Liste Conge Employe
     <button onclick="sortByDate('asc')" class="btn btn-primary">Sort by Date (Asc)</button>
     <button onclick="sortByDate('desc')" class="btn btn-secondary">Sort by Date (Desc)</button>
    </div>
-    {% if conges %}
         <table border="1px" class="container my-4 table table-sm align-middle">
             <thead class="table-dark">
                 <tr>
@@ -49,12 +48,13 @@ Liste Conge Employe
                     <td><a href="" class="btn btn-success"> Edit </a></td>
                     <td><a href="{% url 'supprimerDemandeConge' conge.id %}" class="btn btn-danger"> Supprimer </a></td>
                 </tr>
+                {% empty %}
+                <td>Aucun congé disponible.</td>
                 {% endfor%}
+              
             </tbody>
         </table>
-    {% else %}
-        <p>Aucun congé disponible.</p>
-    {% endif %}
+
     
         <hr class="mt-5">
     <form method="get" action="{% url 'listeCongeEmploye' %}" class="container mx-auto px-4">
