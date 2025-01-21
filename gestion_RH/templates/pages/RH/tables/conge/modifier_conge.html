@@ -1,5 +1,5 @@
 {% extends "../../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
 Modifier Congé
 {% endblock %}
@@ -11,7 +11,10 @@ Modifier Congé
     <!-- Form for modifying Congé -->
     <form method="post" class="p-4 border rounded shadow-sm bg-light">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-group mb-3">
+            <label for="id_type_conge" class="form-label">Type de conge</label>
+            {{ form.type_conge|add_class:"form-select" }}
+        </div>
         
         <!-- Submit Button -->
         <div class="d-flex justify-content-between mt-3">

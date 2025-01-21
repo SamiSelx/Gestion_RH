@@ -1,25 +1,46 @@
 {% extends "../../base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}
-Planifier un Entretien 
+Planifier un Entretien
 {% endblock %}
 
-{% block side_menu %}
-{% endblock %}
+
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center">Planifier un Entretien</h1>
-    <p>Pour Candidature {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
+<div class="container">
+    <h1 class="text-center mb-4">Planifier un Entretien</h1>
+    <p class="text-center">Pour Candidature de {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
     <p class="text-muted text-center">Veuillez remplir les informations suivantes pour planifier un entretien pour le candidat: {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
 
     <div class="card mt-4">
         <div class="card-body">
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                
+                <!-- Date and Time of the Interview -->
+                <div class="mb-3">
+                    <label for="id_date_entretien" class="form-label">Date de l'entretien</label>
+                    {{ form.date_entretien|add_class:"form-control" }}
+                    <div class="form-text">Sélectionnez la date de l'entretien.</div>
+                </div>
 
+                <!-- Place of the Interview -->
+                <div class="mb-3">
+                    <label for="id_lieu" class="form-label">Lieu de l'entretien</label>
+                    {{ form.lieu|add_class:"form-control" }}
+                    <div class="form-text">Indiquez le lieu de l'entretien.</div>
+                </div>
+
+                <!-- Comments (Optional) -->
+                <div class="mb-3">
+                    <label for="id_commentaires" class="form-label">Commentaires (Facultatif)</label>
+                    {{ form.commentaires|add_class:"form-control" }}
+                    <div class="form-text">Ajoutez des commentaires pour l'entretien (facultatif).</div>
+                </div>
+
+                <!-- Submit Button -->
                 <button type="submit" class="btn btn-success w-100">Planifier l'Entretien</button>
             </form>
         </div>

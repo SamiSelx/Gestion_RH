@@ -1,17 +1,49 @@
 {% extends "../../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
 Modifier l'offre
 {% endblock %}
 
 {% block content %}
-<div class="container p-3 mt-4 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
-    Modifier l'offre :
-</div>
+<h2 class="text-center text-primary mb-4">Modifier l'offre :</h2>
 
 <form method="POST" class="container my-4">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="mb-3">
+        <label for="id_titre_offre" class="form-label">Titre de l'Offre</label>
+        {{ form.titre_offre|add_class:"form-control" }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_description" class="form-label">Description</label>
+        {{ form.description|add_class:"form-control" }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_location" class="form-label">Emplacement</label>
+        {{ form.location|add_class:"form-control" }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_code_service" class="form-label">Service</label>
+        {{ form.code_service|add_class:"form-select" }}
+    </div>
+    
+  
+     
+     <div class="mb-3">
+        <label for="id_date_posted" class="form-label">Date de Publication</label>
+        {{ form.date_posted|add_class:"form-control" }}
+    </div>
+    
+   
+    <div class="mb-3">
+        <label for="id_is_active" class="form-label">Statut</label>
+        {{ form.is_active|add_class:"form-check-input" }} 
+        <label class="form-check-label" for="id_is_active">Actif</label>
+    </div>
+
+    
     <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
 

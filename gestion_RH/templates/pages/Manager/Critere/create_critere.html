@@ -1,13 +1,31 @@
 {% extends "../../../base.html" %}
-{% block title %}Créer un Critère{% endblock %}
+{% load custom_filters %}
+{% block title %}
+    Créer un Critère
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <h1>Créer un Critère</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Créer</button>
-        <a href="{% url 'list_criteres' %}" class="btn btn-secondary">Annuler</a>
-    </form>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Créer un Nouveau Critère</h1>
+
+    <div class="card p-4 shadow-sm rounded-3">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <!-- Form Fields -->
+                <div class="mb-3">
+                    <label for="id_description_critere" class="form-label">Description du Critère</label>
+                    {{ form.description_critere|add_class:"form-control" }}
+                </div>
+
+                <!-- Buttons Section -->
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-success w-48">Créer</button>
+                    <a href="{% url 'list_criteres' %}" class="btn btn-outline-secondary w-48">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

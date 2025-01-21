@@ -1,5 +1,5 @@
 {% extends "../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
 Ajouter Prime
 {% endblock %}
@@ -11,7 +11,16 @@ Ajouter Prime
     <!-- Form for adding a Prime -->
     <form method="post" class="p-4 border rounded shadow-sm bg-light">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="mb-3">
+            <label for="id_code_employe" class="form-label">Code Employé</label>
+            {{ form.code_employe|add_class:"form-control" }}
+        </div>
+
+        
+        <div class="mb-3">
+            <label for="id_prime_montant" class="form-label">Montant de la Prime</label>
+            {{ form.prime_montant|add_class:"form-control" }}
+        </div>
         
         <!-- Submit Button -->
         <div class="d-flex justify-content-between mt-3">

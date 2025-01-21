@@ -1,4 +1,5 @@
 {% extends "../../../../base.html" %}
+{% load custom_filters %}
 
 {% block title %}
 Modifier Objectif
@@ -6,16 +7,40 @@ Modifier Objectif
 
 {% block content %}
 <div class="container mt-5">
-    <h1 class="mb-4">Modifier Objectif</h1>
-    <form method="post" class="bg-light p-4 rounded shadow-sm">
-        {% csrf_token %}
-        <div class="mb-3">
-            {{ form.as_p }}
+    <!-- Page Header -->
+    <h1 class="text-center text-primary mb-4">Modifier l'Objectif</h1>
+
+    <!-- Form Card -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post" class="card p-4 shadow-sm border-0 bg-light">
+                {% csrf_token %}
+                
+                <!-- Description -->
+                <div class="mb-3">
+                    <label for="id_description_objectif" class="form-label">Description de l'Objectif</label>
+                    {{ form.description_objectif|add_class:"form-control" }}
+                </div>
+
+                <!-- Date Limite -->
+                <div class="mb-3">
+                    <label for="id_date_limite" class="form-label">Date Limite</label>
+                    {{ form.date_limite|add_class:"form-control" }}
+                </div>
+
+                <!-- Employé -->
+                <div class="mb-3">
+                    <label for="id_code_employe" class="form-label">Employé</label>
+                    {{ form.code_employe|add_class:"form-select" }}
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'listeObjectif' %}" class="btn btn-secondary">Annuler</a>
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </div>
+            </form>
         </div>
-        
-            <a href="{% url 'listeObjectif' %}" class="btn btn-secondary">Annuler</a>
-            <input type="submit" value="Modifier" class="btn btn-primary">
-       
-    </form>
+    </div>
 </div>
 {% endblock %}

@@ -1,5 +1,6 @@
-{% extends "../../../../base.html" %}
 
+{% extends "../../../../base.html" %}
+{% load custom_filters %}
 {% block title %}
 Ajouter Contrat
 {% endblock %}
@@ -16,8 +17,40 @@ Ajouter Contrat
                     <form method="post">
                         {% csrf_token %}
                         <div class="form-group mb-3">
-                            {{ form.as_p }}
+                            <label for="id_type_contrat" class="form-label">Type de Contrat</label>
+                            {{ form.type_contrat|add_class:"form-select" }}
                         </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_date_debut_contrat" class="form-label">Date de Début</label>
+                            {{ form.date_debut_contrat|add_class:"form-control" }}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_date_fin_contrat" class="form-label">Date de Fin</label>
+                            {{ form.date_fin_contrat|add_class:"form-control" }}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_salaire" class="form-label">Salaire</label>
+                            {{ form.salaire|add_class:"form-control" }}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_etat" class="form-label">État</label>
+                            {{ form.etat|add_class:"form-control" }}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_archive" class="form-label">Archivé</label>
+                            {{ form.archive|add_class:"form-check-input" }}
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_code_employe" class="form-label">Code Employé</label>
+                            {{ form.code_employe|add_class:"form-select" }}
+                        </div>
+
                         <div class="d-flex justify-content-between">
                             <a href="{% url 'listeContrat' %}" class="btn btn-danger">Annuler</a>
                             <button type="submit" class="btn btn-success">Enregistrer</button>

@@ -1,5 +1,5 @@
 {% extends "../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
     Modifier Evaluation
 {% endblock %}
@@ -13,7 +13,28 @@
         
       
         <div class="mb-3">
-            {{ form.as_p }}
+            <div class="mb-3">
+                <label for="id_date_evaluation" class="form-label">Date de l'Évaluation</label>
+                {{ form.date_evaluation|add_class:"form-control" }}
+            </div>
+
+           
+
+            <div class="mb-3">
+                <label for="id_type_evaluation" class="form-label">Type d'Évaluation</label>
+                {{ form.type_evaluation|add_class:"form-select" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_employe_manager" class="form-label">Manager</label>
+                {{ form.employe_manager|add_class:"form-select" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_employe" class="form-label">Employé</label>
+                {{ form.employe|add_class:"form-select" }}
+            </div>
+
         </div>
 
       

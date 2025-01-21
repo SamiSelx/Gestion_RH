@@ -1,5 +1,5 @@
 {% extends "../../../../base.html" %}
-
+{% load custom_filters %}
 {% block title %}
 Update Formation
 {% endblock %}
@@ -10,7 +10,16 @@ Update Formation
     
     <form method="POST" class="card p-4 shadow-sm">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="mb-3">
+            <label for="id_titre_formation" class="form-label">Titre de la Formation</label>
+            {{ form.titre_formation|add_class:"form-control" }}
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_description_formation" class="form-label">Description de la Formation</label>
+            {{ form.description_formation|add_class:"form-control" }}
+        </div>
+        
         
         <div class="d-flex justify-content-end mt-3">
             <button type="submit" class="btn btn-outline-dark mx-2">Sauvegarder les modifications</button>
