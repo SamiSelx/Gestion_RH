@@ -36,14 +36,7 @@ def planifier_entretien(request, candidature_id):
     
    
     if candidature.statut == "Rejetée":
-        # return render(
-        #     request, 
-        #     'pages/recruitment/planifier_entretien.html', 
-        #     {
-        #         'error': "La candidature a été rejetée. Vous ne pouvez pas planifier un entretien.",
-        #         'candidature': candidature
-        #     }
-        # )
+    
         messages.add_message(request,messages.ERROR,"La candidature a été rejetée. Vous ne pouvez pas planifier un entretien.")
         return redirect("liste_candidatures")
     
@@ -80,62 +73,6 @@ def candidature_detail(request, id):
 
 
 
-
-def analyse_recrutement(request):
-   
-    today = date.today()
-    start_date = today - timedelta(days=365)
-
-    
-    recrutements_par_mois = (
-        Candidature.objects.filter(date_soumission__gte=start_date)
-        .annotate(month=TruncMonth('date_soumission'))
-        .values('month')
-        .annotate(count=Count('id'))
-        .order_by('month')
-    )
-
-    # print(recrutements_par_mois)
-
-    offres_par_mois = (
-        Offre_employe.objects.filter(date_posted__gte=start_date)
-        .annotate(month=TruncMonth('date_posted'))
-        .values('month')
-        .annotate(count=Count('id'))
-        .order_by('month')
-    )
-    candidatures_acceptees = (
-        Candidature.objects.filter(statut='Acceptée', date_soumission__gte=start_date)
-        .annotate(month=TruncMonth('date_soumission'))
-        .values('month')
-        .annotate(count=Count('id'))
-        .order_by('month')
-    )
-    
-    recrutements_data = {
-        'months': [item['month'].strftime('%Y-%m') for item in recrutements_par_mois],
-        'counts': [item['count'] for item in recrutements_par_mois],
-    }
-    offres_data = {
-        'months': [item['month'].strftime('%Y-%m') for item in offres_par_mois],
-        'counts': [item['count'] for item in offres_par_mois],
-    }
-    candidatures_acceptees_data = {
-        'months': [item['month'].strftime('%Y-%m') for item in candidatures_acceptees],
-        'counts': [item['count'] for item in candidatures_acceptees],
-    }
-
-    context = {
-        'recrutements_data': json.dumps(recrutements_data),
-        'offres_data': json.dumps(offres_data),
-        'candidatures_acceptees_data': json.dumps(candidatures_acceptees_data),
-    }
-
-    return render(request, 'pages/RH/analyse/analyse_recrutement.html', context)
-
-
-
-
 def planification_entretien_list(request):
     entretiens = Entretien.objects.select_related('candidature', 'candidature__candidat', 'candidature__offre').all()
     return render(request, 'pages/RH/planification/planification_entretien_list.html', {'entretiens': entretiens})
@@ -159,3 +96,78 @@ def supprimer_entretien(request, entretien_id):
         messages.success(request, "L'entretien a été supprimé avec succès.")
         return redirect('planification_entretien_list')  
     return render(request, 'pages/RH/planification/supprimer_entretien.html', {'entretien': entretien})
+
+
+
+def analyse_recrutement(request):
+    today = date.today()
+    start_date = today - timedelta(days=365)  # 12 months ago
+
+    # Get recruitment data by month
+    recrutements_par_mois = (
+        Candidature.objects.filter(date_soumission__gte=start_date)
+        .annotate(month=TruncMonth('date_soumission'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
+
+    # Get job offer data by month
+    offres_par_mois = (
+        Offre_employe.objects.filter(date_posted__gte=start_date)
+        .annotate(month=TruncMonth('date_posted'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
+    
+    # Get accepted applications data by month
+    candidatures_acceptees = (
+        Candidature.objects.filter(statut='Acceptée', date_soumission__gte=start_date)
+        .annotate(month=TruncMonth('date_soumission'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
+
+    # Ensure each month from the last 12 months is represented in the data
+    months = [(today - timedelta(days=30 * i)).replace(day=1) for i in range(12)]  # 12 months from today
+    
+    def fill_months_data(data, months):
+        filled_data = []
+        for month in months:
+            count = 0
+            for entry in data:
+                if entry['month'].month == month.month and entry['month'].year == month.year:
+                    count = entry['count']
+                    break
+            filled_data.append({'month': month, 'count': count})
+        return filled_data
+
+    # Fill the months data for each category
+    recrutements_par_mois = fill_months_data(recrutements_par_mois, months)
+    offres_par_mois = fill_months_data(offres_par_mois, months)
+    candidatures_acceptees = fill_months_data(candidatures_acceptees, months)
+
+    # Prepare the data to send to the template
+    recrutements_data = {
+        'months': [item['month'].strftime('%Y-%m') for item in recrutements_par_mois],
+        'counts': [item['count'] for item in recrutements_par_mois],
+    }
+    offres_data = {
+        'months': [item['month'].strftime('%Y-%m') for item in offres_par_mois],
+        'counts': [item['count'] for item in offres_par_mois],
+    }
+    candidatures_acceptees_data = {
+        'months': [item['month'].strftime('%Y-%m') for item in candidatures_acceptees],
+        'counts': [item['count'] for item in candidatures_acceptees],
+    }
+
+    # Pass the data to the template as JSON
+    context = {
+        'recrutements_data': json.dumps(recrutements_data),
+        'offres_data': json.dumps(offres_data),
+        'candidatures_acceptees_data': json.dumps(candidatures_acceptees_data),
+    }
+
+    return render(request, 'pages/RH/analyse/analyse_recrutement.html', context)
