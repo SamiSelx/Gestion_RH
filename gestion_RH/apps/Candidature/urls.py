@@ -10,6 +10,9 @@ path('rh/tables/candidatures/', views.liste_candidatures, name='liste_candidatur
 path('rh/tables/candidatures/modifier_statut/<int:candidature_id>/', views.modifier_statut, name='modifier_statut'),
 path('rh/tables/candidatures/details/<int:id>/', views.candidature_detail, name='detail_candidat'),
 path('rh/AnalyseRecrutements/', views.analyse_recrutement, name='analyse_recrutement'),
+path('rh/planification/', views.planification_entretien_list, name='planification_entretien_list'),
+path('rh/planification/modifier/<int:entretien_id>/', views.modifier_entretien, name='modifier_entretien'),
+path('rh/planification/supprimer/<int:entretien_id>/', views.supprimer_entretien, name='supprimer_entretien'),
 path('success/', views.success_page, name='successPage'),
 
 ]

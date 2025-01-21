@@ -1,0 +1,58 @@
+{% extends "../../../base.html" %}
+{% load custom_filters %}
+
+{% block title %}
+Modifier Entretien
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Modifier l'Entretien</h1>
+
+    <div class="card shadow-lg p-4">
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- Date de l'entretien -->
+            <div class="mb-3">
+                <label for="id_date_entretien" class="form-label">Date de l'entretien :</label>
+                {{ form.date_entretien|add_class:"form-control" }}
+                {% for error in form.date_entretien.errors %}
+                <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Lieu -->
+            <div class="mb-3">
+                <label for="id_lieu" class="form-label">Lieu :</label>
+                {{ form.lieu|add_class:"form-control" }}
+                {% for error in form.lieu.errors %}
+                <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Commentaires -->
+            <div class="mb-3">
+                <label for="id_commentaires" class="form-label">Commentaires :</label>
+                {{ form.commentaires|add_class:"form-control" }}
+                {% for error in form.commentaires.errors %}
+                <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                              <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0"/>
+                              <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+                            </svg> Enregistrer
+                </button>
+                <a href="{% url 'planification_entretien_list' %}" class="btn btn-secondary">
+                     Annuler
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

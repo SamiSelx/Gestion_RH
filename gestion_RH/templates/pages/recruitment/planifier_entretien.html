@@ -10,6 +10,11 @@ Planifier un Entretien
 
 {% block content %}
 <div class="container">
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+    {{ error }}
+    </div>
+    {% endif %}
     <h1 class="text-center mb-4">Planifier un Entretien</h1>
     <p class="text-center">Pour Candidature de {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
     <p class="text-muted text-center">Veuillez remplir les informations suivantes pour planifier un entretien pour le candidat: {{ candidature.candidat.nomC }} {{ candidature.candidat.prenomC }}</p>
