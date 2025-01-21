@@ -25,6 +25,10 @@ Contrat
     Liste des Contrats :
 </div>
 
+<div class="d-flex align-items-end justify-content-end text-end m-2">
+    <a href="{% url 'ajouterContrat' %}" class="btn btn-outline-dark" type="submit">Ajouter Contrat</a>
+</div>
+
 <div class="container my-4">
     <form method="get">
         <div class="input-group">
@@ -75,8 +79,29 @@ Contrat
     </tbody>
 </table>
 
-<div class="d-flex align-items-end position-absolute bottom-0 end-0 p-4">
-    <a href="{% url 'ajouterContrat' %}" class="btn btn-outline-dark" type="submit">Ajouter Contrat</a>
+<div class=" d-flex flex-column align-items-end" style="margin-right:20px"> 
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        <ul class="pagination justify-content-center">
+            {% if contrats.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ contrats.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+    
+            {% for num in contrats.paginator.page_range %}
+            <li class="page-item {% if contrats.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+    
+            {% if contrats.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ contrats.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>    
 </div>
 
 {% endblock %}

@@ -105,7 +105,11 @@ def analyseAbsence(request):
 
 def listeEmployeSalaire(request):
     employes = Employe.objects.all()
-    
+    employes_list = Employe.objects.all()
+    paginator = Paginator(employes_list, 10)
+
+    page_number = request.GET.get('page')
+    employes = paginator.get_page(page_number)
     today = date.today()
     if request.method == 'POST':
         employe = Employe.objects.get(pk=request.POST.get('employeId'))

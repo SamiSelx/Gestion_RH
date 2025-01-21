@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.core.paginator import Paginator
 
 
 ## PDF Library
@@ -17,7 +18,8 @@ import io
 from xhtml2pdf import pisa
 
 def afficheContrat(request):
-    search_query = request.GET.get('search', '')  
+    search_query = request.GET.get('search', '')
+    # contrats = Contrat.objects.all()
 
     if search_query:
         
@@ -27,6 +29,12 @@ def afficheContrat(request):
     else:
         # contrats = Contrat.objects.all()
         contrats = Contrat.objects.filter(archive=False)
+        contrats_list = Contrat.objects.all()
+        paginator = Paginator(contrats_list, 10)
+
+        page_number = request.GET.get('page')
+        contrats = paginator.get_page(page_number)
+        # contrats = Contrat.objects.filter(archive=False)
         
     return render(request,"pages/RH/tables/contrat/listeContrat.html",{'contrats':contrats})
 
