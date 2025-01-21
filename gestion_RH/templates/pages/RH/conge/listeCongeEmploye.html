@@ -8,7 +8,7 @@ Liste Conge Employe
 
 {% block content %}
    <div class="container">
-    <h1>Liste des Congés</h1>
+    <h1>Liste des Demandes des Congés</h1>
     <hr>
     <button onclick="sortByDate('asc')" class="btn btn-primary">Sort by Date (Asc)</button>
     <button onclick="sortByDate('desc')" class="btn btn-secondary">Sort by Date (Desc)</button>
@@ -27,7 +27,6 @@ Liste Conge Employe
                     <th>Status</th>
                     <td>Approver</td>
                     <td>Terminer</td>
-                    <td>Edit</td>
                     <td>Supprimer</td>
                 </tr>
             </thead>
@@ -45,7 +44,6 @@ Liste Conge Employe
                     <td>{{ conge.status }}</td>
                     <td><a href="{% url 'approveCongeEmploye' conge.id %}" class="btn btn-success"> Approver </a></td>
                     <td><a href="{% url 'termineCongeEmploye' conge.id %}" class="btn btn-success"> Terminer </a></td>
-                    <td><a href="" class="btn btn-success"> Edit </a></td>
                     <td><a href="{% url 'supprimerDemandeConge' conge.id %}" class="btn btn-danger"> Supprimer </a></td>
                 </tr>
                 {% empty %}
@@ -61,19 +59,19 @@ Liste Conge Employe
         {% comment %} {{ form.as_p }} {% endcomment %}
         <div class="row">
             <div class="mb-3 col-2">
-                <label for="id_type_conge" class="form-label ">Type of Leave</label>
+                <label for="id_type_conge" class="form-label ">Type conge</label>
                 {{ form.type_conge|add_class:"form-select form-select-sm" }}
             </div>
             <div class="mb-3 col-2">
-                <label for="id_employe" class="form-label">Type of Leave</label>
+                <label for="id_employe" class="form-label">Employe</label>
                 {{ form.employe|add_class:"form-select" }}
             </div>
             <div class="mb-3 col-2">
-                <label for="id_date_debut_from" class="form-label">Type of Leave</label>
+                <label for="id_date_debut_from" class="form-label">Date Debut</label>
                 {{ form.date_debut_from|add_class:"form-select" }}
             </div>
             <div class="mb-3 col-2">
-                <label for="id_date_debut_to" class="form-label">Type of Leave</label>
+                <label for="id_date_debut_to" class="form-label">Date Fin</label>
                 {{ form.date_debut_to|add_class:"form-select" }}
             </div>
         </div>
