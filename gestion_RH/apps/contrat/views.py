@@ -1,10 +1,17 @@
-from django.shortcuts import render,redirect, get_object_or_404 
+from django.shortcuts import render,redirect, get_object_or_404
 from apps.app.models import Contrat
 from .forms import ContratForm
 from django.contrib import messages
 from datetime import date
 import csv
-from django.http import HttpResponse
+from django.http import HttpResponse,FileResponse
+from django.template.loader import render_to_string
+from django.utils import timezone
+
+## PDF Library
+from django.http import FileResponse,HttpResponse
+import io
+from xhtml2pdf import pisa
 
 def afficheContrat(request):
     search_query = request.GET.get('search', '')  
@@ -78,7 +85,7 @@ def contrat_detail(request, id):
     return render(request, 'pages/rh/tables/contrat/contrat_detail.html', {'contrat': contrat})
 
 def contrat_detail_EMP(request): 
-    contrat = get_object_or_404(Contrat, id=request.user.employe.id) 
+    contrat = get_object_or_404(Contrat, code_employe=request.user.employe.id)
     return render(request, 'pages/Employe/contrat/contrat_detail_EMP.html', {'contrat': contrat})
 
 def check_contrat_expiration(request):
@@ -156,3 +163,20 @@ def fiche_journal_contrats(request):
         messages.info(request, "Aucun contrat ne correspond à vos critères de recherche.")
 
     return render(request, 'pages/RH/tables/contrat/listeFiltrer.html', {'contrats': contrats})
+
+def generate_fiche_de_contrat(request,contrat_id):
+    contrat = Contrat.objects.get(id=contrat_id)
+    html_content = render_to_string('fiche_de_contrat.html', {
+        'employe': contrat.code_employe,
+        'contrat': contrat,
+        'date': timezone.now().strftime('%Y-%m-%d')
+    })
+
+    pdf_buffer = io.BytesIO()
+    pisa_status = pisa.CreatePDF(html_content, dest=pdf_buffer)
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF', status=400)
+    
+    # Move the cursor to the beginning of the BytesIO buffer
+    pdf_buffer.seek(0)
+    return FileResponse(pdf_buffer, as_attachment=True, filename=f'fiche_de_contrat.pdf')

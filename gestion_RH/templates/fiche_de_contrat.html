@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fiche de Contrat</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Fiche de Contrat - {{ employe.nomE }}</h1>
+    <p>Date: {{ date }}</p>
+    <table>
+        <tr>
+            <td>Type de Contrat:</td>
+            <td>{{ contrat.type_contrat }}</td>
+        </tr>
+        <tr>
+            <td>Date de Début: </td>
+            <td>{{ contrat.date_debut_contrat }}</td>
+        </tr>
+        <tr>
+            <td>Date de Fin: </td>
+            <td>{{contrat.date_fin_contrat}}</td>
+        </tr>
+        <tr>
+            <td>Etat </td>
+            <td>{{ contrat.etat }}</td>
+        </tr>
+        <tr>
+            <td>Salaire </td>
+            <td>{{ contrat.salaire }} DZD</td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -18,7 +18,8 @@ Contrat Detail
     <a href="{% url 'listeContrat' %}" class="btn btn-outline-dark mx-2">Retour à la Liste</a>
     <a href="{% url 'modifierContrat' pk=contrat.pk %}" class="btn btn-outline-warning mx-2">Modifier le Contrat</a>
     <a href="{% url 'supprimerContrat' pk=contrat.pk %}" class="btn btn-outline-danger mx-2" onclick="return confirm('Êtes-vous sûr de vouloir archiver ce contrat ?');">Supprimer le Contrat</a>
-    <a href="{% url 'export_contrat_csv' contrat.id %}" class="btn btn-outline-dark">Download Contrat</a>
+    <a href="{% url 'export_contrat_pdf' contrat.id %}" class="btn btn-outline-dark mx-2">Download Contrat PDF</a>
+    <a href="{% url 'export_contrat_csv' contrat.id %}" class="btn btn-outline-dark">Download Contrat CSV</a>
   </div>
 </div>
 {% endblock %}
