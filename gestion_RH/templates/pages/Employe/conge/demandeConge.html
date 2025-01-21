@@ -1,5 +1,6 @@
 {% extends "../../../base.html" %}
 {% load custom_filters %}
+
 {% block title %}
     Demande Conge
 {% endblock %}
@@ -16,31 +17,29 @@
             </div>
         {% endif %}
 
-        <form method="post" class="mt-4">
+        <form method="post" class="card mt-4 container mx-auto p-lg-4">
             {% csrf_token %}
-            <div class="form-group">
+                {% comment %} {{ form.as_p }} {% endcomment %}
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Type Conge</label>
+                    {{form.code_conge|add_class:"form-control p-2"}}
+                </div>
+                <div class="row gap-lg-5">
+                    <div class="mb-4 col">
+                        <label class="form-label fw-bold">Date Debut De Conge</label>
+                        {{form.date_debut|add_class:"form-control p-2"}}
+                    </div>
+                    <div class="mb-4 col">
+                        <label class="form-label fw-bold">Date Fin De Conge</label>
+                        {{form.date_fin|add_class:"form-control p-2"}}
+                    </div>
+                </div>
                 
-        <div class="mb-3">
-            <label for="id_code_conge" class="form-label">Code Congé</label>
-            {{ form.code_conge|add_class:"form-control" }}
-        </div>
-
-        
-        <div class="mb-3">
-            <label for="id_date_debut" class="form-label">Date de Début</label>
-            {{ form.date_debut|add_class:"form-control" }}
-        </div>
-
-      
-        <div class="mb-3">
-            <label for="id_date_fin" class="form-label">Date de Fin</label>
-            {{ form.date_fin|add_class:"form-control" }}
-        </div>
-            </div>
-
             
-                <a href="{% url 'employePage' %}" class="btn btn-secondary">Annuler</a>
-                <input type="submit" value="Demande" class="btn btn-primary">
+                <div class="row gap-lg-5">
+                    <a href="{% url 'employePage' %}" class="btn btn-secondary col ">Annuler</a>
+                    <input type="submit" value="Demande" class="btn btn-primary col">
+                </div>
             
         </form>
     </div>

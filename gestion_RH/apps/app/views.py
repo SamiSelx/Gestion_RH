@@ -21,12 +21,18 @@ def home(request):
         })
     return render(request,"pages/home/index.html",{'offres': truncated_offres})
 
+
+# Handle Errors----------
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
 # For Page RH ------------
 def RhTables(request):
     return render(request,"pages/RH/tables/tables.html")
 
 def RhRedirect(request):
-    return redirect('tables')
+    return redirect('dashboard')
 
 def employeeAnalyses(request):
     total_employees = Employe.objects.count()
@@ -37,7 +43,6 @@ def employeeAnalyses(request):
 
     contract_data_list = list(contract_data)
 
-    # Serialize the data into JSON
     contract_data_json = json.dumps(contract_data_list)
     today = date.today()
     age_distribution = [
@@ -52,7 +57,6 @@ def employeeAnalyses(request):
         ).count()},
         {'range': '>50', 'count': Employe.objects.filter(date_naissance_E__lt=today.replace(year=today.year - 50)).count()},
     ]
-    # Seniority distribution (e.g., <5 years, 5-10 years, >10 years)
     seniority_distribution = [
         {'range': '<5 years', 'count': Employe.objects.filter(date_embauche_E__gte=today.replace(year=today.year - 5)).count()},
         {'range': '5-10 years', 'count': Employe.objects.filter(
@@ -68,7 +72,6 @@ def employeeAnalyses(request):
         'contract_data':contract_data_json,
         'age_distribution': json.dumps(age_distribution),
         'seniority_distribution': json.dumps(seniority_distribution),
-        # 'top_performers': top_performers,
     }
     nombre_employes = Employe.objects.count()
     homme_employe = Employe.objects.filter(gender='M').count()
@@ -78,7 +81,6 @@ def employeeAnalyses(request):
 
 # For Page Employee ------------
 def employe(request):
-    # return render(request,'pages/employe/employePage.html')
     return redirect('informationPersonnel')
 
 def informationPersonnel(request):
@@ -135,7 +137,6 @@ def dashboard(request):
         'contract_data':contract_data_json,
         'age_distribution': json.dumps(age_distribution),
         'seniority_distribution': json.dumps(anciennete_distribution),
-        # 'top_performers': top_performers,
     }
     nombre_employes = Employe.objects.count()
     homme_employe = Employe.objects.filter(gender='M').count()

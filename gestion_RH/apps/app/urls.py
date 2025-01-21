@@ -4,6 +4,7 @@ from . import views
 from ..conge.views import demandeConge 
 from django.shortcuts import render
 
+
 urlpatterns = [
     path('',views.home,name='home'),
     path('rh/tables/',views.RhTables,name='tables'),
