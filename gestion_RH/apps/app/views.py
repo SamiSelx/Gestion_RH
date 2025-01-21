@@ -10,6 +10,20 @@ from django.utils.text import Truncator
 
 # @login_required
 def home(request):
+    # k = 20
+    # for i in range(5):
+    #     emp = Employe.objects.get(pk = k)
+    #     if emp:
+    #         Contrat.objects.create(
+    #             type_contrat= "Stagiaire",
+    #             date_debut_contrat = "2018-10-4",
+    #             date_fin_contrat = "2018-12-04",
+    #             salaire = 600000,
+    #             etat = "non-actif",
+    #             code_employe = emp,
+    #         )
+    #     k = k-1
+
     offres = Offre_employe.objects.all()
     truncated_offres = []
 
