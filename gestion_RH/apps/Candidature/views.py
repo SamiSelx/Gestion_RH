@@ -35,15 +35,17 @@ def planifier_entretien(request, candidature_id):
     candidature = get_object_or_404(Candidature, id=candidature_id)
     
    
-    # if candidature.statut == "Rejetée":
-    #     return render(
-    #         request, 
-    #         'pages/recruitment/planifier_entretien.html', 
-    #         {
-    #             'error': "La candidature a été rejetée. Vous ne pouvez pas planifier un entretien.",
-    #             'candidature': candidature
-    #         }
-    #     )
+    if candidature.statut == "Rejetée":
+        # return render(
+        #     request, 
+        #     'pages/recruitment/planifier_entretien.html', 
+        #     {
+        #         'error': "La candidature a été rejetée. Vous ne pouvez pas planifier un entretien.",
+        #         'candidature': candidature
+        #     }
+        # )
+        messages.add_message(request,messages.ERROR,"La candidature a été rejetée. Vous ne pouvez pas planifier un entretien.")
+        return redirect("liste_candidatures")
     
     if request.method == 'POST':
         form = EntretienForm(request.POST)
