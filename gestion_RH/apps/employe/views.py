@@ -67,11 +67,6 @@ def export_employe_csv(request, employe_id):
     competences = ", ".join([competence.nom_competence for competence in employe.competences.all()])
     formations = ", ".join([formation.titre_formation for formation in employe.formations.all()])
     objectifs = ", ".join([f"{objectif.description_objectif} (Deadline: {objectif.date_limite})" for objectif in employe.objectifs.all()])
-    conges = ", ".join([
-        f"{conge.type_conge} (Start: {conge.date_debut}, End: {conge.date_fin}, Desc: {conge.description or 'No description'})"
-        for conge in employe.conges.all()
-    ])
-
     
     writer.writerow([
         employe.id,
@@ -84,7 +79,7 @@ def export_employe_csv(request, employe_id):
         competences,
         formations,
         objectifs,
-        conges
+        
     ])
 
     return response

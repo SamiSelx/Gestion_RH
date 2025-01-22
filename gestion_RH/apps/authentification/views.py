@@ -16,6 +16,7 @@ from django.conf import settings
 def send_activation_mail(user,request):
     current_site = get_current_site(request)
     subject = 'Activate Your Account'
+    # encode id of the user so the user won't know his id
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     token = generate_token.make_token(user)
     body = render_to_string('registration/activate.html',{
