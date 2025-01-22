@@ -10,24 +10,11 @@ from django.utils.text import Truncator
 
 # @login_required
 def home(request):
-    # k = 20
-    # for i in range(5):
-    #     emp = Employe.objects.get(pk = k)
-    #     if emp:
-    #         Contrat.objects.create(
-    #             type_contrat= "Stagiaire",
-    #             date_debut_contrat = "2018-10-4",
-    #             date_fin_contrat = "2018-12-04",
-    #             salaire = 600000,
-    #             etat = "non-actif",
-    #             code_employe = emp,
-    #         )
-    #     k = k-1
-
     offres = Offre_employe.objects.all()
     truncated_offres = []
 
     for offre in offres:
+        # limite la taille de description
         truncated_description = Truncator(offre.description).chars(100)
         truncated_offres.append({
             'offre': offre,
@@ -117,6 +104,8 @@ def dashboard(request):
     diversity_gender = Employe.objects.values('gender').annotate(count=Count('gender'))
     diversity_gender_list = list(diversity_gender)
     diversity_gender_json = json.dumps(diversity_gender_list)
+
+    # les types de contrats avec leurs nombre
     contract_data= Contrat.objects.values('type_contrat').annotate(count=Count('type_contrat'))
 
     contract_data_list = list(contract_data)

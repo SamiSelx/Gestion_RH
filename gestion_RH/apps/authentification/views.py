@@ -31,12 +31,14 @@ def send_activation_mail(user,request):
 
 def activate_user(request,uidb64,token):
     try:
+        # get the id of user
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = CustomUser.objects.get(pk= uid)
 
     except Exception as e:
         user = None
     
+    # if the user exist then verify token
     if user and generate_token.check_token(user,token):
         user.isActive = True
         user.save()

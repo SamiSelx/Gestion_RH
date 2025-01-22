@@ -158,24 +158,25 @@ def employeSalaireDetail(request,code_employe):
 def calcule_salaire_mensuel(employe, month, year,heure_supp):
     salaire_base = employe.salaire_base.salaire_base
     
-    days_in_month = (date(year, month + 1, 1) - timedelta(days=1)).day
-    workdays = [d for d in range(1, days_in_month + 1) if date(year, month, d).weekday() in range(5)]
-    salaire_quotidien = salaire_base / len(workdays)
+    salaire_quotidien = employe.salaire_base.salaire_quotidien
+    
+    # pour calculer les heures supplémentaires
     salaire_par_heure = salaire_quotidien / 8
     
-    # Check absences in the month
+    
     absences = Absence.objects.filter(code_employe=employe.id, date_absence__month=month, date_absence__year=year).count()
     deduction = absences * salaire_quotidien
 
-    # Calculate primes for the month
+    
     primes = Prime.objects.filter(code_employe=employe.id, date_attribuee__month=month, date_attribuee__year=year)
     total_primes = sum([prime.prime_montant for prime in primes])
     salaireAvances = DemandeAvanceSalaire.objects.filter(code_employe=employe.id,date_demande__month=month,date_demande__year=year)
     total_salaire_avance = sum([salaireAvance.montant for salaireAvance in salaireAvances])
     
-    # Final salary
+    
     salaire_mensuel = round(salaire_base - deduction + (salaire_par_heure * heure_supp )+ total_primes - total_salaire_avance,2)
     return salaire_mensuel
+
 ## Employe:
 def demandeAvanceSalaire(request):
     employe = get_object_or_404(Employe,id=request.user.employe.id)
@@ -185,7 +186,7 @@ def demandeAvanceSalaire(request):
         ## nombre demande d'avance par an
         nombreDemandeAvance = DemandeAvanceSalaire.objects.filter(code_employe = request.user.employe.id,date_demande__year = today.year).count()
         if nombreDemandeAvance == 2:
-             messages.error(request,"Tu as dépasser le nombre de demande, contact RH plus de detaile")
+             messages.error(request,"Tu as dépassé le nombre de demandes. Contacte le service RH pour plus de détails.")
              return render(request,'pages/employe/salaire/demandeAvanceSalaire.html',{'form':form}) 
         form = DemandeAvanceSalaireForm(request.POST,employe_id=employe.id) 
         if form.is_valid():
@@ -308,6 +309,6 @@ def generate_fiche_de_paie(request,code_employe):
     if pisa_status.err:
         return HttpResponse('Error generating PDF', status=400)
     
-    # Move the cursor to the beginning of the BytesIO buffer
+    
     pdf_buffer.seek(0)
     return FileResponse(pdf_buffer, as_attachment=True, filename=f'fiche_de_paie.pdf')
