@@ -7,11 +7,13 @@ Supprimer Demande Conge
 
 {% block content %}
 
-<h1>Supprimer le Congé</h1>
-<p>Êtes-vous sûr de vouloir supprimer ce congé ?</p>
-<form method="post">
+<h1 class="text-danger text-center my-4">Supprimer le Congé</h1>
+<p class="fw-bold text-center">Êtes-vous sûr de vouloir supprimer ce congé ?</p>
+<form method="post" class="p-4 border rounded shadow-sm bg-light">
     {% csrf_token %}
-    <button type="submit">Oui</button>
+    <div class="d-flex justify-content-between mt-3 gap-lg-5">
+    <button type="submit" class="btn btn-danger" style="width:100%">Oui</button>
+    <a href="{% url 'listeCongeEmploye' %}" class="btn btn-outline-dark" style="display: block; margin-top: 10px;width:100%;">Annuler</a>
+    </div>
 </form>
-<a href="{% url 'listeCongeEmploye' %}" style="display: block; margin-top: 10px;">Retour à la liste des congés</a>
 {% endblock %}

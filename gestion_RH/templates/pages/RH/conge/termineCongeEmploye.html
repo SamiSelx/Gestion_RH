@@ -7,10 +7,13 @@ Approve Conge
 
 {% block content %}
 
-<h1>Termner le Congé</h1>
-<form method="post">
+<h1 class="text-primary text-center my-4">Terminer le Congé</h1>
+<form method="post" class="p-4 border rounded shadow-sm bg-light">
     {% csrf_token %}
-    <button type="submit">Termine Conge</button>
+    <div class="d-flex justify-content-center mt-3">
+
+    <button type="submit" class=" btn btn-primary">Termine Conge</button>
+    </div>
 </form>
 {% if messages %}
 <div class="messages">

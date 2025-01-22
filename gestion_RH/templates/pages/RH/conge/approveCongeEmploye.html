@@ -7,12 +7,25 @@ Approve Conge
 
 {% block content %}
 
-<h1>Approve le Congé</h1>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Approve</button>
-</form>
-{% if messages %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text-primary">Approve le Congé</h2>
+
+    <form method="post" class="p-4 border rounded shadow-sm bg-light">
+  
+
+        {% csrf_token %}
+
+        <div class="d-flex justify-content-center mt-3">
+
+        <button type="submit" class="btn btn-primary">Approve</button>
+    </div>
+
+    </form>
+
+    <!-- Back to List Link -->
+    <a href="{% url 'listeCongeEmploye' %}" style="d-block text-center mt-3 text-decoration-none">Retour à la liste des congés</a>
+
+    {% if messages %}
 <div class="messages">
     {% for message in messages %}
         <div class="alert alert-danger">
@@ -25,5 +38,5 @@ Approve Conge
         {% endwith %}
     {% endfor %}
 {% endif %}
-<a href="{% url 'listeCongeEmploye' %}" style="display: block; margin-top: 10px;">Retour à la liste des congés</a>
+</div>
 {%endblock%}
