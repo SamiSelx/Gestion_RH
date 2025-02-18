@@ -80,7 +80,6 @@ class Conge(models.Model):
         ('Exceptionnel', 'Congé exceptionnel'),
     ]
     type_conge = models.CharField(max_length=20,choices=TYPE_CONGE_CHOICES,default='Annuel')
-    # code_employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='conges')  
 
     def __str__(self):
         return f"{self.type_conge}"

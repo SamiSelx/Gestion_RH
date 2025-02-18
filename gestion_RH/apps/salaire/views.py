@@ -211,11 +211,18 @@ def send_fiche_de_paie(employe):
     # salaire = employe.salaire_base.salaire_base
     primes = Prime.objects.filter(code_employe=employe.id, date_attribuee__month=date.today().month, date_attribuee__year=date.today().year)
     total_prime= sum([prime.prime_montant for prime in primes])
-   
+    fiche_de_paie = FicheDePaieS.objects.filter(
+        employe = employe,
+        month__year=today.year,
+        month__month=today.month
+    ).first()
+    if fiche_de_paie is None:
+        raise ValueError("Le salaire n'a été calculer")
     html_content = render_to_string('fiche_de_paie.html', {
         'employe': employe,
-        'salaire': calcule_salaire_mensuel(employe,today.month,today.year,0),
+        'salaire': fiche_de_paie.salaire_mensuel,
         'primes': total_prime,
+        'heures_supp':fiche_de_paie.heures_supp,
         'date': timezone.now().strftime('%Y-%m-%d')
     })
 
@@ -232,10 +239,10 @@ def send_fiche_de_paie(employe):
         subject="Votre Fiche de Paie",
         body="Veuillez trouver ci-joint votre fiche de paie pour ce mois.",
         from_email=settings.EMAIL_FROM_USER,
-        to=[employe.user.email],  # Ensure this is the email of the employee
+        to=[employe.user.email], 
     )
 
-    # Attach the PDF file to the email (provide the name and content)
+    
     email.attach(f"fiche_de_paie_{employe.id}.pdf", pdf_buffer.read(), "application/pdf")
 
     # Send email
@@ -264,17 +271,19 @@ def send_fiche_de_paie_view(request, code_employe):
 
 def generate_fiche_de_paie(request,code_employe):
     today = date.today()
-    # Retrieve necessary data
+    
     employe = Employe.objects.get(pk=code_employe)
-    # salaire = employe.salaire_base.salaire_base
     primes = Prime.objects.filter(code_employe=employe.id, date_attribuee__month=date.today().month, date_attribuee__year=date.today().year)
     total_prime= sum([prime.prime_montant for prime in primes])
-    # employe.salaire = calcule_salaire_mensuel(employe,today.month,today.year)
+
     fiche_de_paie = FicheDePaieS.objects.filter(
         employe = employe,
         month__year=today.year,
         month__month=today.month
     ).first()
+    if fiche_de_paie is None:
+        messages.add_message(request,messages.ERROR,"Le salaire n'a été calculer")
+        return redirect('listeEmployeSalaire')
     html_content = render_to_string('fiche_de_paie.html', {
         'employe': employe,
         'salaire': fiche_de_paie.salaire_mensuel,
